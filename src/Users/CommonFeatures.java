@@ -1,33 +1,40 @@
 package Users;
 
+import java.io.File;
 import java.sql.*;
 
 public abstract class CommonFeatures {
-    private final String DATABASE_URL = "jdbc:sqlite:bd/AACRugby.db";
+
+    private Long nCC;
+    private String name;
+    private String email;
+    private String sex;
+    private String birthDate;
+    private Long phoneNumber;
+    private String DATABASE_URL;
     private Connection dbConn;
+    public CommonFeatures(){
 
-    public CommonFeatures() throws SQLException
+    };//efeitos de teste
+
+    public CommonFeatures(Long nCC, String name, String email, String sex, String birthDate, Long phoneNumber) throws SQLException
     {
+        File f = new File("AACRugby.db");
+        this.DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
         dbConn = DriverManager.getConnection(DATABASE_URL);
+        this.nCC = nCC;
+        this.name = name;
+        this.email = email;
+        this.sex = sex;
+        this.birthDate = birthDate;
+        this.phoneNumber = phoneNumber;
     }
+
+    public String getDATABASE_URL() {
+        return DATABASE_URL;
+    }
+
+
     //String sqlQuery = "SELECT nCC, logged, email, name, password, birthDate, sex, phoneNumber, aptitude, position, weight, height, typeUser FROM users";
-    public boolean login(String email, String password) throws SQLException {
-        Statement statement = dbConn.createStatement();
 
-        String sqlQuery = "SELECT email, password from users";
-        ResultSet resultSet = statement.executeQuery(sqlQuery);
-
-        while (resultSet.next()) {
-            String e = resultSet.getString("username");
-            String p = resultSet.getString("password");
-            if(email.equals(e) && password.equals(p)) {
-                resultSet.close();
-                statement.close();
-                return true;
-            }
-        }
-        resultSet.close();
-        statement.close();
-        return false;
-    }
 }
