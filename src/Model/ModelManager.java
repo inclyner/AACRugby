@@ -1,8 +1,8 @@
 package Model;
 
-public class Manager {
+public class ModelManager {
 
-    public Manager() {
+    public ModelManager() {
     }
 
     private void InsertUser(){}
