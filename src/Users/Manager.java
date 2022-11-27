@@ -1,8 +1,8 @@
-package logic;
+package Users;
 
 import java.sql.SQLException;
 
-public class Manager extends commonFeatures{
+public class Manager extends CommonFeatures {
 
     public Manager() throws SQLException {
         super();

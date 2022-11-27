@@ -1,12 +1,12 @@
-package logic;
+package Users;
 
 import java.sql.*;
 
-public abstract class commonFeatures {
+public abstract class CommonFeatures {
     private final String DATABASE_URL = "jdbc:sqlite:bd/AACRugby.db";
     private Connection dbConn;
 
-    public commonFeatures() throws SQLException
+    public CommonFeatures() throws SQLException
     {
         dbConn = DriverManager.getConnection(DATABASE_URL);
     }
