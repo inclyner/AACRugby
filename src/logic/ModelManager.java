@@ -1,13 +1,13 @@
 package logic;
 
+//import Users.CommonFeatures;
 import Users.CommonFeatures;
 
 import java.io.File;
 import java.sql.*;
 
-public class ModelManager extends CommonFeatures {
+public class ModelManager {
     CommonFeatures cF;
-
     public ModelManager() throws SQLException {
         //super();
         //this.cF = new CommonFeatures();
