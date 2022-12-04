@@ -1,6 +1,12 @@
 package Users;
 
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.sql.*;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Manager extends CommonFeatures {
 
@@ -12,6 +18,7 @@ public class Manager extends CommonFeatures {
 
     private void deleteUser(){}
 
-    private void AproveChangeRequest(){}
+    private void aproveChangeRequest() {
+    }
 
 }
