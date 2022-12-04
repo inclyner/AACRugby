@@ -29,6 +29,13 @@ public abstract class CommonFeatures {
         this.birthDate = birthDate;
         this.phoneNumber = phoneNumber;
     }
+    
+    public Connection createDb() throws SQLException {
+        File f = new File("AACRugby\\bd\\AACRugby.db");
+        String DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
+        Connection dbConn = DriverManager.getConnection(DATABASE_URL);
+        return dbConn;
+    }
 
     public String getDATABASE_URL() {
         return DATABASE_URL;
