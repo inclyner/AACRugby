@@ -28,6 +28,7 @@ public abstract class CommonFeatures {
         this.sex = sex;
         this.birthDate = birthDate;
         this.phoneNumber = phoneNumber;
+        this.dbConn = createDb();
     }
     
     public Connection createDb() throws SQLException {
@@ -36,6 +37,11 @@ public abstract class CommonFeatures {
         Connection dbConn = DriverManager.getConnection(DATABASE_URL);
         return dbConn;
     }
+
+    public Connection getDbConnection() {
+        return dbConn;
+    }
+
 
     public String getDATABASE_URL() {
         return DATABASE_URL;
