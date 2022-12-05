@@ -13,7 +13,7 @@ public class ModelManager {
         //this.cF = new CommonFeatures();
     }
     public boolean login(String email, String password) throws SQLException {
-        File f = new File("AACRugby\\bd\\AACRugby.db");
+        File f = new File("bd\\AACRugby.db");
         String DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
         Connection dbConn = DriverManager.getConnection(DATABASE_URL);
         Statement statement = dbConn.createStatement();
