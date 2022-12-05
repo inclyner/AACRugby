@@ -119,52 +119,48 @@ public class Manager extends CommonFeatures {
         sendEmail.sendEmail(pass);
         return "User is now in the System";
     }
-}
 
 
-    /*private void deleteUser(ArrayList<Long> listaCc) throws SQLException {
+private void deleteUser(ArrayList<Long> listaCc) throws SQLException {
         Statement statement = getDbConnection().createStatement();
-        AtomicReference<String> sqlQuery = new AtomicReference<>("SELECT nCC FROM user");
-        ResultSet resultSet = statement.executeQuery(sqlQuery.get());
-
+        String sqlQuery1 = "SELECT nCC FROM user";
+        ResultSet resultSet = statement.executeQuery(sqlQuery1);
         listaCc.forEach((n) -> {
-            //while (resultSet.next()) {
+            try {
+            while (resultSet.next()) {
                 long cc = resultSet.getLong("nCC");
                 int type = resultSet.getInt("type");
-
-
                 if (n == cc) {
                     if (type == 2) {
-                        sqlQuery.set("DELETE FROM medicalAppointment WHERE playerCC=" + cc);
-                        statement.executeQuery(sqlQuery.get());
+                        String sqlQuery = "DELETE FROM medicalAppointment WHERE playerCC=" + cc +";";
+                        statement.executeUpdate(sqlQuery);
 
-                        sqlQuery.set("SELECT * FROM practice_player WHERE playerCC=" + cc);
-                        ResultSet resultSetTemp = statement.executeQuery(sqlQuery.get());
-                        // remover treinos em que o player esta convocado sozinho
+                        sqlQuery = "SELECT * FROM practice_player WHERE playerCC=" + cc;
+                        ResultSet resultSetTemp = statement.executeQuery(sqlQuery);
                         while (resultSetTemp.next()) {
                             int idPractice = resultSet.getInt("idPractice");
-                            sqlQuery.set("SELECT * FROM practice_player");
-                            ResultSet ids = statement.executeQuery(sqlQuery.get());
-                            if (ids.getRow() <= 1) {
-                                sqlQuery.set("DELETE FROM practice_player WHERE idPractice=" + idPractice);
-                                statement.executeQuery(sqlQuery.get());
+                            sqlQuery = "SELECT * FROM practice_player";
+                            ResultSet ids = statement.executeQuery(sqlQuery);
+                            ids.last();
+                            if(ids.getRow()==1){
+                                sqlQuery = "DELETE FROM practice_player WHERE idPractice=" + idPractice+ "";
+                                statement.executeUpdate(sqlQuery);
+                                sqlQuery = "DELETE FROM practice WHERE id=" + idPractice+ "";
+                                statement.executeUpdate(sqlQuery);
                             }
                         }
                     }
-
-                    sqlQuery.set("DELETE FROM user WHERE nCC=" + cc);
-                    statement.executeQuery(sqlQuery.get());
-
-
+                    String sqlQuery="DELETE FROM user WHERE nCC = " + cc+"";
+                    statement.executeUpdate(sqlQuery);
                 }
-
             }
-
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+                }
         });
-
     }
 
-    private void approveChangeRequest(int id, boolean bool) {
+  /*  private void approveChangeRequest(int id, boolean bool) {
        Statement statement = getDbConnection().createStatement();
         AtomicReference<String> sqlQuery = new AtomicReference<>("SELECT * FROM changeRequest WHERE id=" + id);
        ResultSet resultSet = statement.executeQuery(sqlQuery.get());
@@ -183,7 +179,6 @@ public class Manager extends CommonFeatures {
         }
         sqlQuery.set("DELETE FROM changeRequest WHERE id=" + id);
         statement.executeQuery(sqlQuery.get());
-    }
+    }*/
 
 }
-*/
