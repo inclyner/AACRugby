@@ -90,7 +90,9 @@ public class Manager extends CommonFeatures {
         //Check Unique Values
         try {
             Statement statement = getDbConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * from user");
+            String query = "SELECT nCC, email from user";
+            ResultSet resultSet = statement.executeQuery(query);
+            System.out.println();
             while (resultSet.next() && terminate.equals("")) {
                 Long nCartao = resultSet.getLong("nCC");
                 if (nCartao.equals(nCC)) terminate="Citizen Card Number Already Exists";
@@ -106,7 +108,8 @@ public class Manager extends CommonFeatures {
 
         try {
             Statement statement = getDbConnection().createStatement();
-            String sqlQuery = "INSERT INTO user VALUES ("+nCC+"','"+"false"+"','"+email.toLowerCase()+"','"+name.toLowerCase()+"','"+pass.toLowerCase()+"','"+birthDate+"','"+sex.toLowerCase()+"','"+phoneNumber+"','"+aptitude+"','"+position+"','"+weight+"','"+height+"','"+type+"')";
+            String sqlQuery = "INSERT INTO user VALUES ("+nCC+",'"+"false"+"','"+email.toLowerCase()+"','"+name.toLowerCase()+"','"+pass.toLowerCase()+"',"+birthDate+",'"+sex.toLowerCase()+"',"+phoneNumber+",'"+aptitude+"','"+position+"',"+weight+","+height+",'"+type+"')";
+            System.out.println(sqlQuery);
             statement.executeUpdate(sqlQuery);
             statement.close();
         }catch (SQLException e) {

@@ -33,8 +33,8 @@ public abstract class CommonFeatures {
 
     
     public static Connection createDb() throws SQLException {
-        File f = new File("AACRugby.db");
-        //File f = new File("AACRugby\\bd\\AACRugby.db");
+        //File f = new File("AACRugby.db");
+        File f = new File("AACRugby\\bd\\AACRugby.db");
         String DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
         Connection dbConn = DriverManager.getConnection(DATABASE_URL);
         return dbConn;
