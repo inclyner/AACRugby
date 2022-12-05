@@ -3,6 +3,7 @@ package Users;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Objects;
 
 public class Player extends CommonFeatures{
 
@@ -32,14 +33,20 @@ public class Player extends CommonFeatures{
     public void requestChangePersonalData(String oldInfo, String newInfo) {
         try {
             Statement statement = getDbConnection().createStatement();
-            oldInfo = "SELECT email, phoneNumber FROM user WHERE type=2";
-            ResultSet resultSet = statement.executeQuery(oldInfo);
+            String sqlQuery = "SELECT email, phoneNumber FROM user WHERE type=2";
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
             while(resultSet.next()) {
-                newInfo = "UPDATE requestChange SET email='" + email + "', " +
-                        "phoneNumber='" + phoneNumber + "' WHERE playerCC=" + nCC;;
-                statement.executeUpdate(newInfo);
-                statement.close();
+                int id = resultSet.getInt("id");
+                if (Objects.equals(id, id))
+                    return;
+                oldInfo = resultSet.getString("oldInfo");
+                long nCC = resultSet.getLong("nCC");
+                newInfo = resultSet.getString("newInfo");
+                String sqlQuery2 = "UPDATE changeRequest SET email='" + newInfo +
+                        "phoneNumber='" + newInfo + "' WHERE playerCC=" + nCC;
+                statement.executeUpdate(sqlQuery2);
             }
+            statement.close();
         }catch (SQLException e){
             throw new RuntimeException();
         }
