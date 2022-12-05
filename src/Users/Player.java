@@ -13,7 +13,7 @@ public class Player extends CommonFeatures{
     private String position;
 
     public Player(Long nCC, String name, String email, String sex, String birthDate, Long phoneNumber) throws SQLException {
-        super(nCC, name, email, sex, birthDate, phoneNumber);
+        super(email);
     }
 
     public void setWeight(double weight){

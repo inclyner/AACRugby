@@ -18,9 +18,9 @@ public class Coach extends CommonFeatures{
         }
         try {
             Statement statement = getDbConnection().createStatement();
-            String sqlQuery = "SELECT * FROM user WHERE type=2";
+            String sqlQuery = "SELECT * FROM user WHERE typeUserId=2";
             ResultSet resultSet = statement.executeQuery(sqlQuery);
-            String sqlQuery1 = "SELECT * FROM externalPunishment";
+            String sqlQuery1 = "SELECT * FROM externalPunishments";
             ResultSet resultSet1 = statement.executeQuery(sqlQuery1);
             while (resultSet.next()) {
                 long nCC = resultSet.getLong("nCC");
@@ -43,12 +43,12 @@ public class Coach extends CommonFeatures{
                 return "Insert notes";
             }
         }catch (SQLException e){
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
         return "Nothing";
     }
 
-    private void callUpPlayers(ArrayList<Long>playersCC, int idgame){
+    public void callUpPlayers(ArrayList<Long>playersCC, int idgame){
         int i=0;
         if (playersCC.size()>18 || playersCC.size()<15 || String.valueOf(idgame)==null)
             return;
@@ -73,7 +73,7 @@ public class Coach extends CommonFeatures{
         }
     }
 
-    private void repportNonAttendance(Long CC){
+    public void repportNonAttendance(Long CC){
         int n=1;
         try {
             Statement statement = getDbConnection().createStatement();

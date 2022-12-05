@@ -1,7 +1,10 @@
 package Users;
 
+import logic.Game;
+
 import java.io.File;
 import java.sql.*;
+import java.util.ArrayList;
 
 public abstract class CommonFeatures {
 
@@ -31,6 +34,38 @@ public abstract class CommonFeatures {
     public static Connection getDbConnection() throws SQLException {
        return dbConn = createDb();
     }
+
+    public ArrayList<String> getGames(){
+        ArrayList<Game> games = new ArrayList<>();
+        ArrayList<Long> players = new ArrayList<>();
+
+        try {
+            Statement statement = getDbConnection().createStatement();
+            String query = "SELECT * from game";
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()){
+                int idGame = resultSet.getInt("id");
+                String date = resultSet.getString("date");
+                String equipaAdv = resultSet.getString("equipaAdversaria");
+                String horaInicio = resultSet.getString("horaInicial");
+                String horaFinal = resultSet.getString("horaFinal");
+                String local = resultSet.getString("local");
+                Long nCCCoach = resultSet.getLong("coachCC");
+
+                String sqlQuery = "SELECT idGame from game_player WHERE idGame = " + idGame+"";
+                ResultSet resultSet1 = statement.executeQuery(sqlQuery);
+                while (resultSet1.next()){
+                    players.add(resultSet1.getLong("id"));
+                }
+                games.add(new Game(nCCCoach, horaInicio, horaFinal, local, players, equipaAdv));
+                players.clear();
+
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;}
 
 
     public String getDATABASE_URL() {

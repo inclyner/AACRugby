@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.sql.*;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,28 +14,58 @@ import java.util.regex.Pattern;
 public class Manager extends CommonFeatures {
 
     public Manager(Long nCC, String name, String email, String sex, String birthDate, Long phoneNumber) throws SQLException {
-        super(nCC, name, email, sex, birthDate, phoneNumber);
+        super(email);
     }
 
-    public Manager() {
+    public Manager() {}
 
-    }
-
-    public String insertUser(int type, Long nCC, String name, String email, String pass, String sex, String birthDate, Long phoneNumber, Boolean aptitude, Float height, Float weight, String position) {
-        try {
-            Connection db = CommonFeatures.getDbConnection();
-            if(db==null) return "Daah";
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        String terminate ="";
+    public String approveCellPhone(Long phoneNumber){
         Pattern special = Pattern.compile("[!@#$%&*()_+=`£@;,//<>§€^ºª|<>?{}«»´\\[\\]~-]");
         Pattern letter = Pattern.compile("[a-zA-z]");
-        Pattern digit = Pattern.compile("[0-9]");
+
+        if (phoneNumber.toString().length() != 9) return "Incomplete Phone Number";
+        Matcher hasSpecial = special.matcher(phoneNumber.toString());
+        Matcher hasLetters = letter.matcher(phoneNumber.toString());
+        if (hasLetters.find() || hasSpecial.find()) return "Invalid Phone Number";
+
+        else return null;
+    }
+
+    public String checkEmail(String email){
         Pattern pat = Pattern.compile("^[a-zA-Z0-9_+&*-]+(?:\\." +
                 "[a-zA-Z0-9_+&*-]+)*@" +
                 "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
                 "A-Z]{2,7}$");
+        if (!pat.matcher(email).matches()) return "Please insert a valid email";
+        String terminate="";
+        try {
+            Statement statement = getDbConnection().createStatement();
+            String query = "SELECT email from user";
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next() && terminate.equals("")) {
+                String e = resultSet.getString("email");
+                if (email.equals(e)) terminate="Email Already Exists";
+            }
+            statement.close();
+            resultSet.close();
+            return terminate;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String insertUser(int type, Long nCC, String name, String email, String pass, String sex, String birthDate, Long phoneNumber, Boolean aptitude, Float height, Float weight, String position) {
+        /*try {
+            Connection db = CommonFeatures.getDbConnection();
+            if(db==null) return "Daah";
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }*/
+        String terminate ="";
+        Pattern special = Pattern.compile("[!@#$%&*()_+=`£@;,//<>§€^ºª|<>?{}«»´\\[\\]~-]");
+        Pattern letter = Pattern.compile("[a-zA-z]");
+        Pattern digit = Pattern.compile("[0-9]");
+
 
         Matcher hasSpecial = special.matcher(name);
         Matcher hasDigits = digit.matcher(name);
@@ -59,19 +90,18 @@ public class Manager extends CommonFeatures {
 
         //Check email
         email = email.replaceAll("\\s", "");
-        if (!pat.matcher(email).matches()) return "Please insert a valid email";
+        checkEmail(email);
+
         //nao verifica que o email existe mesmo, mas a sintaxe está correta
 
         //Check phoneNumber
-        if (phoneNumber.toString().length() != 9) return "Incomplete Phone Number";
-        hasSpecial = special.matcher(phoneNumber.toString());
-        Matcher hasLetters = letter.matcher(phoneNumber.toString());
-        if (hasLetters.find() || hasSpecial.find()) return "Invalid Phone Number";
+        if(approveCellPhone(phoneNumber)!=null) return approveCellPhone(phoneNumber);
+        if(!Objects.equals(checkEmail(email), "")) return checkEmail(email);
 
         //Check nCC
         if (nCC.toString().length() != 9) return "Incomplete Citizen Card";
         hasSpecial = special.matcher(nCC.toString());
-        hasLetters = letter.matcher(nCC.toString());
+        Matcher hasLetters = letter.matcher(nCC.toString());
         if (hasLetters.find() || hasSpecial.find()) return "Invalid Citizen Card";
 
         //Check height
@@ -88,6 +118,9 @@ public class Manager extends CommonFeatures {
             else if(weight<40.0) return "Weight's too low";
         }
         //Check Unique Values
+
+        if (height.isNaN()) height=null;
+        if(weight.isNaN()) weight=null;
         try {
             Statement statement = getDbConnection().createStatement();
             String query = "SELECT nCC, email from user";
@@ -160,22 +193,28 @@ private void deleteUser(ArrayList<Long> listaCc) throws SQLException {
         });
     }
 
-  /*  private void approveChangeRequest(int id, boolean bool) {
-       Statement statement = getDbConnection().createStatement();
-        AtomicReference<String> sqlQuery = new AtomicReference<>("SELECT * FROM changeRequest WHERE id=" + id);
-       ResultSet resultSet = statement.executeQuery(sqlQuery.get());
-        String oldInfo = resultSet.getString("oldInfo");
-        String newInfo = resultSet.getString("newInfo");
-        long cc = resultSet.getLong("nCC");
+    private String approveChangeRequest(int id, boolean bool) {
         Pattern pat = Pattern.compile("^[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-z" + "A-Z]{2,7}$");
-
-        if (bool) {
-            if (oldInfo.length() == 9) {
-                sqlQuery.set("UPDATE user SET phoneNumber = '" + newInfo + "' WHERE nCC=" + cc);
-            } else if (pat.matcher(oldInfo).matches()) {
-                sqlQuery.set("UPDATE user SET email = '" + newInfo + "' WHERE nCC=" + cc);
+        try {
+            Statement statement = getDbConnection().createStatement();
+            String sqlQuery = "SELECT * FROM changeRequest WHERE id=" + id+"";
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            String oldInfo = resultSet.getString("oldInfo");
+            String newInfo = resultSet.getString("newInfo");
+            long cc = resultSet.getLong("playerCC");
+            if (bool) {
+                if (approveCellPhone(Long.valueOf(newInfo))==null) {
+                    sqlQuery="UPDATE user SET phoneNumber = '" + newInfo + "' WHERE nCC=" + cc+"";
+                } else if (Objects.equals(checkEmail(newInfo), "")) {
+                    sqlQuery = "UPDATE user SET email = '" + newInfo + "' WHERE nCC=" + cc +"";
+                }else return "Invalid Values";
+                statement.executeUpdate(sqlQuery);
             }
-            statement.executeQuery(sqlQuery.get());
+            sqlQuery = "DELETE FROM changeRequest WHERE id=" + id;
+            statement.executeUpdate(sqlQuery);
+            return "Option Validated";
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 

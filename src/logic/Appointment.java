@@ -1,12 +1,12 @@
 package logic;
 
 public class Appointment {
-    private String nameAuthor;
+    private Long nCCAuthor;
     private String initialTime;
     private String finalTime;
 
-    public Appointment(String nameAuthor, String initialTime, String finalTime) {
-        this.nameAuthor = nameAuthor;
+    public Appointment(Long nCCAuthor, String initialTime, String finalTime) {
+        this.nCCAuthor = nCCAuthor;
         this.initialTime = initialTime;
         this.finalTime = finalTime;
     }
@@ -15,8 +15,8 @@ public class Appointment {
         this.finalTime = finalTime;
     }
 
-    public String getNameAuthor() {
-        return nameAuthor;
+    public Long getNameAuthor() {
+        return nCCAuthor;
     }
 
     public String getInitialTime() {
