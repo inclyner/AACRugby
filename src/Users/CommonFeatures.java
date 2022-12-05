@@ -12,7 +12,7 @@ public abstract class CommonFeatures {
     private String birthDate;
     private Long phoneNumber;
     private String DATABASE_URL;
-    private Connection dbConn;
+    private static Connection dbConn;
     public CommonFeatures(){
 
     };//efeitos de teste
