@@ -17,24 +17,12 @@ public abstract class CommonFeatures {
 
     };//efeitos de teste
 
-    public CommonFeatures(Long nCC, String name, String email, String sex, String birthDate, Long phoneNumber) throws SQLException
-    {
-        File f = new File("AACRugby.db");
-        this.DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
-        dbConn = DriverManager.getConnection(DATABASE_URL);
-        this.nCC = nCC;
-        this.name = name;
-        this.email = email;
-        this.sex = sex;
-        this.birthDate = birthDate;
-        this.phoneNumber = phoneNumber;
-
-    }
+    public CommonFeatures(String email) throws SQLException {this.email = email;}
 
     
     public static Connection createDb() throws SQLException {
         //File f = new File("AACRugby.db");
-        File f = new File("AACRugby\\bd\\AACRugby.db");
+        File f = new File("bd\\AACRugby.db");
         String DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
         Connection dbConn = DriverManager.getConnection(DATABASE_URL);
         return dbConn;

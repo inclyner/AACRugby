@@ -51,8 +51,8 @@ public class Manager extends CommonFeatures {
         pass = pass.replaceAll("\\s", "");
         hasSpecial = special.matcher(pass);
         hasDigits = digit.matcher(pass);
-        if (pass.length() < 5) return "Password is too small!";
-        else if (pass.length() == 0) return "Please Insert a Password";
+        if (pass.length() == 0) return "Please Insert a Password";
+        else if (pass.length() < 5) return "Password is too small!";
         else if (pass.length() > 10) return "Please Insert a Smaller Password";
         else if (!hasSpecial.find() || !hasDigits.find())
             return "Please insert a password with digits and special characters";
@@ -143,14 +143,14 @@ private void deleteUser(ArrayList<Long> listaCc) throws SQLException {
                             ResultSet ids = statement.executeQuery(sqlQuery);
                             ids.last();
                             if(ids.getRow()==1){
-                                sqlQuery = "DELETE FROM practice_player WHERE idPractice=" + idPractice+ "";
+                                sqlQuery = "DELETE FROM practice_player WHERE idPractice=" + idPractice+ ";";
                                 statement.executeUpdate(sqlQuery);
-                                sqlQuery = "DELETE FROM practice WHERE id=" + idPractice+ "";
+                                sqlQuery = "DELETE FROM practice WHERE id=" + idPractice+ ";";
                                 statement.executeUpdate(sqlQuery);
                             }
                         }
                     }
-                    String sqlQuery="DELETE FROM user WHERE nCC = " + cc+"";
+                    String sqlQuery="DELETE FROM user WHERE nCC = " + cc+";";
                     statement.executeUpdate(sqlQuery);
                 }
             }
@@ -177,8 +177,6 @@ private void deleteUser(ArrayList<Long> listaCc) throws SQLException {
             }
             statement.executeQuery(sqlQuery.get());
         }
-        sqlQuery.set("DELETE FROM changeRequest WHERE id=" + id);
-        statement.executeQuery(sqlQuery.get());
-    }*/
+    }
 
 }
