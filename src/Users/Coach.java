@@ -187,8 +187,26 @@ public class Coach extends CommonFeatures{
         }
     }
 
-    private void SceduleTrainningSession(){
-
+    public void ScheduleTrainingSession(ArrayList<Long>playersCC, int idPractice, String local, Date date, Time startTime, Time endTime, long coachCC){
+        int i=0;
+        try {
+            Statement statement = getDbConnection().createStatement();
+            String sqlQuery = "SELECT * FROM practice_player";
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            while (resultSet.next()) {
+                int id = resultSet.getInt("idPractice");
+                if (Objects.equals(id, idPractice))
+                    return;
+            }
+            while(i<=playersCC.size()){
+                sqlQuery = "INSERT INTO game SET idPractice='" + idPractice + "', " +"local="+ local + "', " +
+                        "date="+ date + "', " + "startTime"+ startTime + "', " + "endTime" + endTime + "', " +"coachCC"+ coachCC;
+                statement.executeUpdate(sqlQuery);
+                i++;
+            }
+            statement.close();
+        }catch (SQLException e){
+            throw new RuntimeException();
+        }
     }
-
 }
