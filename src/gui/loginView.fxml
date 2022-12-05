@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="800.0" maxWidth="800.0" minHeight="374.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LoginController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LoginController">
    <children>
-      <TextField fx:id="cc" focusTraversable="false" layoutX="367.0" layoutY="132.0" prefHeight="26.0" prefWidth="188.0" promptText="Citizen Card">
+      <TextField fx:id="tfEmail" focusTraversable="false" layoutX="367.0" layoutY="132.0" prefHeight="26.0" prefWidth="188.0" promptText="Email">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor></TextField>
@@ -36,10 +36,14 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </Label>
-      <ImageView fitHeight="196.0" fitWidth="188.0" layoutX="74.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgAcademica" fitHeight="196.0" fitWidth="188.0" layoutX="74.0" layoutY="85.0" onMouseClicked="#onClickImage" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@img/Academica_logo.png" />
          </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </ImageView>
+      <Label fx:id="wrongLogIn" layoutX="379.0" layoutY="104.0" prefHeight="18.0" prefWidth="176.0" textAlignment="CENTER" textFill="RED" />
    </children>
 </AnchorPane>
