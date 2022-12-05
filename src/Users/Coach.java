@@ -45,8 +45,29 @@ public class Coach extends CommonFeatures{
         }
     }
 
-    private void callUpPlayers(){
-
+    private void callUpPlayers(ArrayList<Long>playersCC, int idgame){
+        int i=0;
+        if (playersCC.size()>18 || playersCC.size()<15 || String.valueOf(idgame)==null)
+            return;
+        try {
+            Statement statement = getDbConnection().createStatement();
+            String sqlQuery = "SELECT * FROM game_player";
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            while (resultSet.next()) {
+                int id = resultSet.getInt("idGame");
+                if (Objects.equals(id, idgame))
+                    return;
+            }
+            while(i<=playersCC.size()){
+                sqlQuery = "INSERT INTO game_players SET idGame='" + idgame + "', " +
+                        "playerCC='" + playersCC.get(i);
+                statement.executeUpdate(sqlQuery);
+                i++;
+            }
+            statement.close();
+        }catch (SQLException e){
+            throw new RuntimeException();
+        }
     }
 
     private void repportNonAttendance(){

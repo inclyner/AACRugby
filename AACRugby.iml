@@ -54,5 +54,8 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="activation" level="project" />
+    <orderEntry type="library" name="mail" level="project" />
+    <orderEntry type="library" name="sqlite-jdbc-3.39.3.0" level="project" />
   </component>
 </module>

@@ -19,7 +19,7 @@ public class Manager extends CommonFeatures {
         Pattern special = Pattern.compile("[!@#$%&*()_+=`£@;,//<>§€^ºª|<>?{}«»´\\[\\]~-]");
         Pattern letter = Pattern.compile("[a-zA-z]");
         Pattern digit = Pattern.compile("[0-9]");
-        Pattern pat = Pattern.compile("^[a-zA-Z0-9_+&*-]+(?:\\."+
+        Pattern pat = Pattern.compile("^[a-zA-Z0-9_+&*-]+(?:\\." +
                 "[a-zA-Z0-9_+&*-]+)*@" +
                 "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
                 "A-Z]{2,7}$");
@@ -40,8 +40,8 @@ public class Manager extends CommonFeatures {
         hasSpecial = special.matcher(pass);
         hasDigits = digit.matcher(pass);
         if (pass.length() < 5) return "Password is too small!";
-        else if(pass.length()==0) return "Please Insert a Password";
-        else if(pass.length() > 10) return "Please Insert a Smaller Password";
+        else if (pass.length() == 0) return "Please Insert a Password";
+        else if (pass.length() > 10) return "Please Insert a Smaller Password";
         else if (!hasSpecial.find() || !hasDigits.find())
             return "Please insert a password with digits and special characters";
 
@@ -93,7 +93,7 @@ public class Manager extends CommonFeatures {
                             int idPractice = resultSet.getInt("idPractice");
                             sqlQuery.set("SELECT * FROM practice_player");
                             ResultSet ids = statement.executeQuery(sqlQuery.get());
-                            if(ids.getRow()<=1){
+                            if (ids.getRow() <= 1) {
                                 sqlQuery.set("DELETE FROM practice_player WHERE idPractice=" + idPractice);
                                 statement.executeQuery(sqlQuery.get());
                             }
@@ -112,7 +112,26 @@ public class Manager extends CommonFeatures {
 
     }
 
-    private void aproveChangeRequest() {
+    private void approveChangeRequest(int id, boolean bool) {
+       Statement statement = getDbConnection().createStatement();
+        AtomicReference<String> sqlQuery = new AtomicReference<>("SELECT * FROM changeRequest WHERE id=" + id);
+       ResultSet resultSet = statement.executeQuery(sqlQuery.get());
+        String oldInfo = resultSet.getString("oldInfo");
+        String newInfo = resultSet.getString("newInfo");
+        long cc = resultSet.getLong("nCC");
+        Pattern pat = Pattern.compile("^[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-z" + "A-Z]{2,7}$");
+
+        if (bool) {
+            if (oldInfo.length() == 9) {
+                sqlQuery.set("UPDATE user SET phoneNumber = '" + newInfo + "' WHERE nCC=" + cc);
+            } else if (pat.matcher(oldInfo).matches()) {
+                sqlQuery.set("UPDATE user SET email = '" + newInfo + "' WHERE nCC=" + cc);
+            }
+            statement.executeQuery(sqlQuery.get());
+        }
+        sqlQuery.set("DELETE FROM changeRequest WHERE id=" + id);
+        statement.executeQuery(sqlQuery.get());
     }
 
 }
+*/
