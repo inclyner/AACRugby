@@ -3,6 +3,7 @@ package Users;
 import java.sql.SQLException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 public class Coach extends CommonFeatures{
@@ -23,7 +24,7 @@ public class Coach extends CommonFeatures{
             ResultSet resultSet1 = statement.executeQuery(sqlQuery1);
             while (resultSet.next()) {
                 long nCC = resultSet.getLong("nCC");
-                int n = resultSet.getString("name");
+                String n = resultSet.getString("name");
                 if (Objects.equals(n, name)) {
                     while (resultSet1.next()) {
                         if (resultSet1.getString("playerCC") != null) {
@@ -70,12 +71,46 @@ public class Coach extends CommonFeatures{
         }
     }
 
-    private void repportNonAttendance(){
-
+    private void repportNonAttendance(Long CC){
+        int n=1;
+        try {
+            Statement statement = getDbConnection().createStatement();
+            String sqlQuery = "SELECT * FROM nonAtendance";
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            while (resultSet.next()) {
+                int cc = resultSet.getInt("playerCC");
+                if (Objects.equals(cc, CC)) {
+                    n = resultSet.getInt("counter");
+                    n++;
+                    sqlQuery = "UPDATE nonAtendance SET counter=" + n;
+                    statement.executeUpdate(sqlQuery);
+                    statement.close();
+                    return;
+                }
+            }
+            sqlQuery = "INSERT INTO nonAtendance SET playerCC='" + CC + "', " +
+                    "counter='" + n;
+            statement.executeUpdate(sqlQuery);
+            statement.close();
+        }
+        catch (SQLException e){
+            throw new RuntimeException();
+        }
     }
 
-    private void insertNotesAboutPlayer(){
+    //criar campo a dizer notes e idgames no users
+    private void insertNotesAboutPlayer(Long cc, int idgame, String notes, boolean fit){
+        try {
+            Statement statement = getDbConnection().createStatement();
+            String sqlQuery = "SELECT * FROM user";
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            while (resultSet.next()) {
 
+            }
+        }
+        catch (SQLException e){
+            throw new RuntimeException();
+        }
     }
 
     private void SceduleTrainningSession(){
