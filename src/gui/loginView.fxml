@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="800.0" maxWidth="800.0" minHeight="374.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LoginController">
+   <children>
+      <TextField fx:id="cc" focusTraversable="false" layoutX="367.0" layoutY="132.0" prefHeight="26.0" prefWidth="188.0" promptText="Citizen Card">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor></TextField>
+      <Button fx:id="loginBtn" defaultButton="true" layoutX="426.0" layoutY="270.0" mnemonicParsing="false" onAction="#onClickLogin" prefHeight="34.0" prefWidth="66.0" style="-fx-background-color: rgba(193,166,112,255);" text="Login" textAlignment="CENTER">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <PasswordField fx:id="password" focusTraversable="false" layoutX="365.0" layoutY="179.0" prefHeight="26.0" prefWidth="188.0" promptText="Password">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor></PasswordField>
+      
+      <Label layoutX="106.0" layoutY="287.0" text="Rugby Team">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </Label>
+      <ImageView fitHeight="196.0" fitWidth="188.0" layoutX="74.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@img/Academica_logo.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
