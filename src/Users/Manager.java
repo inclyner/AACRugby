@@ -154,7 +154,8 @@ public class Manager extends CommonFeatures {
     }
 
 
-private void deleteUser(ArrayList<Long> listaCc) throws SQLException {
+private boolean deleteUser(ArrayList<Long> listaCc) throws SQLException {
+        int ncc=0;
         Statement statement = getDbConnection().createStatement();
         String sqlQuery1 = "SELECT nCC FROM user";
         ResultSet resultSet = statement.executeQuery(sqlQuery1);
@@ -191,17 +192,18 @@ private void deleteUser(ArrayList<Long> listaCc) throws SQLException {
                 throw new RuntimeException(e);
                 }
         });
+        return false;
     }
 
-    private String approveChangeRequest(int id, boolean bool) {
-        Pattern pat = Pattern.compile("^[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-z" + "A-Z]{2,7}$");
+    public String approveChangeRequest(int id, boolean bool) {
         try {
             Statement statement = getDbConnection().createStatement();
             String sqlQuery = "SELECT * FROM changeRequest WHERE id=" + id+"";
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             String oldInfo = resultSet.getString("oldInfo");
             String newInfo = resultSet.getString("newInfo");
-            long cc = resultSet.getLong("playerCC");
+            Long cc = resultSet.getLong("playerCC");
+            if(cc == null) return "Player not found";
             if (bool) {
                 if (approveCellPhone(Long.valueOf(newInfo))==null) {
                     sqlQuery="UPDATE user SET phoneNumber = '" + newInfo + "' WHERE nCC=" + cc+"";

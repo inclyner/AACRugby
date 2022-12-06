@@ -1,14 +1,9 @@
 package Users.tests;
 
-import Users.CommonFeatures;
 import Users.Manager;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ManagerTest {
 
@@ -133,7 +128,28 @@ class ManagerTest {
             Manager manager = new Manager();
             assertEquals("Weight's too low",manager.insertUser(2, 423455849L, "Joao Silva", "rhoyikj467@tmail3.com", "psword123!", "male", "12-10-99", 123456789L, true, 180F, 25F, "Wing"));
         }
+    @Test
+    public void OverWeight() {
+        Manager manager = new Manager();
+        assertEquals("Weight's too low",manager.insertUser(2, 423455849L, "Joao Silva", "rhoyikj467@tmail3.com", "psword123!", "male", "12-10-99", 123456789L, true, 180F, 25F, "Wing"));
+    }
 
+    @Test
+    public void approveChangeRequestRight() {
+        Manager manager = new Manager();
+        assertEquals("Option Validated",manager.approveChangeRequest(2, true));
+    }
+
+    @Test
+    public void approveChangeRequestWrongEmail() {
+        Manager manager = new Manager();
+        assertEquals("Invalid Values",manager.approveChangeRequest(2, true));
+    }
+    @Test
+    public void approveChangeRequestWrongCellPhone() {
+        Manager manager = new Manager();
+        assertEquals("Invalid Values",manager.approveChangeRequest(2, true));
+    }
 
 }
 
