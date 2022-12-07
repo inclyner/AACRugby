@@ -4,6 +4,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import com.gluonhq.charm.glisten.control.Icon;
 import gui.Main;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -18,8 +19,8 @@ public class ManagerMainController {
     @FXML
     private URL location;
 
-    @FXML
-    private ImageView accountIcon;
+    @FXML // fx:id="icon"
+    private Icon icon; // Value injected by FXMLLoader
 
     @FXML
     private Button btnAproveRequests;
@@ -32,14 +33,34 @@ public class ManagerMainController {
 
     @FXML
     void onClickAccountIcon(MouseEvent event) {
-        System.out.println("To be developed" );
+        try {
+            Main main = new Main();
+            main.showNewWindow("UserPersonalDataView.fxml","Personal Data");
+            //main.changeScene("manager\\InsertUserView.fxml");
+
+        } catch (SQLException e){
+            System.err.println(e);
+        }
     }
 
     @FXML
     void onClickInsertUser(MouseEvent event) {
         try {
             Main main = new Main();
-            main.changeScene("manager\\InsertUserView.fxml");
+            main.showNewWindow("manager\\InsertUserView.fxml","Insert new User");
+            //main.changeScene("manager\\InsertUserView.fxml");
+
+        } catch (SQLException e){
+            System.err.println(e);
+        }
+    }
+
+    @FXML
+    void onClickDeleteUser(MouseEvent event) {
+        try {
+            Main main = new Main();
+            main.showNewWindow("manager\\DeleteUserView.fxml","Delete new User");
+            //main.changeScene("manager\\DeleteUserView.fxml");
 
         } catch (SQLException e){
             System.err.println(e);
@@ -48,7 +69,7 @@ public class ManagerMainController {
 
     @FXML
     void initialize() {
-        assert accountIcon != null : "fx:id=\"accountIcon\" was not injected: check your FXML file 'ManagerMainView.fxml'.";
+
         assert btnAproveRequests != null : "fx:id=\"btnAproveRequests\" was not injected: check your FXML file 'ManagerMainView.fxml'.";
         assert btnDeleteUser != null : "fx:id=\"btnDeleteUser\" was not injected: check your FXML file 'ManagerMainView.fxml'.";
         assert btnInsertUser != null : "fx:id=\"btnInsertUser\" was not injected: check your FXML file 'ManagerMainView.fxml'.";

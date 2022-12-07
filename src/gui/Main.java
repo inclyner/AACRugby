@@ -11,11 +11,13 @@ import javafx.scene.image.Image;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 
 public class Main extends Application {
     private ModelManager modelManager = new ModelManager();
     private static Stage stg;
+    private static final Image image = new Image("http://rugbyaac.com/wp-content/uploads/2018/12/Logo-AACRugby.png");
 
     public ModelManager getModelManager() {
         return modelManager;
@@ -34,19 +36,50 @@ public class Main extends Application {
         stage.setResizable(false);
         Parent root = FXMLLoader.load(getClass().getResource("loginView.fxml"));
         Scene scene = new Scene(root, 600, 400, Color.WHITE);
-        Image image = new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQgWV1T_EgX1G_nTPaUWR-AcFgvzdKS6Yk-dhQ-2QgRw&s");
+
         stage.setScene(scene);
 
         stage.setTitle("Rugby Team Management");
         stage.getIcons().add(image);
-        stage.setMinWidth(400);
+        //stage.setMinWidth(400);
         stage.show();
+    }
+
+    public Stage getStage(){
+        return stg;
     }
 
     public void changeScene(String fxml){
         try{
             Parent pane = FXMLLoader.load(getClass().getResource(fxml));
             stg.getScene().setRoot(pane);
+        } catch (IOException e){
+            System.err.println(e);
+        }
+    }
+
+    public void showNewWindow(String fxml, String title){
+        try{
+            Parent pane = FXMLLoader.load(getClass().getResource(fxml));
+
+            Stage stage = new Stage();
+            stg = stage;
+            stg.setScene(new Scene(pane));
+            stg.setTitle(title);
+            stg.setResizable(false);
+            stg.getIcons().add(image);
+
+            stg.show();
+
+            /*
+            stg.setScene(new Scene(pane));
+            stg.setTitle(title);
+            stg.setResizable(false);
+            stg.getIcons().add(image);
+
+
+            stg.show();*/
+
         } catch (IOException e){
             System.err.println(e);
         }

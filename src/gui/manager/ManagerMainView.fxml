@@ -6,23 +6,28 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="515.0" prefWidth="725.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.manager.ManagerMainController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.manager.ManagerMainController">
    <children>
-      <Button fx:id="btnInsertUser" layoutX="50.0" layoutY="54.0" mnemonicParsing="false" onMouseClicked="#onClickInsertUser" prefHeight="34.0" prefWidth="152.0" style="-fx-background-color: rgba(193,166,112,255);" text="InsertUser">
+      <Button fx:id="btnInsertUser" layoutX="37.0" layoutY="30.0" mnemonicParsing="false" onMouseClicked="#onClickInsertUser" prefHeight="34.0" prefWidth="152.0" style="-fx-background-color: rgba(193,166,112,255);" text="InsertUser">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button fx:id="btnDeleteUser" layoutX="50.0" layoutY="95.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="152.0" style="-fx-background-color: rgba(193,166,112,255);" text="Delete User">
+      <Button fx:id="btnDeleteUser" layoutX="37.0" layoutY="71.0" mnemonicParsing="false" onMouseClicked="#onClickDeleteUser" prefHeight="34.0" prefWidth="152.0" style="-fx-background-color: rgba(193,166,112,255);" text="Delete User">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button fx:id="btnAproveRequests" layoutX="50.0" layoutY="139.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="152.0" style="-fx-background-color: rgba(193,166,112,255);" text="Approval Request">
+      <Button fx:id="btnAproveRequests" layoutX="37.0" layoutY="115.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="152.0" style="-fx-background-color: rgba(193,166,112,255);" text="Approval Request">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <ImageView fx:id="accountIcon" fitHeight="265.0" fitWidth="320.0" layoutX="441.0" layoutY="41.0" onMouseClicked="#onClickAccountIcon" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="295.0" fitWidth="319.0" layoutX="141.0" layoutY="71.0" opacity="0.15" pickOnBounds="true">
          <image>
-            <Image url="@account_icon.png" />
+            <Image url="@img/Logo-AACRugby.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="63.0" fitWidth="68.0" layoutX="518.0" layoutY="13.0" onMouseClicked="#onClickAccountIcon" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@img/61205.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />

@@ -45,5 +45,15 @@
          </cursor>
       </ImageView>
       <Label fx:id="wrongLogIn" layoutX="379.0" layoutY="104.0" prefHeight="18.0" prefWidth="176.0" textAlignment="CENTER" textFill="RED" />
+      <ImageView fitHeight="31.0" fitWidth="32.0" layoutX="321.0" layoutY="130.0" preserveRatio="true">
+         <image>
+            <Image url="@img/email_icon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="321.0" layoutY="179.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@img/key_icon.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
