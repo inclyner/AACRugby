@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ManagerTest {
 
-
     @Test
     public void insertCorrectUserPlayerAllFields() {
         Manager manager = new Manager();

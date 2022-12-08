@@ -1,73 +1,93 @@
 package Users;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Scanner;
 
-public class Coach extends CommonFeatures{
+public class Coach extends CommonFeatures {
+
+    private ArrayList<Long> cc = new ArrayList<Long>();
+
+    public ArrayList<Long> getCc() {
+        return cc;
+    }
 
     public Coach(String email) throws SQLException {
         super(email);
     }
 
-    public String InsertPlayersPunishement(String name, String notes, int nGames) {
-        if (name==null || notes==null || String.valueOf(nGames)==null){
+    public String InsertPlayersPunishement(String name, String notes, int nGames){
+        //Falta obter cc do coach para meter na base de dados a ultima pessoa q alterou tudo
+        if (name == null || notes == null /*|| String.valueOf(nGames) == null*/) {
             return "Falta de argumentos";
         }
         try {
             Statement statement = getDbConnection().createStatement();
-            String sqlQuery = "SELECT * FROM user WHERE typeUserId=2";
+            String sqlQuery = "SELECT nCC, name FROM user WHERE typeUserId=2";
             ResultSet resultSet = statement.executeQuery(sqlQuery);
-            String sqlQuery1 = "SELECT * FROM externalPunishments";
-            ResultSet resultSet1 = statement.executeQuery(sqlQuery1);
             while (resultSet.next()) {
                 long nCC = resultSet.getLong("nCC");
                 String n = resultSet.getString("name");
                 if (Objects.equals(n, name)) {
+                    String sqlQuery1 = "SELECT * FROM externalPunishments";
+                    ResultSet resultSet1 = statement.executeQuery(sqlQuery1);
                     while (resultSet1.next()) {
-                        if (resultSet1.getString("playerCC") != null) {
-                            sqlQuery1 = "UPDATE externalPunishment SET notes='" + notes + "', " +
-                                    "numberGames='" + nGames + "' WHERE playerCC=" + nCC;
-                            statement.executeUpdate(sqlQuery);
+                        if (Objects.equals(resultSet1.getLong("playerCC"), nCC)) {
+                            notes=resultSet1.getString("notes").concat(notes);
+                            nGames+=resultSet1.getInt("numberGames");
+                            sqlQuery1 = "UPDATE externalPunishments SET coachCC ='" + 423455848L + "', notes ='" + notes + "', numberGames ='" + nGames + "'WHERE playerCC=" + nCC;
+                            statement.executeUpdate(sqlQuery1);
+                            resultSet.close();
+                            resultSet1.close();
                             statement.close();
                             return "Update the notes";
                         }
                     }
+                    //Alterar a parte de coachCC, esta mal
+                    sqlQuery1 = "INSERT INTO externalPunishments (playerCC, coachCC, notes, numberGames) VALUES ('"+nCC+"','"+nCC+"','"+notes+"','"+nGames+"')";
+                    statement.executeUpdate(sqlQuery1);
+                    statement.close();
+                    return "Insert notes";
                 }
-                sqlQuery1 = "INSERT INTO externalPunishment SET notes='" + notes + "', " +
-                        "numberGames='" + nGames + "' WHERE playerCC=" + nCC;
-                statement.executeUpdate(sqlQuery);
-                statement.close();
-                return "Insert notes";
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return "Nothing";
     }
 
-    public void callUpPlayers(ArrayList<Long>playersCC, int idgame){
+    public String callUpPlayers(ArrayList<Long>playersCC, int idgame) {
         int i=0;
-        if (playersCC.size()>18 || playersCC.size()<15 || String.valueOf(idgame)==null)
-            return;
+        if (playersCC.size()-1>18) /*|| String.valueOf(idgame)==null*/
+            return "Extra players";
+        else if (playersCC.size()-1<15)
+            return "Not enough players";
         try {
             Statement statement = getDbConnection().createStatement();
             String sqlQuery = "SELECT * FROM game_player";
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             while (resultSet.next()) {
                 int id = resultSet.getInt("idGame");
-                if (Objects.equals(id, idgame))
-                    return;
+                if (Objects.equals(id, idgame)){
+                    resultSet.close();
+                    statement.close();
+                    return "Already have call up of this game";
+                }
             }
-            while(i<=playersCC.size()){
-                sqlQuery = "INSERT INTO game_player SET idGame='" + idgame + "', " +
-                        "playerCC=" + playersCC.get(i);
+            while(i<playersCC.size()){
+                sqlQuery = "INSERT INTO game_player (idGame, playerCC) VALUES ('"+idgame+"','"+playersCC.get(i)+"')";
                 statement.executeUpdate(sqlQuery);
                 i++;
             }
+            resultSet.close();
             statement.close();
+            return "Insert date about call up in the database";
         }catch (SQLException e){
             throw new RuntimeException();
         }
@@ -80,19 +100,20 @@ public class Coach extends CommonFeatures{
             String sqlQuery = "SELECT * FROM nonAtendance";
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             while (resultSet.next()) {
-                int cc = resultSet.getInt("playerCC");
+                long cc = resultSet.getInt("playerCC");
                 if (Objects.equals(cc, CC)) {
                     n = resultSet.getInt("counter");
                     n++;
-                    sqlQuery = "UPDATE nonAtendance SET counter=" + n;
+                    sqlQuery = "UPDATE nonAtendance SET counter='" + n + "'WHERE nCC ='" + CC + "';";
                     statement.executeUpdate(sqlQuery);
+                    resultSet.close();
                     statement.close();
                     return;
                 }
             }
-            sqlQuery = "INSERT INTO nonAtendance SET playerCC='" + CC + "', " +
-                    "counter='" + n;
+            sqlQuery = "INSERT INTO nonAtendance (playerCC, counter) VALUES ('" + CC + "','" + n + "')";
             statement.executeUpdate(sqlQuery);
+            resultSet.close();
             statement.close();
         }
         catch (SQLException e){
@@ -108,79 +129,53 @@ public class Coach extends CommonFeatures{
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             //update
             while (resultSet.next()) {
-                int playercc = resultSet.getInt("playerCC");
+                long playercc = resultSet.getInt("playerCC");
                 int idGame = resultSet.getInt("idGame");
-                if (Objects.equals(playercc, cc) && Objects.equals(idGame, idgame)){
+                if (Objects.equals(playercc, cc) && Objects.equals(idGame, idgame)) {
                     aux = resultSet.getString("notes");
-                    sqlQuery = "UPDATE game_players SET notes='" + notes.concat(aux);
+                    sqlQuery = "UPDATE game_players SET notes='" + notes.concat(aux) + "'WHERE nCC ='" + cc + "'AND idGame='" + idgame + "';";
                     statement.executeUpdate(sqlQuery);
-                    String sqlQuery1 = "SELECT * FROM user";
+                    resultSet.close();
+                    String sqlQuery1 = "SELECT nCC, aptitude FROM user WHERE typeUserId=2";
                     ResultSet resultSet1 = statement.executeQuery(sqlQuery1);
                     while (resultSet1.next()) {
-                        if(fit){
-                            if(resultSet1.getBoolean("aptitude")){
+                        if (Objects.equals(resultSet1.getLong("nCC"), cc)) {
+                            if (Objects.equals(resultSet1.getBoolean("aptitude"), fit)) {
+                                resultSet1.close();
                                 statement.close();
                                 return;
-                            }
-                            else {
-                                sqlQuery1 = "UPDATE user SET aptitude=" + true;
+                            } else {
+                                sqlQuery1 = "UPDATE user SET aptitude='" + fit + "'WHERE nCC ='" + cc + "';";
                                 statement.executeUpdate(sqlQuery1);
-                                statement.close();
-                                return;
-                            }
-                        }
-                        else {
-                            if (!resultSet1.getBoolean("aptitude")){
-                                statement.close();
-                                return;
-                            }
-                            else {
-                                sqlQuery1 = "UPDATE user SET aptitude=" + false;
-                                statement.executeUpdate(sqlQuery1);
+                                resultSet1.close();
                                 statement.close();
                                 return;
                             }
                         }
                     }
-                    statement.close();
                 }
             }
             //create data
-            resultSet.first();
-            while (resultSet.next()){
-                sqlQuery = "INSERT INTO game_players SET idGames='" + idgame + "', " +
-                        "notes='" + notes;
-                statement.executeUpdate(sqlQuery);
-                String sqlQuery1 = "SELECT * FROM user";
-                ResultSet resultSet1 = statement.executeQuery(sqlQuery1);
-                while (resultSet1.next()) {
-                    if(fit){
-                        if(resultSet1.getBoolean("aptitude")){
-                            statement.close();
-                            return;
-                        }
-                        else {
-                            sqlQuery1 = "UPDATE user SET aptitude=" + true;
-                            statement.executeUpdate(sqlQuery1);
-                            statement.close();
-                            return;
-                        }
-                    }
-                    else {
-                        if (!resultSet1.getBoolean("aptitude")){
-                            statement.close();
-                            return;
-                        }
-                        else {
-                            sqlQuery1 = "UPDATE user SET aptitude=" + false;
-                            statement.executeUpdate(sqlQuery1);
-                            statement.close();
-                            return;
-                        }
+            sqlQuery = "INSERT INTO game_players (idGame, playerCC, notes) VALUES ('" + idgame + "','" + cc + "','" + notes + "')";
+            statement.executeUpdate(sqlQuery);
+            String sqlQuery1 = "SELECT nCC, aptitude FROM user WHERE typeUserId=2";
+            ResultSet resultSet1 = statement.executeQuery(sqlQuery1);
+            while (resultSet1.next()) {
+                if (Objects.equals(resultSet1.getLong("nCC"), cc)) {
+                    if (Objects.equals(resultSet1.getBoolean("aptitude"), fit)) {
+                        resultSet1.close();
+                        statement.close();
+                        return;
+                    } else {
+                        sqlQuery1 = "UPDATE user SET aptitude='" + fit + "'WHERE nCC ='" + cc + "';";
+                        statement.executeUpdate(sqlQuery1);
+                        resultSet1.close();
+                        statement.close();
+                        return;
                     }
                 }
-                statement.close();
             }
+            statement.close();
         }
         catch (SQLException e){
             throw new RuntimeException();
@@ -199,14 +194,75 @@ public class Coach extends CommonFeatures{
                     return;
             }
             while(i<=playersCC.size()){
-                sqlQuery = "INSERT INTO game SET idPractice='" + idPractice + "', " +"local="+ local + "', " +
-                        "date="+ date + "', " + "startTime"+ startTime + "', " + "endTime" + endTime + "', " +"coachCC"+ coachCC;
+                sqlQuery = "INSERT INTO game (idPractice, local, date, startTime, endTime, coachCC) VALUES ('"
+                        + idPractice + "','"+ local + "','" + date + "','" + startTime + "','" + endTime + "','" + coachCC +"')";
                 statement.executeUpdate(sqlQuery);
                 i++;
             }
             statement.close();
         }catch (SQLException e){
             throw new RuntimeException();
+        }
+    }
+
+    public void InsertUsersFromTxt() throws SQLException{
+        int type=0;
+        Long nCC=0L , phoneNumber=0L;
+        String name=null, email=null, sex=null, birthDate=null, password=null, position=null, typeS;
+        boolean aptitude=true;
+        try {
+            File myObj = new File("C:\\Users\\Utilizador\\Downloads\\tests.txt");
+            Scanner myReader = new Scanner(myObj);
+            do {
+                String data = myReader.nextLine();
+                if(data.length()>1) {
+                    do{
+                        int start = data.indexOf(":");
+                        int end = data.length();
+                        String aux = data.substring(0, start);
+                        if (Objects.equals(aux, "User")) {
+                            typeS = data.substring(++start, end);
+                            //System.out.println(typeS);
+                            switch (typeS) {
+                                case "Player" -> type = 2;
+                                case "Manager" -> type = 4;
+                                case "Coach" -> type = 3;
+                                case "Doctor" -> type = 1;
+                            }
+                        } else if (Objects.equals(aux, "Name")) {
+                            name = data.substring(++start, end);
+                        } else if (Objects.equals(aux, "Email")) {
+                            email = data.substring(++start, end);
+                        } else if (Objects.equals(aux, "BirthDate")) {
+                            birthDate = data.substring(++start, end);
+                        } else if (Objects.equals(aux, "Password")) {
+                            password = data.substring(++start, end);
+                        }else if (Objects.equals(aux, "Sex")) {
+                            sex = data.substring(++start, end);
+                        }else if (Objects.equals(aux, "Phone")) {
+                            phoneNumber = Long.parseLong(data.substring(++start, end));
+                        } else if (Objects.equals(aux, "Citizen")) {
+                            nCC = Long.parseLong(data.substring(++start, end));
+                        } else if (Objects.equals(aux, "Position")) {
+                            position = data.substring(++start, end);
+                        } else if (Objects.equals(aux, "Aptitude")) {
+                            aptitude = Boolean.parseBoolean(data.substring(++start, end));
+                        }
+                        data = myReader.nextLine();
+                    }while(!Objects.equals(data, "") && myReader.hasNextLine());
+                    Manager manager = new Manager();
+                    System.out.println(nCC + name + type + email + password + sex + birthDate + phoneNumber + aptitude + position);
+                    if(type==2) {
+                        System.out.println(manager.insertUser(type, nCC, name, email, password, sex, birthDate, phoneNumber, aptitude, 200F, 100F, position));
+                        cc.add(nCC);
+                    }else
+                        System.out.println(manager.insertUser(type, nCC, name, email, password, sex, birthDate, phoneNumber, null,Float.NaN,Float.NaN,""));
+                }
+            }while (myReader.hasNextLine());
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
         }
     }
 }

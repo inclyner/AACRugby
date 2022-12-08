@@ -141,7 +141,7 @@ public class Manager extends CommonFeatures {
 
         try {
             Statement statement = getDbConnection().createStatement();
-            String sqlQuery = "INSERT INTO user VALUES ("+nCC+",'"+"false"+"','"+email.toLowerCase()+"','"+name.toLowerCase()+"','"+pass.toLowerCase()+"',"+birthDate+",'"+sex.toLowerCase()+"',"+phoneNumber+",'"+aptitude+"','"+position+"',"+weight+","+height+",'"+type+"')";
+            String sqlQuery = "INSERT INTO user VALUES ("+nCC+",'"+"false"+"','"+email.toLowerCase()+"','"+name.toLowerCase()+"','"+pass.toLowerCase()+"','"+birthDate+"','"+sex.toLowerCase()+"',"+phoneNumber+",'"+aptitude+"','"+position+"',"+weight+","+height+",'"+type+"')";
             System.out.println(sqlQuery);
             statement.executeUpdate(sqlQuery);
             statement.close();
