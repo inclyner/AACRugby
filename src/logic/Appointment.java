@@ -5,10 +5,13 @@ public class Appointment {
     private String initialTime;
     private String finalTime;
 
-    public Appointment(Long nCCAuthor, String initialTime, String finalTime) {
+    private String date;
+
+    public Appointment(Long nCCAuthor, String initialTime, String finalTime, String date) {
         this.nCCAuthor = nCCAuthor;
         this.initialTime = initialTime;
         this.finalTime = finalTime;
+        this.date = date;
     }
 
     public void setFinalTime(String finalTime) {
