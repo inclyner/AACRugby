@@ -66,7 +66,6 @@ public class Manager extends CommonFeatures {
         Pattern letter = Pattern.compile("[a-zA-z]");
         Pattern digit = Pattern.compile("[0-9]");
 
-
         Matcher hasSpecial = special.matcher(name);
         Matcher hasDigits = digit.matcher(name);
 
@@ -105,22 +104,22 @@ public class Manager extends CommonFeatures {
         if (hasLetters.find() || hasSpecial.find()) return "Invalid Citizen Card";
 
         //Check height
-        if (!height.isNaN()) {
+        if (height!=null) {
             //if(height.toString().length()!=3) return "Please Insert a valid height";
              if(height > 300.0) return "There's no one that high";
             else if(height<100.0) return "We don't want anyone that small";
         }
 
         //Check weight
-        if (!weight.isNaN()) {
+        if (height!=null) {
            // if(weight.toString().length()!=3) return "Please Insert a valid weight";
             if(weight > 200.0) return "Weight's too high";
             else if(weight<40.0) return "Weight's too low";
         }
         //Check Unique Values
 
-        if (height.isNaN()) height=null;
-        if(weight.isNaN()) weight=null;
+        //if (height.isNaN()) height=null;
+        //if(weight.isNaN()) weight=null;
         try {
             Statement statement = getDbConnection().createStatement();
             String query = "SELECT nCC, email from user";

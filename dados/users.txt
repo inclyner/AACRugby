@@ -1,0 +1,274 @@
+User:Player
+Sex:Male
+Name:Camilo Tavares
+Email:camilotavares@acc.com
+BirthDate:21-02-1989
+Password:n+#d6D
+Phone:289037995
+Position:Full-Back
+Aptitude:True
+Citizen:585005353
+
+User:Player
+Sex:Male
+Name:Bernardo Manuel
+Email:bernardomanuel@acc.com
+BirthDate:12-04-1989
+Password:2v+5NI
+Phone:289845087
+Position:Scrum-half
+Aptitude:True
+Citizen:412191513
+
+User:Player
+Sex:Male
+Name:Rodrigo Castro
+Email:rodrigocastro@acc.com
+BirthDate:03-01-1995
+Password:!F1e^xb
+Phone:289301873
+Position:Centre
+Aptitude:True
+Citizen:837587143
+
+User:Player
+Sex:Male
+Name:Francisco Amélio
+Email:franciscoamelio@acc.com
+BirthDate:01-12-1984
+Password:@fY*CR2
+Phone:289856078
+Position:Wing
+Aptitude:False
+Citizen:451707431
+
+User:Player
+Sex:Male
+Name:João Antunes
+Email:joaoantunes@acc.com
+BirthDate:21-02-1999
+Password:M235!!df
+Phone:946528348
+Position:Full-Back
+Aptitude:True
+Citizen:255345124
+
+User:Player
+Sex:Male
+Name:Mário Costa
+Email:mariocosta@acc.com
+BirthDate:12-04-1989
+Password:234K#ll
+Phone:921789067
+Position:Scrum-half
+Aptitude:True
+Citizen:234567985
+
+User:Player
+Sex:Male
+Name:Vítor Santos
+Email:vitorsantos@acc.com
+BirthDate:03-01-1995
+Password:!fgJ4
+Phone:927393746
+Position:Centre
+Aptitude:True
+Citizen:345634223
+
+User:Player
+Sex:Male
+Name:Bruno Rodrigues
+Email:brunorodrigues@acc.com
+BirthDate:01-12-1984
+Password:F45%%ma
+Phone:911567345
+Position:Wing
+Aptitude:False
+Citizen:456753984
+
+User:Player
+Sex:Male
+Name:Rodrigo Fernandes
+Email:rodrigofernandes@acc.com
+BirthDate:01-02-1993
+Password:d+a*4w
+Phone:239748120
+Position:Hooker
+Aptitude:True
+Citizen:987654904
+
+User:Player
+Sex:Male
+Name:José Maria
+Email:josemaria@acc.com
+BirthDate:24-08-1981
+Password:75hL(q
+Phone:239047128
+Position:Fly-half
+Aptitude:True
+Citizen:876432894
+
+User:Player
+Sex:Male
+Name:Francisco Nascimento
+Email:francisconascimento@acc.com
+BirthDate:22-07-1991
+Password:3.g5M2!
+Phone:927393746
+Position:Centre
+Aptitude:True
+Citizen:654321894
+
+User:Player
+Sex:Male
+Name:Carlos Correia
+Email:carloscorreia@acc.com
+BirthDate:11-05-1974
+Password:SH67.ms!
+Phone:239784517
+Position:Wing
+Aptitude:True
+Citizen:785345904
+
+User:Player
+Sex:Male
+Name:Adriel Cunha
+Email:adrielcunha@acc.com
+BirthDate:26-02-1999
+Password:MEXd!1k
+Phone:289697411
+Position:Full-Back
+Aptitude:True
+Citizen:525279014
+
+User:Player
+Sex:Male
+Name:Mário Costa
+Email:mariocosta@acc.com
+BirthDate:12-04-1989
+Password:U)&s99
+Phone:289845087
+Position:Scrum-half
+Aptitude:True
+Citizen:231108574
+
+User:Player
+Sex:Male
+Name:Carlos Carrilho
+Email:carloscarrilho@acc.com
+BirthDate:11-11-1991
+Password:WXb&6V
+Phone:289301873
+Position:Centre
+Aptitude:True
+Citizen:941824054
+
+User:Player
+Sex:Male
+Name:Dinis Durão
+Email:dinisdurao@acc.com
+BirthDate:13-06-1984
+Password:2KVt*I
+Phone:289856078
+Position:Wing
+Aptitude:False
+Citizen:967320215
+
+User:Player
+Sex:Male
+Name:Leonardo Fagundes
+Email:leonardofagundes@acc.com
+BirthDate:16-11-1989
+Password:Ed*p99
+Phone:289653250
+Position:Hooker
+Aptitude:True
+Citizen:100257235
+
+User:Player
+Sex:Male
+Name:Gonçalo Sousa
+Email:goncalosousa@acc.com
+BirthDate:24-09-1987
+Password:%&TsM2
+Phone:289643581
+Position:Fly-half
+Aptitude:True
+Citizen:305796965
+
+User:Player
+Sex:Male
+Name:Manuel Carvalho
+Email:manuelcarvalho@acc.com
+BirthDate:24-01-1994
+Password:5!s3da
+Phone:289709254
+Position:Centre
+Aptitude:True
+Citizen:286752125
+
+User:Player
+Sex:Male
+Name:João Andrade
+Email:joaoandrade@acc.com
+BirthDate:16-05-1978
+Password:3s#.aG
+Phone:289637406
+Position:Wing
+Aptitude:True
+Citizen:868119635
+
+User:Doctor
+Sex:Female
+Name:Maria Amélia
+Email:mariaamelia@acc.com
+BirthDate:03-12-1990
+Password:DY5%xV
+Phone:289858764
+Citizen:129136635
+
+User:Doctor
+Sex:Female
+Name:Joana Andrade
+Email:joanaandrade@acc.com
+BirthDate:16-05-1978
+Password:3d@BZ8
+Phone:289004943
+Citizen:857269735
+
+User:Coach
+Sex:Female
+Name:Camila Santos
+Email:camilasantos@acc.com
+BirthDate:03-08-1999
+Password:#4&vb6
+Phone:289628823
+Citizen:770909795
+
+User:Coach
+Sex:Female
+Name:Joana Andrade
+Email:joanaandrade@acc.com
+BirthDate:16-03-2000
+Password:##F%5n
+Phone:289264632
+Citizen:42102385
+
+User:Manager
+Sex:Male
+Name:Caetano Barbosa
+Email:caetanobarbosa@acc.com
+BirthDate:16‎-12-2001
+Password:E(NvQs1
+Phone:289270938
+Citizen:386862555
+
+User:Manager
+Sex:Female
+Name:Maria João
+Email:mariajoao@acc.com
+BirthDate:03-12-1990
+Password:qbh5zD!
+Phone:289569976
+Citizen:123456789
+
