@@ -60,21 +60,25 @@ public abstract class CommonFeatures {
         return email;
     }
 
-    public ArrayList<MedicalAppointment> getAppointments() throws SQLException {
-        ArrayList<MedicalAppointment> appointments = new ArrayList<>();
-        Statement statement = getDbConnection().createStatement();
-        String query = "SELECT * FROM medicalAppointment";
-        ResultSet resultSet = statement.executeQuery(query);
-        while(resultSet.next()){
-            String initialTime = resultSet.getString("startTime");
-            String finalTime = resultSet.getString("endTime");
-            String date = resultSet.getString("date");
-            Long playerCC = resultSet.getLong("playerCC");
-            Long doctorCC = resultSet.getLong("doctorCC");
-            appointments.add(new MedicalAppointment(doctorCC, initialTime, finalTime, date, playerCC));
+    public ArrayList<MedicalAppointment> getAppointments(){
+        try {
+            ArrayList<MedicalAppointment> appointments = new ArrayList<>();
+            Statement statement = getDbConnection().createStatement();
+            String query = "SELECT * FROM medicalAppointment";
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                String initialTime = resultSet.getString("startTime");
+                String finalTime = resultSet.getString("endTime");
+                String date = resultSet.getString("date");
+                Long playerCC = resultSet.getLong("playerCC");
+                Long doctorCC = resultSet.getLong("doctorCC");
+                appointments.add(new MedicalAppointment(doctorCC, initialTime, finalTime, date, playerCC));
+            }
+            closeDb();
+            return appointments;
+        }catch (SQLException e){
+            throw new RuntimeException();
         }
-        closeDb();
-        return appointments;
 
     }
 

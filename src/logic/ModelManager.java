@@ -79,6 +79,22 @@ public class ModelManager {
         return  manager1.getDoctors();
     }
 
+    public ArrayList<Game> getAllGames(){
+        Manager manager1 = new Manager();
+        return  manager1.getGames();
+    }
+
+
+    public ArrayList<Practise> getAllPractise(){
+        Manager manager1 = new Manager();
+        return  manager1.getPractise();
+    }
+
+    public ArrayList<MedicalAppointment> getAllAppointments(){
+        Manager manager1 = new Manager();
+        return manager1.getAppointments();
+    }
+
     public String getNameUser(String email) throws SQLException {
         File f = new File("bd\\AACRugby.db");
         String DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
