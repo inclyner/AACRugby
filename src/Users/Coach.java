@@ -1,6 +1,7 @@
 package Users;
 
 import logic.Game;
+import logic.Practise;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -185,7 +186,7 @@ public class Coach extends CommonFeatures {
         }
     }
 
-    public String ScheduleTrainingSession(ArrayList<Long>playersCC, String local, String date, String startTime, String endTime) throws SQLException, ParseException {
+    public String scheduleTrainingSession(ArrayList<Long>playersCC, String local, String date, String startTime, String endTime) throws SQLException, ParseException {
         int i=0;
         Calendar cal = Calendar.getInstance();
         cal.getTime();
@@ -224,7 +225,7 @@ public class Coach extends CommonFeatures {
             Date date1 = new SimpleDateFormat("dd-MM-yyyy").parse(game.getDate());
             if(practiseDate==date1 && getnCC(this.getEmail()).equals(game.getnCCAuthor())){
                 if (begin.isAfter(initialTime) || end.isBefore(finalTime))
-                    return "You are busy, choose another time";
+                    return "You are busy with a game, choose another time";
             }
             for(Long p: playersCC){
                 if(game.getPlayers().contains(p)){
@@ -237,17 +238,33 @@ public class Coach extends CommonFeatures {
 
             }
 
-        //for()
-
-
+        for(Practise practise: getPractise()){
+            if(getPractise().size()==0) break;
+            LocalTime begin = LocalTime.parse(practise.getInitialTime());
+            LocalTime end = LocalTime.parse(practise.getFinalTime());
+            Date date1 = new SimpleDateFormat("dd-MM-yyyy").parse(practise.getDate());
+            if(practiseDate==date1 && getnCC(this.getEmail()).equals(practise.getnCCAuthor())){
+                if (begin.isAfter(initialTime) || end.isBefore(finalTime))
+                    return "You are busy with a practise, choose another time";
+            }
+            for(Long p: playersCC){
+                if(practise.getPlayers().contains(p)){
+                    if(date1==practiseDate) {
+                        if (begin.isAfter(initialTime) || end.isBefore(finalTime))
+                            playersCC.remove(p);
+                    }
+                }
+            }
+        }
         try {
             Statement statement = getDbConnection().createStatement();
-            while(i<=playersCC.size()){
-                String sqlQuery= "INSERT INTO practise VALUES(NULL,'"+local+"','"+date+"','"+startTime+"','"+endTime+"','"+getnCC(getEmail())+"')";
-                statement.executeUpdate(sqlQuery);
-                i++;
-            }
-            statement.close();
+            String sqlQuery= "INSERT INTO practise VALUES(NULL,'"+local+"','"+date+"','"+startTime+"','"+endTime+"','"+getnCC(getEmail())+"')";
+            statement.executeUpdate(sqlQuery);
+            sqlQuery = "SELECT id from game WHERE local='"+"local' " + "AND date='"+"date'";
+            ResultSet resultSet1 = statement.executeQuery(sqlQuery);
+            int idGame = resultSet.getInt("id");
+            for(Long p: playersCC)
+                sqlQuery = "INSERT INTO game_player VALUES("+idGame+","+p+","+"NULL"+")";
         }catch (SQLException e){
             throw new RuntimeException();
         }

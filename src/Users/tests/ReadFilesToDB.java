@@ -1,5 +1,6 @@
 package Users.tests;
 
+import Users.Coach;
 import Users.CommonFeatures;
 import Users.Manager;
 
@@ -9,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -136,6 +138,7 @@ public class ReadFilesToDB {
     public void insertPractise() throws SQLException{
 
         long coachCC = 0;
+        Coach coach = new Coach("camilasantos@acc.com");
         String sqlQuery,date = null, equipaAdv=null, horaInicial=null, horaFinal=null, local=null;
         Connection dbConn = connectDB();
         try {
@@ -168,10 +171,10 @@ public class ReadFilesToDB {
                     }
                 } while(!Objects.equals(data, "") && myReader.hasNextLine());
                 System.out.println(date+"\t"+equipaAdv+"\t"+horaInicial+"\t"+horaFinal+"\t"+local+"\t"+coachCC);
-                Statement statement = dbConn.createStatement();
-                sqlQuery= "INSERT INTO game VALUES(NULL,'"+date+"','"+equipaAdv+"','"+horaInicial+"','"+horaFinal+"','"+local+"','"+coachCC+"')";
-                statement.executeUpdate(sqlQuery);
-                statement.close();
+                ArrayList<Long> playersCC = new ArrayList<>();
+                //playersCC.addAll(())
+                //System.out.println(coach.scheduleTrainingSession(type, local, date, horaFinal, horaFinal));
+                //statement.close();
             }
             myReader.close();
         } catch (FileNotFoundException e) {
