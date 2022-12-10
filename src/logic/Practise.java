@@ -11,4 +11,8 @@ public class Practise extends Appointment{
         super(nameAuthor, initialTime, finalTime, date);
         this.local = local;
     }
+
+    public ArrayList<Long> getPlayers() {
+        return players;
+    }
 }

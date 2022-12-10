@@ -14,6 +14,26 @@ public class Appointment {
         this.date = date;
     }
 
+    public Long getnCCAuthor() {
+        return nCCAuthor;
+    }
+
+    public void setnCCAuthor(Long nCCAuthor) {
+        this.nCCAuthor = nCCAuthor;
+    }
+
+    public void setInitialTime(String initialTime) {
+        this.initialTime = initialTime;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     public void setFinalTime(String finalTime) {
         this.finalTime = finalTime;
     }
