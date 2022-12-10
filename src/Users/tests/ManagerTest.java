@@ -12,7 +12,7 @@ import static org.testng.AssertJUnit.assertTrue;
 
 class ManagerTest {
 
-
+/*
     // delete users tests
     @Test
     void testDeleteUser_userExists() throws Exception {
@@ -268,7 +268,7 @@ class ManagerTest {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
 }
 
 

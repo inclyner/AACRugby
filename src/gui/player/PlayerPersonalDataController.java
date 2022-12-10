@@ -68,6 +68,26 @@ public class PlayerPersonalDataController {
     }
 
     @FXML
+    void onSelectTypeOfData(ActionEvent event) {
+
+        try{
+            Main main = new Main();
+            String optionSelected = cmbPersonalData.getSelectionModel().getSelectedItem();
+
+            if(optionSelected.equals("Personal Data")){
+                main.changeScene("player\\PlayerPersonalDataView.fxml");
+            } else if(optionSelected.equals("Notes")){
+                main.changeScene("player\\PlayerNotesView.fxml");
+            } else if(optionSelected.equals("Diet Information")){
+                main.changeScene("player\\PlayerDietView.fxml");
+            }
+
+        } catch (SQLException e){
+            System.err.println(e);
+        }
+    }
+
+    @FXML
     void onClivkBtnSave(ActionEvent event) {
 
     }

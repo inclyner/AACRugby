@@ -34,10 +34,10 @@ public class LoginController {
             Main main = new Main();
             //System.out.println("Sucesso");
 
-            //main.changeScene("player\\playerMainView.fxml");
+            //main.changeScene("manager\\ManagerMainView.fxml");
 
             if(main.getModelManager().login(tfEmail.getText().toString(), password.getText().toString())){
-                int typeOfUser = main.getModelManager().checksTypeUser(tfEmail.getText(),password.getText());
+                int typeOfUser = main.getModelManager().checksTypeUser(tfEmail.getText());
                 // doctor
                 if(typeOfUser == 1) {
                     main.changeScene("manager\\ManagerMainView.fxml");

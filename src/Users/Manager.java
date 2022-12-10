@@ -19,11 +19,33 @@ public class Manager extends CommonFeatures {
 
     public Manager() {}
 
-    private String approveCellPhone(Long phoneNumber){
+    private String approveWeight(String weight){
         Pattern special = Pattern.compile("[!@#$%&*()_+=`£@;,//<>§€^ºª|<>?{}«»´\\[\\]~-]");
         Pattern letter = Pattern.compile("[a-zA-z]");
 
-        if (phoneNumber.toString().length() != 9) return "Incomplete Phone Number";
+        if (weight.length() > 3 || weight.length()<1) return "Invalid Weight";
+        Matcher hasSpecial = special.matcher(weight);
+        Matcher hasLetters = letter.matcher(weight);
+        if (hasLetters.find() || hasSpecial.find()) return "Invalid Weight";
+
+        else return null;
+    }
+    private String approveHeight(String height){
+        Pattern special = Pattern.compile("[!@#$%&*()_+=`£@;,//<>§€^ºª|<>?{}«»´\\[\\]~-]");
+        Pattern letter = Pattern.compile("[a-zA-z]");
+
+        if (height.length() > 3 || height.length()<1) return "Invalid Height";
+        Matcher hasSpecial = special.matcher(height);
+        Matcher hasLetters = letter.matcher(height);
+        if (hasLetters.find() || hasSpecial.find()) return "Invalid Height";
+
+        else return null;
+    }
+    private String approveCellPhone(String phoneNumber){
+        Pattern special = Pattern.compile("[!@#$%&*()_+=`£@;,//<>§€^ºª|<>?{}«»´\\[\\]~-]");
+        Pattern letter = Pattern.compile("[a-zA-z]");
+
+        if (phoneNumber.length() != 9) return "Incomplete Phone Number";
         Matcher hasSpecial = special.matcher(phoneNumber.toString());
         Matcher hasLetters = letter.matcher(phoneNumber.toString());
         if (hasLetters.find() || hasSpecial.find()) return "Invalid Phone Number";
@@ -54,7 +76,10 @@ public class Manager extends CommonFeatures {
         }
     }
 
-    public String insertUser(int type, Long nCC, String name, String email, String pass, String sex, String birthDate, Long phoneNumber, Boolean aptitude, Float height, Float weight, String position) {
+    public String insertUser(int type, String nCC, String name, String email, String pass, String sex, String birthDate, String phoneNumber, String aptitude, String height, String weight, String position) {
+        Long cartao=null, phone=null;
+        Float peso =null, altura =null;
+
         /*try {
             Connection db = CommonFeatures.getDbConnection();
             if(db==null) return "Daah";
@@ -90,36 +115,35 @@ public class Manager extends CommonFeatures {
         //Check email
         email = email.replaceAll("\\s", "");
         checkEmail(email);
-
-        //nao verifica que o email existe mesmo, mas a sintaxe está correta
-
         //Check phoneNumber
         if(approveCellPhone(phoneNumber)!=null) return approveCellPhone(phoneNumber);
         if(!Objects.equals(checkEmail(email), "")) return checkEmail(email);
 
+        phone = Long.parseLong(phoneNumber);
         //Check nCC
-        if (nCC.toString().length() != 9) return "Incomplete Citizen Card";
-        hasSpecial = special.matcher(nCC.toString());
-        Matcher hasLetters = letter.matcher(nCC.toString());
+        if (nCC.length() != 9) return "Incomplete Citizen Card";
+        hasSpecial = special.matcher(nCC);
+        Matcher hasLetters = letter.matcher(nCC);
         if (hasLetters.find() || hasSpecial.find()) return "Invalid Citizen Card";
 
+        cartao = Long.parseLong(nCC);
         //Check height
         if (height!=null) {
-            //if(height.toString().length()!=3) return "Please Insert a valid height";
-             if(height > 300.0) return "There's no one that high";
-            else if(height<100.0) return "We don't want anyone that small";
+            if(approveWeight(height)!=null) return approveWeight(height);
+            altura = Float.parseFloat(height);
+             if(altura > 300.0) return "There's no one that high";
+            else if(altura<100.0) return "We don't want anyone that small";
         }
 
         //Check weight
-        if (height!=null) {
-           // if(weight.toString().length()!=3) return "Please Insert a valid weight";
-            if(weight > 200.0) return "Weight's too high";
-            else if(weight<40.0) return "Weight's too low";
+        if (weight!=null) {
+        if(approveWeight(weight)!=null) return approveWeight(weight);
+        peso = Float.parseFloat(weight);
+        if(peso > 200.0) return "Weight's too high";
+            else if(peso<40.0) return "Weight's too low";
         }
         //Check Unique Values
 
-        //if (height.isNaN()) height=null;
-        //if(weight.isNaN()) weight=null;
         try {
             Statement statement = getDbConnection().createStatement();
             String query = "SELECT nCC, email from user";
@@ -127,7 +151,7 @@ public class Manager extends CommonFeatures {
             System.out.println();
             while (resultSet.next() && terminate.equals("")) {
                 Long nCartao = resultSet.getLong("nCC");
-                if (nCartao.equals(nCC)) terminate="Citizen Card Number Already Exists";
+                if (nCartao.equals(cartao)) terminate="Citizen Card Number Already Exists";
                 String e = resultSet.getString("email");
                 if (email.equals(e)) terminate="Email Already Exists";
             }
@@ -140,7 +164,7 @@ public class Manager extends CommonFeatures {
 
         try {
             Statement statement = getDbConnection().createStatement();
-            String sqlQuery = "INSERT INTO user VALUES ("+nCC+",'"+"false"+"','"+email.toLowerCase()+"','"+name.toLowerCase()+"','"+pass.toLowerCase()+"','"+birthDate+"','"+sex.toLowerCase()+"',"+phoneNumber+",'"+aptitude+"','"+position+"',"+weight+","+height+",'"+type+"')";
+            String sqlQuery = "INSERT INTO user VALUES ("+cartao+",'"+"false"+"','"+email.toLowerCase()+"','"+name.toLowerCase()+"','"+pass.toLowerCase()+"','"+birthDate+"','"+sex.toLowerCase()+"',"+phone+",'"+aptitude+"','"+position+"',"+peso+","+altura+",'"+type+"')";
             System.out.println(sqlQuery);
             statement.executeUpdate(sqlQuery);
             statement.close();
@@ -204,7 +228,7 @@ public class Manager extends CommonFeatures {
             Long cc = resultSet.getLong("playerCC");
             if(cc == null) return "Player not found";
             if (bool) {
-                if (approveCellPhone(Long.valueOf(newInfo))==null) {
+                if (approveCellPhone(newInfo)==null) {
                     sqlQuery="UPDATE user SET phoneNumber = '" + newInfo + "' WHERE nCC=" + cc+"";
                 } else if (Objects.equals(checkEmail(newInfo), "")) {
                     sqlQuery = "UPDATE user SET email = '" + newInfo + "' WHERE nCC=" + cc +"";

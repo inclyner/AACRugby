@@ -80,7 +80,7 @@ public class ReadFilesToDB {
                         }
                     } while(!Objects.equals(data, "") && myReader.hasNextLine());
                     System.out.println(nCC + "    "+ name +"    "+ type +"    "+ email +"    "+ password +"    "+ sex + "    "+birthDate + "    "+phoneNumber+ "    "+ aptitude + "    "+position);
-                    System.out.println(manager.insertUser(type, nCC, name, email, password, sex, birthDate, phoneNumber, aptitude, height, weight, position));
+                    //System.out.println(manager.insertUser(type, nCC, name, email, password, sex, birthDate, phoneNumber, aptitude, height, weight, position));
 
             }
             myReader.close();

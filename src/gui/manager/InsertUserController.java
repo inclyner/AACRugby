@@ -54,7 +54,7 @@ public class InsertUserController {
     @FXML
     private TextField tfEmail;
     @FXML
-    private TextField tfHeight;
+    private TextField tfHeight=null;
     @FXML
     private TextField tfName;
     @FXML
@@ -62,7 +62,9 @@ public class InsertUserController {
     @FXML
     private TextField tfPhoneNumber;
     @FXML
-    private TextField tfWeight;
+    private TextField tfWeight=null;
+
+    private String sexSelected;
     private ObservableList<String> typeOfUsersList = FXCollections.observableArrayList(
             "Coach","Player","Doctor");
     private ObservableList<String> AptitudeList = FXCollections.observableArrayList(
@@ -96,7 +98,8 @@ public class InsertUserController {
                 tittle = "Missing data!";
                 message = "You must fill all the required fields";
 
-            } else if(cmbTypeUser.getSelectionModel().getSelectedItem().equals("Player") &&
+            }
+            else if(cmbTypeUser.getSelectionModel().getSelectedItem().equals("Player") &&
                     (tfHeight.getText().isEmpty() || tfWeight.getText().isEmpty() ||
                             cmbPosition.getSelectionModel().getSelectedItem() == null ||
                             cmbAptitude.getSelectionModel().getSelectedItem() == null))
@@ -117,18 +120,20 @@ public class InsertUserController {
                 message = "The user must be at least 15 years old!";
             }
 
+
             if(error){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle(tittle);
                 alert.setContentText(message);
                 alert.showAndWait();
             } else {
-                // TODO: metodo no model manager para criar user
+                if(chbFemale.isSelected())
+                    sexSelected= "Female";
+                else
+                    sexSelected="Male";
+                main.getModelManager().insertUser(cmbTypeUser.getSelectionModel().getSelectedIndex(), tfCitizenCardNumber.getText(), tfName.getText(), tfEmail.getText() ,tfPassword.getText(), sexSelected, tfBirthDate.toString(), tfPhoneNumber.getText(), cmbAptitude.getSelectionModel().getSelectedItem(), tfHeight.getText(), tfWeight.getText(), cmbPosition.getSelectionModel().getSelectedItem());
                 //main.changeScene("manager\\InsertUserView.fxml");
             }
-
-
-
 
 
 

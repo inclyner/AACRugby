@@ -1,5 +1,6 @@
 package gui.manager;
 
+import Users.Player;
 import gui.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -98,16 +99,30 @@ public class DeleteUserController {
     }
 
     private ObservableList<TableDeleteSetter> getTable() {
-        ObservableList<TableDeleteSetter> tabela = FXCollections.observableArrayList();
-        for (int i = 0; i < 20; i++) {
+        try {
+            Main main = new Main();
+            ArrayList<Player> players = main.getModelManager().getAllPlayer();
+            ObservableList<TableDeleteSetter> tabela = FXCollections.observableArrayList();
+            System.out.println(players);
+            for(int i = 0; i < 20; i++){
+                TableDeleteSetter tab = new TableDeleteSetter("asdasd","Player","asdasdasd");
+                tabela.add(tab);
+            }
 
-            CheckBox checkBox = new CheckBox();
 
-            TableDeleteSetter data = new TableDeleteSetter("Rodrigo", "Rodrigo","rodrigo@aac.pt");
-            tabela.add(data);
+            /*
+            for (int i = 0; i < 20; i++) {
+
+                CheckBox checkBox = new CheckBox();
+
+                TableDeleteSetter data = new TableDeleteSetter("2" , "Rodrigo", "rodrigo@aac.pt");
+                tabela.add(data);
+            }*/
+
+            return tabela;
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-
-        return tabela;
     }
 
     private boolean isAnyUserSelected(){

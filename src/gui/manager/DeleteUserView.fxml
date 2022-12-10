@@ -9,34 +9,35 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="476.0" prefWidth="608.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.manager.DeleteUserController">
-   <children>
-      <TableView fx:id="deleteTableView" layoutX="52.0" layoutY="90.0" prefHeight="276.0" prefWidth="503.0" style="-fx-background-color: rgba(193,166,112,255);">
-        <columns>
+    <children>
+    <TableView fx:id="deleteTableView" layoutX="52.0" layoutY="90.0" prefHeight="276.0" prefWidth="503.0" style="-fx-background-color: rgba(193,166,112,255);">
+      <columns>
           <TableColumn fx:id="name" prefWidth="170.0" text="Name" />
-            <TableColumn fx:id="email" prefWidth="162.0" text="Email" />
+          <TableColumn fx:id="email" prefWidth="162.0" text="Email" />
           <TableColumn fx:id="typeOfUser" prefWidth="92.0" text="Type Of User" />
-            <TableColumn fx:id="checkBox" prefWidth="76.0" text="Delete" />
-        </columns>
-      </TableView>
-      <Button fx:id="btnBack" layoutX="59.0" layoutY="417.0" mnemonicParsing="false" onAction="#onBackBtnClick" prefHeight="36.0" prefWidth="61.0" style="-fx-background-color: rgba(193,166,112,255);" text="Back">
-         <font>
-            <Font size="13.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="btnSave" layoutX="511.0" layoutY="414.0" mnemonicParsing="false" onAction="#onSaveBtnClick" prefHeight="36.0" prefWidth="61.0" style="-fx-background-color: rgba(193,166,112,255);" text="Save">
-         <font>
-            <Font size="13.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor></Button>
-      <Label layoutX="45.0" layoutY="42.0" text="Delete User">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-   </children>
+          <TableColumn fx:id="checkBox" prefWidth="76.0" text="Delete" />
+      </columns>
+    </TableView>
+    <Button fx:id="btnBack" layoutX="59.0" layoutY="417.0" mnemonicParsing="false" onAction="#onBackBtnClick" prefHeight="36.0" prefWidth="61.0" style="-fx-background-color: rgba(193,166,112,255);" text="Back">
+        <font>
+          <Font size="13.0" />
+        </font>
+        <cursor>
+          <Cursor fx:constant="HAND" />
+        </cursor>
+    </Button>
+    <Button fx:id="btnSave" layoutX="507.0" layoutY="417.0" mnemonicParsing="false" onAction="#onSaveBtnClick" prefHeight="36.0" prefWidth="61.0" style="-fx-background-color: rgba(193,166,112,255);" text="Save">
+        <font>
+          <Font size="13.0" />
+        </font>
+        <cursor>
+          <Cursor fx:constant="HAND" />
+        </cursor>
+    </Button>
+    <Label layoutX="45.0" layoutY="42.0" text="Delete User">
+        <font>
+          <Font size="16.0" />
+        </font>
+    </Label>
+    </children>
 </AnchorPane>
