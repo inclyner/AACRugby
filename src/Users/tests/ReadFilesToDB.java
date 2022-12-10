@@ -12,6 +12,8 @@ import java.sql.Statement;
 import java.util.Objects;
 import java.util.Scanner;
 
+import static Users.CommonFeatures.createDb;
+
 public class ReadFilesToDB {
 
     public Connection connectDB() throws SQLException {
@@ -135,6 +137,7 @@ public class ReadFilesToDB {
 
         long coachCC = 0;
         String sqlQuery,date = null, equipaAdv=null, horaInicial=null, horaFinal=null, local=null;
+        Connection dbConn = connectDB();
         try {
             File myObj = new File("AACRugby\\dados\\games.txt");
             Scanner myReader = new Scanner(myObj);
