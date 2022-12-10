@@ -25,7 +25,7 @@ public abstract class CommonFeatures {
     
     public static Connection createDb() throws SQLException {
         //File f = new File("AACRugby.db");
-        File f = new File("AACRugby\\bd\\AACRugby.db");
+        File f = new File("bd\\AACRugby.db");
         String DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
         Connection db = DriverManager.getConnection(DATABASE_URL);
         dbConn = db;

@@ -49,7 +49,7 @@
             <Font size="13.0" />
          </font></Label>
       <DatePicker fx:id="tfBirthDate" layoutX="444.0" layoutY="93.0" onAction="#onSelectBirthDate" prefHeight="25.0" prefWidth="124.0" promptText="DD/MM/YYYY" />
-      <TextField fx:id="tfAge" layoutX="417.0" layoutY="139.0" prefHeight="25.0" prefWidth="41.0" />
+      <TextField fx:id="tfAge" editable="false" layoutX="417.0" layoutY="139.0" prefHeight="25.0" prefWidth="41.0" />
       <Label layoutX="372.0" layoutY="143.0" text="Age">
          <font>
             <Font size="13.0" />

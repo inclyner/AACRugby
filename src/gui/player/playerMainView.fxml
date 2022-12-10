@@ -10,12 +10,12 @@
 
 <AnchorPane prefHeight="476.0" prefWidth="608.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.player.PlayerMainController">
    <children>
-      <Label fx:id="lbHello" layoutX="51.0" layoutY="52.0" text="Hello ">
+      <Label fx:id="lbHello" layoutX="344.0" layoutY="52.0" text="Hello ">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cmbCalendar" layoutX="44.0" layoutY="145.0" onAction="#onSelectCmbCalendar" prefWidth="150.0" promptText="Month" />
+      <ComboBox fx:id="cmbCalendar" layoutX="26.0" layoutY="50.0" onAction="#onSelectCmbCalendar" prefWidth="150.0" promptText="Month" />
       <ImageView fx:id="imgAccount" fitHeight="71.0" fitWidth="90.0" layoutX="493.0" layoutY="29.0" onMouseClicked="#onClickAccountProfile" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@img/61205.png" />

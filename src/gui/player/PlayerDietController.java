@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextArea;
 
 import java.sql.SQLException;
 
@@ -14,8 +15,24 @@ public class PlayerDietController {
     @FXML
     private ComboBox<String> cmbPersonalData;
 
+    @FXML
+    private TextArea tfdietInformation;
+
     private ObservableList<String> optionsViewPersonalData = FXCollections.observableArrayList(
             "Personal Data","Notes","Diet Information");
+
+
+    @FXML
+    void onClickBackBtn(ActionEvent event) {
+        try {
+            Main main = new Main();
+            main.changeScene("player\\PlayerMainView.fxml");
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @FXML
     void onSelectTypeOfData(ActionEvent event) {

@@ -6,8 +6,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.Optional;
 
 public class PlayerPersonalDataController {
@@ -51,6 +54,12 @@ public class PlayerPersonalDataController {
 
     @FXML
     private TextField tfWeight;
+
+    @FXML
+    private ImageView pencilEmail;
+
+    @FXML
+    private ImageView pencilPhoneNumber;
 
     private ObservableList<String> optionsViewPersonalData = FXCollections.observableArrayList(
             "Personal Data","Notes","Diet Information");
@@ -96,6 +105,47 @@ public class PlayerPersonalDataController {
     void onSelectBirthDate(ActionEvent event) {
 
     }
+
+    @FXML
+    void onClickPencilEmail(MouseEvent event) {
+        if(!tfEmail.isEditable()){
+            tfEmail.setStyle("-fx-border-color: #c1a670");
+            tfEmail.setEditable(true);
+            tfEmail.setFocusTraversable(true);
+        } else {
+            tfEmail.setStyle("");
+            tfEmail.setEditable(false);
+            tfEmail.setFocusTraversable(false);
+        }
+    }
+
+    @FXML
+    void onClickPencilPhone(MouseEvent event) {
+        if(!tfPhoneNumber.isEditable()){
+            tfPhoneNumber.setStyle("-fx-border-color: #c1a670");
+            tfPhoneNumber.setEditable(true);
+            tfPhoneNumber.setFocusTraversable(true);
+        } else {
+            tfPhoneNumber.setStyle("");
+            tfPhoneNumber.setEditable(false);
+            tfPhoneNumber.setFocusTraversable(false);
+        }
+    }
+
+    private void setEditableColor(TextField tf){
+        ObservableList<String> styleClass = tf.getStyleClass();
+
+        if(!styleClass.contains("tfEditable")) {
+            styleClass.add("tfEditable");
+        }
+    }
+
+    private void removeEditableColor(TextField tf){
+        ObservableList<String> styleClass = tf.getStyleClass();
+        styleClass.removeAll(Collections.singleton("tfEditable"));
+    }
+
+
 
     @FXML
     void initialize() {

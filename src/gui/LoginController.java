@@ -35,6 +35,7 @@ public class LoginController {
             //System.out.println("Sucesso");
 
             //main.changeScene("manager\\ManagerMainView.fxml");
+            //main.changeScene("player\\playerMainView.fxml");
 
             if(main.getModelManager().login(tfEmail.getText().toString(), password.getText().toString())){
                 int typeOfUser = main.getModelManager().checksTypeUser(tfEmail.getText());
@@ -59,7 +60,6 @@ public class LoginController {
                 wrongLogIn.setText("You must fill all credentials");
             else
                 wrongLogIn.setText("Email or Password incorrect!");
-
 
         } catch (SQLException e){
             System.err.println(e);

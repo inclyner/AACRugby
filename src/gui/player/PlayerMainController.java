@@ -1,6 +1,8 @@
 package gui.player;
 
 import gui.Main;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -18,6 +20,9 @@ public class PlayerMainController {
 
     @FXML
     private ImageView imgAccount;
+
+    private ObservableList<String> options = FXCollections.observableArrayList(
+            "Month","Year");
 
 
     @FXML

@@ -44,7 +44,7 @@ public class ManagerMainController {
         try {
             Main main = new Main();
             main.changeScene("manager\\DeleteUserView.fxml");
-
+            //main.getModelManager().getAllPlayer();
         } catch (SQLException e){
             System.err.println(e);
         }

@@ -98,17 +98,18 @@ public class DeleteUserController {
         deleteTableView.setItems(getTable());
     }
 
+    // JÁ NAO DA ERRO
     private ObservableList<TableDeleteSetter> getTable() {
         try {
             Main main = new Main();
             ArrayList<Player> players = main.getModelManager().getAllPlayer();
             ObservableList<TableDeleteSetter> tabela = FXCollections.observableArrayList();
             System.out.println(players);
-            for(int i = 0; i < 20; i++){
-                TableDeleteSetter tab = new TableDeleteSetter("asdasd","Player","asdasdasd");
+
+            for(Player player : players){
+                TableDeleteSetter tab = new TableDeleteSetter(player.getEmail(),"Player",player.getEmail());
                 tabela.add(tab);
             }
-
 
             /*
             for (int i = 0; i < 20; i++) {
