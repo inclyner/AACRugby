@@ -2,6 +2,7 @@ package Utils;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 
 public class Utils {
 
@@ -11,5 +12,13 @@ public class Utils {
         } else {
             return 0;
         }
+    }
+
+    public static LocalDate getCurrentDate(){
+        return LocalDate.now();
+    }
+    public static LocalDate getDateAsLocalDate(String date){
+        return LocalDate.parse(date.formatted(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
     }
 }

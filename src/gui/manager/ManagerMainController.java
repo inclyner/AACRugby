@@ -4,8 +4,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import com.gluonhq.charm.glisten.control.Icon;
 import gui.Main;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
@@ -19,9 +19,6 @@ public class ManagerMainController {
     @FXML
     private URL location;
 
-    @FXML // fx:id="icon"
-    private Icon icon; // Value injected by FXMLLoader
-
     @FXML
     private Button btnAproveRequests;
 
@@ -32,23 +29,10 @@ public class ManagerMainController {
     private Button btnInsertUser;
 
     @FXML
-    void onClickAccountIcon(MouseEvent event) {
-        try {
-            Main main = new Main();
-            main.showNewWindow("UserPersonalDataView.fxml","Personal Data");
-            //main.changeScene("manager\\InsertUserView.fxml");
-
-        } catch (SQLException e){
-            System.err.println(e);
-        }
-    }
-
-    @FXML
     void onClickInsertUser(MouseEvent event) {
         try {
             Main main = new Main();
-            main.showNewWindow("manager\\InsertUserView.fxml","Insert new User");
-            //main.changeScene("manager\\InsertUserView.fxml");
+            main.changeScene("manager\\InsertUserView.fxml");
 
         } catch (SQLException e){
             System.err.println(e);
@@ -59,8 +43,18 @@ public class ManagerMainController {
     void onClickDeleteUser(MouseEvent event) {
         try {
             Main main = new Main();
-            main.showNewWindow("manager\\DeleteUserView.fxml","Delete new User");
-            //main.changeScene("manager\\DeleteUserView.fxml");
+            main.changeScene("manager\\DeleteUserView.fxml");
+
+        } catch (SQLException e){
+            System.err.println(e);
+        }
+    }
+
+    @FXML
+    void onClickApprovalRequests(ActionEvent event) {
+        try {
+            Main main = new Main();
+            main.changeScene("manager\\ApproveRequestsView.fxml");
 
         } catch (SQLException e){
             System.err.println(e);

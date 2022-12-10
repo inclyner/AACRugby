@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="476.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.player.PlayerPersonalDataController">
+   <children>
+      <ComboBox fx:id="cmbPersonalData" layoutX="34.0" layoutY="34.0" prefWidth="150.0" promptText="Personal Data" />
+      <TextField fx:id="tfName" layoutX="92.0" layoutY="84.0" prefHeight="26.0" prefWidth="144.0" />
+      <Label layoutX="28.0" layoutY="92.0" text="Name" />
+      <TextField fx:id="tfEmail" layoutX="374.0" layoutY="88.0" />
+      <Label layoutX="320.0" layoutY="92.0" text="Email" />
+      <TextField fx:id="tfCC" layoutX="441.0" layoutY="146.0" />
+      <Label layoutX="273.0" layoutY="150.0" text="Citizen Card Number - PT" />
+      <TextField fx:id="tfPhoneNumber" layoutX="119.0" layoutY="146.0" prefHeight="26.0" prefWidth="124.0" />
+      <Label layoutX="21.0" layoutY="150.0" text="Phone Number" />
+      <Label layoutX="37.0" layoutY="216.0" text="Bith Date">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="tfBirthDate" layoutX="112.0" layoutY="212.0" onAction="#onSelectBirthDate" prefHeight="25.0" prefWidth="124.0" promptText="DD/MM/YYYY" />
+      <TextField fx:id="tfAge" layoutX="348.0" layoutY="212.0" prefHeight="25.0" prefWidth="41.0" />
+      <Label layoutX="303.0" layoutY="216.0" text="Age">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfHeight" layoutX="101.0" layoutY="280.0" prefHeight="25.0" prefWidth="84.0" promptText="cm" />
+      <Label layoutX="35.0" layoutY="284.0" text="Height">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfWeight" layoutX="101.0" layoutY="332.0" prefHeight="25.0" prefWidth="84.0" promptText="kg" />
+      <Label layoutX="34.0" layoutY="336.0" text="Weight">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="252.0" layoutY="288.0" text="Aptitude">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbAptitude" layoutX="329.0" layoutY="284.0" prefHeight="25.0" prefWidth="84.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ComboBox>
+      <ComboBox fx:id="cmbPosition" layoutX="324.0" layoutY="337.0" prefWidth="150.0" visibleRowCount="4">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ComboBox>
+      <Button fx:id="btnBack" layoutX="36.0" layoutY="408.0" mnemonicParsing="false" onAction="#onClickBtnBack" prefHeight="30.0" prefWidth="59.0" style="-fx-background-color: rgba(193,166,112,255);" text="Back">
+         <font>
+            <Font size="13.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Label layoutX="253.0" layoutY="342.0" text="Position">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnSave" layoutX="474.0" layoutY="408.0" mnemonicParsing="false" onAction="#onClivkBtnSave" prefHeight="30.0" prefWidth="59.0" style="-fx-background-color: rgba(193,166,112,255);" text="Save">
+         <font>
+            <Font size="13.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
+</AnchorPane>

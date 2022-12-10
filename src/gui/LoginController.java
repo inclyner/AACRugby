@@ -33,15 +33,34 @@ public class LoginController {
         try {
             Main main = new Main();
             //System.out.println("Sucesso");
-            main.changeScene("manager\\ManagerMainView.fxml");
-            /*
+
+            //main.changeScene("player\\playerMainView.fxml");
+
             if(main.getModelManager().login(tfEmail.getText().toString(), password.getText().toString())){
-                main.changeScene("manager\\ManagerMainView.fxml");
+                int typeOfUser = main.getModelManager().checksTypeUser(tfEmail.getText(),password.getText());
+                // doctor
+                if(typeOfUser == 1) {
+                    main.changeScene("manager\\ManagerMainView.fxml");
+                }
+                // player
+                else if(typeOfUser == 2){
+                    main.changeScene("player\\playerMainView.fxml");
+                }
+                // coach
+                else if(typeOfUser == 3){
+                    main.changeScene("player\\playerMainView.fxml");
+                }
+                // manager
+                else if(typeOfUser == 4){
+                    main.changeScene("manager\\ManagerMainView.fxml");
+                }
             }
             else if(tfEmail.getText().isEmpty() || password.getText().isEmpty())
                 wrongLogIn.setText("You must fill all credentials");
             else
-                wrongLogIn.setText("Email or Password incorrect!");*/
+                wrongLogIn.setText("Email or Password incorrect!");
+
+
         } catch (SQLException e){
             System.err.println(e);
         }

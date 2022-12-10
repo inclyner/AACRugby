@@ -8,12 +8,15 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.Border;
 
 import javax.swing.text.html.Option;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
+import Utils.Utils;
 
 public class InsertUserController {
 
@@ -70,18 +73,69 @@ public class InsertUserController {
             "Hooker","Prop");
 
     @FXML
-    void onCreateBtnClick(MouseEvent event) {
+    void onCreateBtnClick(ActionEvent event) {
+        String tittle = null;
+        String message = null;
+        boolean error = false;
+        int age = 0;
+        if(!tfAge.getText().isEmpty())
+            age = Integer.parseInt(tfAge.getText());
         try {
             Main main = new Main();
-            // TODO: metodo no model manager para criar user
-            //main.changeScene("manager\\InsertUserView.fxml");
+            if(cmbTypeUser.getSelectionModel().getSelectedItem() == null ||
+                    (!chbMale.isSelected() && !chbFemale.isSelected()) ||
+                    tfName.getText().isEmpty() ||
+                    tfBirthDate.getValue() == null ||
+                    tfEmail.getText().isEmpty() ||
+                    tfAge.getText().isEmpty() ||
+                    tfCitizenCardNumber.getText().isEmpty() ||
+                    tfPhoneNumber.getText().isEmpty() ||
+                    tfPassword.getText().isEmpty()
+            ){
+                error = true;
+                tittle = "Missing data!";
+                message = "You must fill all the required fields";
+
+            } else if(cmbTypeUser.getSelectionModel().getSelectedItem().equals("Player") &&
+                    (tfHeight.getText().isEmpty() || tfWeight.getText().isEmpty() ||
+                            cmbPosition.getSelectionModel().getSelectedItem() == null ||
+                            cmbAptitude.getSelectionModel().getSelectedItem() == null))
+            {
+                error = true;
+                tittle = "Missing data!";
+                message = "You must fill all the required fields!";
+            }
+
+            else if(age < 15 ||
+                    (Utils.calculateAge(
+                            Utils.getDateAsLocalDate(String.valueOf(tfBirthDate.getValue())),
+                            Utils.getCurrentDate())
+                    ) < 15)
+            {
+                error = true;
+                tittle = "Invalid Age!";
+                message = "The user must be at least 15 years old!";
+            }
+
+            if(error){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(tittle);
+                alert.setContentText(message);
+                alert.showAndWait();
+            } else {
+                // TODO: metodo no model manager para criar user
+                //main.changeScene("manager\\InsertUserView.fxml");
+            }
+
+
+
+
+
 
         } catch (SQLException e){
-            System.err.println(e);
+            System.out.println("Aqui" + e);
         }
     }
-
-
 
     @FXML
     void OnSelectTypeOfUser(ActionEvent event) {
@@ -89,17 +143,32 @@ public class InsertUserController {
         //System.out.println(selectedType);
 
         if(selectedType.equals("Player")){
+
+            tfWeight.setDisable(false);
+            tfHeight.setDisable(false);
+            cmbAptitude.setDisable(false);
+            cmbPosition.setDisable(false);
+
             labelAptitude.setText("*");
             labelHeight.setText("*");
             labelWeight.setText("*");
             labelPosition.setText("*");
         } else {
+            tfWeight.setDisable(true);
+            tfHeight.setDisable(true);
+            cmbAptitude.setDisable(true);
+            cmbPosition.setDisable(true);
+
+            tfWeight.setText("");
+            tfHeight.setText("");
+
             labelAptitude.setText("");
             labelHeight.setText("");
             labelWeight.setText("");
             labelPosition.setText("");
         }
     }
+
 
     @FXML
     void onCancelBtnClick(ActionEvent event) {
@@ -115,7 +184,7 @@ public class InsertUserController {
             else if(option.get() == ButtonType.CANCEL)
                 return;
             else if(option.get() == ButtonType.OK)
-                main.getStage().close();
+                main.changeScene("manager\\ManagerMainView.fxml");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -138,21 +207,40 @@ public class InsertUserController {
 */
 
 
-
-
     }
+
 
     @FXML
     void onSelectBirthDate(ActionEvent event) {
-        LocalDate currentDate = LocalDate.now();
-        LocalDate birthAsDate = LocalDate.parse(tfBirthDate.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        int age = Utils.Utils.calculateAge(birthAsDate,currentDate);
+        LocalDate currentDate = Utils.getCurrentDate();
+        LocalDate birthAsDate = Utils.getDateAsLocalDate(String.valueOf(tfBirthDate.getValue()));
+        int age = Utils.calculateAge(birthAsDate,currentDate);
 
         tfAge.setText(Integer.toString(age));
     }
 
     @FXML
+    void onSelectFemaleChb(ActionEvent event) {
+        if(chbMale.isSelected()){
+            chbMale.setSelected(false);
+        }
+    }
+
+    @FXML
+    void onSelectMaleChb(ActionEvent event) {
+        if(chbFemale.isSelected()){
+            chbFemale.setSelected(false);
+        }
+    }
+
+    @FXML
     void initialize() {
+
+        tfWeight.setDisable(true);
+        tfHeight.setDisable(true);
+        cmbAptitude.setDisable(true);
+        cmbPosition.setDisable(true);
+
         cmbTypeUser.setItems(typeOfUsersList);
         cmbAptitude.setItems(AptitudeList);
         cmbPosition.setItems(PositionsList);

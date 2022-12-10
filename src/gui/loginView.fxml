@@ -10,25 +10,25 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LoginController">
+<AnchorPane prefHeight="476.0" prefWidth="608.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LoginController">
    <children>
-      <TextField fx:id="tfEmail" focusTraversable="false" layoutX="367.0" layoutY="132.0" prefHeight="26.0" prefWidth="188.0" promptText="Email">
+      <TextField fx:id="tfEmail" focusTraversable="false" layoutX="357.0" layoutY="162.0" prefHeight="26.0" prefWidth="188.0" promptText="Email">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor></TextField>
-      <Button fx:id="loginBtn" defaultButton="true" layoutX="426.0" layoutY="270.0" mnemonicParsing="false" onAction="#onClickLogin" prefHeight="34.0" prefWidth="66.0" style="-fx-background-color: rgba(193,166,112,255);" text="Login" textAlignment="CENTER">
+      <Button fx:id="loginBtn" defaultButton="true" layoutX="416.0" layoutY="300.0" mnemonicParsing="false" onAction="#onClickLogin" prefHeight="34.0" prefWidth="66.0" style="-fx-background-color: rgba(193,166,112,255);" text="Login" textAlignment="CENTER">
          <font>
             <Font size="16.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <PasswordField fx:id="password" focusTraversable="false" layoutX="365.0" layoutY="179.0" prefHeight="26.0" prefWidth="188.0" promptText="Password">
+      <PasswordField fx:id="password" focusTraversable="false" layoutX="355.0" layoutY="209.0" prefHeight="26.0" prefWidth="188.0" promptText="Password">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor></PasswordField>
       
-      <Label layoutX="106.0" layoutY="287.0" text="Rugby Team">
+      <Label layoutX="96.0" layoutY="317.0" text="Rugby Team">
          <font>
             <Font name="System Bold" size="21.0" />
          </font>
@@ -36,7 +36,7 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </Label>
-      <ImageView fx:id="imgAcademica" fitHeight="196.0" fitWidth="188.0" layoutX="74.0" layoutY="85.0" onMouseClicked="#onClickImage" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgAcademica" fitHeight="196.0" fitWidth="188.0" layoutX="64.0" layoutY="115.0" onMouseClicked="#onClickImage" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@img/Academica_logo.png" />
          </image>
@@ -44,13 +44,13 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <Label fx:id="wrongLogIn" layoutX="379.0" layoutY="104.0" prefHeight="18.0" prefWidth="176.0" textAlignment="CENTER" textFill="RED" />
-      <ImageView fitHeight="31.0" fitWidth="32.0" layoutX="321.0" layoutY="130.0" preserveRatio="true">
+      <Label fx:id="wrongLogIn" layoutX="369.0" layoutY="134.0" prefHeight="18.0" prefWidth="176.0" textAlignment="CENTER" textFill="RED" />
+      <ImageView fitHeight="31.0" fitWidth="32.0" layoutX="311.0" layoutY="160.0" preserveRatio="true">
          <image>
             <Image url="@img/email_icon.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="321.0" layoutY="179.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="311.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@img/key_icon.png" />
          </image>

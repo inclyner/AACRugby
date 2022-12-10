@@ -1,19 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.manager.DeleteUserController">
+<AnchorPane prefHeight="476.0" prefWidth="608.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.manager.DeleteUserController">
    <children>
-      <TableView layoutX="109.0" layoutY="83.0" prefHeight="203.0" prefWidth="344.0">
+      <TableView fx:id="deleteTableView" layoutX="52.0" layoutY="90.0" prefHeight="276.0" prefWidth="503.0" style="-fx-background-color: rgba(193,166,112,255);">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn fx:id="name" prefWidth="170.0" text="Name" />
+            <TableColumn fx:id="email" prefWidth="162.0" text="Email" />
+          <TableColumn fx:id="typeOfUser" prefWidth="92.0" text="Type Of User" />
+            <TableColumn fx:id="checkBox" prefWidth="76.0" text="Delete" />
         </columns>
       </TableView>
-      <Button layoutX="488.0" layoutY="346.0" mnemonicParsing="false" text="Button" />
+      <Button fx:id="btnBack" layoutX="59.0" layoutY="417.0" mnemonicParsing="false" onAction="#onBackBtnClick" prefHeight="36.0" prefWidth="61.0" style="-fx-background-color: rgba(193,166,112,255);" text="Back">
+         <font>
+            <Font size="13.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="btnSave" layoutX="511.0" layoutY="414.0" mnemonicParsing="false" onAction="#onSaveBtnClick" prefHeight="36.0" prefWidth="61.0" style="-fx-background-color: rgba(193,166,112,255);" text="Save">
+         <font>
+            <Font size="13.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Label layoutX="45.0" layoutY="42.0" text="Delete User">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

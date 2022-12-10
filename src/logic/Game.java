@@ -17,4 +17,7 @@ public class Game extends Appointment{
         this.oponentTeam = oponentTeam;
     }
 
+    public ArrayList<Long> getPlayers() {
+        return players;
+    }
 }
