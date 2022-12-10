@@ -167,7 +167,7 @@ public class ReadFilesToDB {
                 System.out.println(date+"\t"+local+"\t"+horaInicial+"\t"+horaFinal+"\t"+coachCC);
                 Long[] anotherList = new Long[] {585005353L, 412191513L,837587143L,451707431L,255345124L};
                 ArrayList<Long> playersCC = new ArrayList<>(List.of(anotherList));
-                System.out.println(coach.scheduleTrainingSession(playersCC, local, date, horaFinal, horaFinal));
+                System.out.println(coach.scheduleTrainingSession(playersCC, local, date, horaInicial, horaFinal));
             }
             myReader.close();
         } catch (FileNotFoundException e) {

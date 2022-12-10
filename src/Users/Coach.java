@@ -253,14 +253,14 @@ public class Coach extends CommonFeatures {
         try {
             String sqlQuery= "INSERT INTO practice VALUES(NULL,'"+local+"','"+date+"','"+startTime+"','"+endTime+"','"+getnCC(getEmail())+"')";
             statement.executeUpdate(sqlQuery);
-            System.out.println("idGame");
             statement.close();
 
-            sqlQuery = "SELECT id from game WHERE local='"+"local' " + "AND date='"+"date'";
+            sqlQuery = "SELECT id from practice WHERE local='"+local + "' AND date='"+date +"' AND startTime='" + startTime + "'";
+            System.out.println(sqlQuery);
             ResultSet resultSet1 = statement.executeQuery(sqlQuery);
-            int idGame = resultSet1.getInt("id");
+            int id = resultSet1.getInt("id");
             for(Long p: playersCC) {
-                sqlQuery = "INSERT INTO game_player VALUES(" + idGame + "," + p + "," + "NULL" + ")";
+                sqlQuery = "INSERT INTO practice_player VALUES(" + id + "," + p + ")";
                 statement.executeUpdate(sqlQuery);
                 statement.close();
             }

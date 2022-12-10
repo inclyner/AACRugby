@@ -19,5 +19,5 @@ coachCC;770909795
 local;Coimbra
 date;15-01-2023
 startTime;09:00
-endTime;10;30
+endTime;10:30
 coachCC;770909795

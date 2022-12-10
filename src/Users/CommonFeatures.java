@@ -130,7 +130,7 @@ public abstract class CommonFeatures {
             String sqlQuery = "SELECT playerCC from practice_player WHERE idPractice = " + idPractice+"";
             ResultSet resultSet1 = statement.executeQuery(sqlQuery);
             while (resultSet1.next()){
-                players.add(resultSet1.getLong("id"));
+                players.add(resultSet1.getLong("playerCC"));
             }
             practises.add(new Practise(nCCCoach, players,horaInicio,horaFinal,local,date));
             players.clear();
