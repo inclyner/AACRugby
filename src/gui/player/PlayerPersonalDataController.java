@@ -23,13 +23,13 @@ public class PlayerPersonalDataController {
     private Button btnSave;
 
     @FXML
-    private ComboBox<?> cmbAptitude;
+    private ComboBox<String> cmbAptitude;
 
     @FXML
     private ComboBox<String> cmbPersonalData;
 
     @FXML
-    private ComboBox<?> cmbPosition;
+    private ComboBox<String> cmbPosition;
 
     @FXML
     private TextField tfAge;
@@ -131,20 +131,6 @@ public class PlayerPersonalDataController {
             tfPhoneNumber.setFocusTraversable(false);
         }
     }
-
-    private void setEditableColor(TextField tf){
-        ObservableList<String> styleClass = tf.getStyleClass();
-
-        if(!styleClass.contains("tfEditable")) {
-            styleClass.add("tfEditable");
-        }
-    }
-
-    private void removeEditableColor(TextField tf){
-        ObservableList<String> styleClass = tf.getStyleClass();
-        styleClass.removeAll(Collections.singleton("tfEditable"));
-    }
-
 
 
     @FXML
