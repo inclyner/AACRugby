@@ -22,7 +22,7 @@ public class Doctor extends CommonFeatures{
                 long playercc = resultSet.getInt("playerCC");
                 if (Objects.equals(playercc, cc)){
                     String aux = resultSet.getString("notes");
-                    sqlQuery = "UPDATE dietNotes SET notes='" + notes.concat(aux) + "', doctorCC ='" + getnCC() + "'WHERE nCC ='" + cc + "';";
+                    sqlQuery = "UPDATE dietNotes SET notes='" + notes.concat(aux) + "', doctorCC ='" + getnCC(getEmail()) + "'WHERE nCC ='" + cc + "';";
                     statement.executeUpdate(sqlQuery);
                     resultSet.close();
                     statement.close();
@@ -30,7 +30,7 @@ public class Doctor extends CommonFeatures{
                 }
             }
             //create diet notes
-            sqlQuery = "INSERT INTO dietNotes (playerCC, doctorCC, notes) VALUES ('" + cc + "','" + getnCC() + "','" + notes + "')";
+            sqlQuery = "INSERT INTO dietNotes (playerCC, doctorCC, notes) VALUES ('" + cc + "','" + getnCC(getEmail()) + "','" + notes + "')";
             statement.executeUpdate(sqlQuery);
             resultSet.close();
             statement.close();
@@ -49,7 +49,7 @@ public class Doctor extends CommonFeatures{
                 long playercc = resultSet.getInt("playerCC");
                 if (Objects.equals(playercc, cc)){
                     String aux = resultSet.getString("notes");
-                    sqlQuery = "UPDATE medicalNotes SET notes='" + notes.concat(aux) + "', doctorCC ='" + getnCC() + "'WHERE nCC ='" + cc + "';";
+                    sqlQuery = "UPDATE medicalNotes SET notes='" + notes.concat(aux) + "', doctorCC ='" + getnCC(getEmail()) + "'WHERE nCC ='" + cc + "';";
                     statement.executeUpdate(sqlQuery);
                     resultSet.close();
                     statement.close();
@@ -57,7 +57,7 @@ public class Doctor extends CommonFeatures{
                 }
             }
             //create diet notes
-            sqlQuery = "INSERT INTO medicalNotes (playerCC, doctorCC, notes) VALUES ('" + cc + "','" + getnCC() + "','" + notes + "')";
+            sqlQuery = "INSERT INTO medicalNotes (playerCC, doctorCC, notes) VALUES ('" + cc + "','" + getnCC(getEmail()) + "','" + notes + "')";
             statement.executeUpdate(sqlQuery);
             resultSet.close();
             statement.close();
@@ -81,7 +81,7 @@ public class Doctor extends CommonFeatures{
                     return "Medical Appointment already exist";
             }
             sqlQuery = "INSERT INTO medicalAppointment (doctorCC, playerCC, date, startTime, endTime) VALUES ('"
-                        + getnCC() + "','"+ playerCC + "','" + date + "','" + startTime + "','" + endTime + "')";
+                        + getnCC(getEmail()) + "','"+ playerCC + "','" + date + "','" + startTime + "','" + endTime + "')";
             statement.executeUpdate(sqlQuery);
             statement.close();
             return "Medical Appointment insert in database";

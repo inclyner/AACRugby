@@ -51,7 +51,7 @@ public class ManagerMainController {
     }
 
     @FXML
-    void onClickApprovalRequests(ActionEvent event) {
+    void onClickApprovalRequests(MouseEvent event) {
         try {
             Main main = new Main();
             main.changeScene("manager\\ApproveRequestsView.fxml");

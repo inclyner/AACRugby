@@ -35,7 +35,7 @@ public class Main extends Application {
         stg = stage;
         stage.setResizable(false);
         Parent root = FXMLLoader.load(getClass().getResource("loginView.fxml"));
-        Scene scene = new Scene(root, 600, 400, Color.WHITE);
+        Scene scene = new Scene(root, 600, 480, Color.WHITE);
 
         stage.setScene(scene);
 
@@ -43,10 +43,6 @@ public class Main extends Application {
         stage.getIcons().add(image);
         //stage.setMinWidth(400);
         stage.show();
-    }
-
-    public Stage getStage(){
-        return stg;
     }
 
     public void changeScene(String fxml){
@@ -58,30 +54,4 @@ public class Main extends Application {
         }
     }
 
-    public void showNewWindow(String fxml, String title){
-        try{
-            Parent pane = FXMLLoader.load(getClass().getResource(fxml));
-
-            Stage stage = new Stage();
-            stg = stage;
-            stg.setScene(new Scene(pane));
-            stg.setTitle(title);
-            stg.setResizable(false);
-            stg.getIcons().add(image);
-
-            stg.show();
-
-            /*
-            stg.setScene(new Scene(pane));
-            stg.setTitle(title);
-            stg.setResizable(false);
-            stg.getIcons().add(image);
-
-
-            stg.show();*/
-
-        } catch (IOException e){
-            System.err.println(e);
-        }
-    }
 }

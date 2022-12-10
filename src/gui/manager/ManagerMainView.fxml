@@ -16,7 +16,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button fx:id="btnAproveRequests" layoutX="37.0" layoutY="115.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="152.0" style="-fx-background-color: rgba(193,166,112,255);" text="Approval Request">
+      <Button fx:id="btnAproveRequests" layoutX="37.0" layoutY="115.0" mnemonicParsing="false" onMouseClicked="#onClickApprovalRequests" prefHeight="34.0" prefWidth="152.0" style="-fx-background-color: rgba(193,166,112,255);" text="Approval Request">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
@@ -24,14 +24,6 @@
          <image>
             <Image url="@img/Logo-AACRugby.png" />
          </image>
-      </ImageView>
-      <ImageView fitHeight="63.0" fitWidth="68.0" layoutX="518.0" layoutY="13.0" onMouseClicked="#onClickAccountIcon" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@img/61205.png" />
-         </image>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
       </ImageView>
    </children>
 </AnchorPane>
