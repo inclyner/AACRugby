@@ -2,6 +2,7 @@ package Users;
 
 import logic.Appointment;
 import logic.Game;
+import logic.Practise;
 
 import java.io.File;
 import java.sql.*;
@@ -98,6 +99,82 @@ public abstract class CommonFeatures {
                 players.clear();
             }
             return games;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<Practise> getPractise(){
+    ArrayList<Practise> practises = new ArrayList<>();
+    ArrayList<Long> players = new ArrayList<>();
+
+        try {
+        Statement statement = getDbConnection().createStatement();
+        String query = "SELECT * from practice";
+        ResultSet resultSet = statement.executeQuery(query);
+        while (resultSet.next()){
+            int idPractice = resultSet.getInt("id");
+            String date = resultSet.getString("date");
+            String horaInicio = resultSet.getString("startTime");
+            String horaFinal = resultSet.getString("endTime");
+            String local = resultSet.getString("local");
+            Long nCCCoach = resultSet.getLong("coachCC");
+
+            String sqlQuery = "SELECT playerCC from practice_player WHERE idPractice = " + idPractice+"";
+            ResultSet resultSet1 = statement.executeQuery(sqlQuery);
+            while (resultSet1.next()){
+                players.add(resultSet1.getLong("id"));
+            }
+            practises.add(new Practise(nCCCoach, players,horaInicio,horaFinal,local,date));
+            players.clear();
+        }
+        return practises;
+
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
+}
+    public ArrayList<Player> getPlayers() {
+        ArrayList<Player> players = new ArrayList<>();
+        try {
+            Statement statement = getDbConnection().createStatement();
+            String query = "SELECT * from user WHERE typeUserId=2";
+            ResultSet resultSet = statement.executeQuery(query);
+            Long nCCPlayer = resultSet.getLong("nCC");
+            String name = resultSet.getString("name");
+            String email = resultSet.getString("email");
+            String sex = resultSet.getString("sex");
+            String birthDate = resultSet.getString("birthDate");
+            Long phoneNumber = resultSet.getLong("phoneNumber");
+            while (resultSet.next()) {
+                players.add(new Player(nCCPlayer, name, email, sex, birthDate, phoneNumber));
+            }
+            return players;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public ArrayList<Player> getPlayersAvailable() {
+        ArrayList<Player> players = new ArrayList<>();
+        try {
+            Statement statement = getDbConnection().createStatement();
+            String query = "SELECT * from user WHERE typeUserId=2";
+            ResultSet resultSet = statement.executeQuery(query);
+            Long nCCPlayer = resultSet.getLong("nCC");
+            String name = resultSet.getString("name");
+            String email = resultSet.getString("email");
+            String sex = resultSet.getString("sex");
+            String birthDate = resultSet.getString("birthDate");
+            Long phoneNumber = resultSet.getLong("phoneNumber");
+            Boolean aptitude = resultSet.getBoolean("aptitude");
+            while (resultSet.next()) {
+                if(aptitude){
+                    players.add(new Player(nCCPlayer, name, email, sex, birthDate, phoneNumber));
+                }
+            }
+            return players;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
