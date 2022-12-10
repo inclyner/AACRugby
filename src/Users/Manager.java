@@ -19,7 +19,7 @@ public class Manager extends CommonFeatures {
 
     public Manager() {}
 
-    public String approveCellPhone(Long phoneNumber){
+    private String approveCellPhone(Long phoneNumber){
         Pattern special = Pattern.compile("[!@#$%&*()_+=`£@;,//<>§€^ºª|<>?{}«»´\\[\\]~-]");
         Pattern letter = Pattern.compile("[a-zA-z]");
 
@@ -31,7 +31,7 @@ public class Manager extends CommonFeatures {
         else return null;
     }
 
-    public String checkEmail(String email){
+    private String checkEmail(String email){
         Pattern pat = Pattern.compile("^[a-zA-Z0-9_+&*-]+(?:\\." +
                 "[a-zA-Z0-9_+&*-]+)*@" +
                 "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
@@ -153,7 +153,7 @@ public class Manager extends CommonFeatures {
     }
 
 
-private boolean deleteUser(ArrayList<Long> listaCc) throws SQLException {
+    public boolean deleteUser(ArrayList<Long> listaCc) throws SQLException {
         int ncc=0;
         Statement statement = getDbConnection().createStatement();
         String sqlQuery1 = "SELECT nCC FROM user";
@@ -162,7 +162,7 @@ private boolean deleteUser(ArrayList<Long> listaCc) throws SQLException {
             try {
             while (resultSet.next()) {
                 long cc = resultSet.getLong("nCC");
-                int type = resultSet.getInt("type");
+                int type = resultSet.getInt("typeUserId");
                 if (n == cc) {
                     if (type == 2) {
                         String sqlQuery = "DELETE FROM medicalAppointment WHERE playerCC=" + cc +";";

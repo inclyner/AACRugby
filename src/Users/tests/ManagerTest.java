@@ -3,14 +3,55 @@ package Users.tests;
 import Users.Manager;
 import org.junit.jupiter.api.Test;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.testng.AssertJUnit.assertFalse;
+import static org.testng.AssertJUnit.assertTrue;
 
 class ManagerTest {
 
+
+    // delete users tests
+    @Test
+    void testDeleteUser_userExists() throws Exception {
+        // Arrange
+        ArrayList<Long> listaCc = new ArrayList<Long>();
+        listaCc.add(423455849L);
+        Manager manager = new Manager();
+        manager.insertUser(2, 423455849L, "Joao Silva", "rhoikj467@tmail3.com", "pswor123!", "male", "12-10-99", 123456789L, true, 180F, 190F, "Wing");
+        // Act
+        boolean result = manager.deleteUser(listaCc);
+
+        // Assert
+        assertTrue(result);
+    }
+
+    @Test
+    void testDeleteUser_userDoesNotExist() throws Exception {
+        // Arrange
+        ArrayList<Long> listaCc = new ArrayList<Long>();
+        listaCc.add(111111111L);
+        Manager manager = new Manager();
+
+        // Act
+        boolean result = manager.deleteUser(listaCc);
+
+        // Assert
+        assertFalse(result);
+    }
+
+    //insert user tests
     @Test
     public void insertCorrectUserPlayerAllFields() {
+
         Manager manager = new Manager();
+        ArrayList<Long> lista= new ArrayList<Long>();
+        lista.add(423455849L);
+        remove_user423455849();
         assertEquals( "User is now in the System",manager.insertUser(2, 423455849L, "Joao Silva", "rhoikj467@tmail3.com", "pswor123!", "male", "12-10-99", 123456789L, true, 180F, 190F, "Wing"));
+        remove_user423455849();
     }
     @Test
     public void insertRepeatEmailUser() {
@@ -20,22 +61,28 @@ class ManagerTest {
     @Test
     public void insertRepeatCCUser() {
         Manager manager = new Manager();
-        assertEquals("Email Already Exists",manager.insertUser(2, 423455849L, "Joao Silva", "rhoyikj467@tmail3.com", "psword123!", "male", "12-10-99", 123456789L, true, 180F, 190F, "Wing"));
+        assertEquals("Citizen Card Number Already Exists",manager.insertUser(2, 423455849L, "Joao Silva", "rhoyikj467@tmail3.com", "psword123!", "male", "12-10-99", 123456789L, true, 180F, 190F, "Wing"));
     }
     @Test
     public void insertCorrectUserDoctorAllFields() {
         Manager manager = new Manager();
+        remove_user423455849();
         assertEquals("User is now in the System",manager.insertUser(1, 423412849L, "Joao Baiao", "rhoyikj467@tmail3.com", "psword123!", "male", "12-10-99", 123456789L,null,Float.NaN,Float.NaN,""));
+        remove_user423455849();
     }
     @Test
     public void insertCorrectUserCoachAllFields() {
         Manager manager = new Manager();
+        remove_user423455849();
         assertEquals("User is now in the System",manager.insertUser(3, 423643849L, "Joao Costa", "rhoyikj467@tmail3.com", "psword123!", "male", "12-10-99", 123456789L, null,Float.NaN,Float.NaN,""));
+
     }
     @Test
     public void insertCorrectUserOnlyRequired() {
         Manager manager = new Manager();
+        remove_user423455849();
         assertEquals("User is now in the System",manager.insertUser(2, 423455849L, "Joao Silva", "rhoyikj467@tmail3.com", "psword123!", "male", "12-10-99", 123456789L, true, Float.NaN, Float.NaN, "Wing"));
+        remove_user423455849();
     }
     @Test
     public void insertUserInvalidCCTooMany() {
@@ -150,5 +197,78 @@ class ManagerTest {
         assertEquals("Invalid Values",manager.approveChangeRequest(2, true));
     }
 
+
+
+
+
+
+// change request tests
+    @Test
+    void testApproveChangeRequest_playerNotFound() {
+        // Arrange
+        int id = 1;
+        boolean bool = true;
+        Manager manager = new Manager();
+
+        // Act
+        String result = manager.approveChangeRequest(id, bool);
+
+        // Assert
+        assertEquals("Player not found", result);
+    }
+
+    @Test
+    void testApproveChangeRequest_approveCellPhone() {
+        // Arrange
+        int id = 1;
+        boolean bool = true;
+        Manager manager = new Manager();
+
+        // Act
+        String result = manager.approveChangeRequest(id, bool);
+
+        // Assert
+        assertEquals("Option Validated", result);
+    }
+
+    @Test
+    void testApproveChangeRequest_checkEmail() {
+        // Arrange
+        int id = 1;
+        boolean bool = true;
+        Manager manager = new Manager();
+
+        // Act
+        String result = manager.approveChangeRequest(id, bool);
+
+        // Assert
+        assertEquals("Option Validated", result);
+    }
+
+    @Test
+    void testApproveChangeRequest_invalidValues() {
+        // Arrange
+        int id = 1;
+        boolean bool = true;
+        Manager manager = new Manager();
+
+        // Act
+        String result = manager.approveChangeRequest(id, bool);
+
+        // Assert
+        assertEquals("Invalid Values", result);
+    }
+
+    void remove_user423455849() {
+        Manager manager = new Manager();
+        ArrayList<Long> lista= new ArrayList<Long>();
+        lista.add(423643849L);
+        try {
+            manager.deleteUser(lista);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
+
 
