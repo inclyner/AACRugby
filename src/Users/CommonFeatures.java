@@ -184,6 +184,60 @@ public abstract class CommonFeatures {
         }
     }
 
+    public ArrayList<Manager> getManagers(){
+        ArrayList<Manager> managers = new ArrayList<>();
+        try{
+            Statement statement = getDbConnection().createStatement();
+            String query = "SELECT * from user WHERE typeUserId=4";
+            ResultSet resultSet = statement.executeQuery(query);
+            String email = resultSet.getString("email");
+            while (resultSet.next()) {
+                managers.add(new Manager(email));
+            }
+            return managers;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<Coach> getCoaches(){
+        ArrayList<Coach> coaches = new ArrayList<>();
+        try{
+            Statement statement = getDbConnection().createStatement();
+            String query = "SELECT * from user WHERE typeuserId=3";
+            ResultSet resultSet = statement.executeQuery(query);
+            String email = resultSet.getString("email");
+            while(resultSet.next()){
+                coaches.add(new Coach(email));
+            }
+            return coaches;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<Doctor> getDoctors(){
+        ArrayList<Doctor> doctors = new ArrayList<>();
+        try{
+            Statement statement = getDbConnection().createStatement();
+            String query = "SELECT * from user WHERE typeuserId=1";
+            ResultSet resultSet = statement.executeQuery(query);
+            Long nCCDoctor = resultSet.getLong("nCC");
+            String name = resultSet.getString("name");
+            String email = resultSet.getString("email");
+            String sex = resultSet.getString("sex");
+            String birthDate = resultSet.getString("birthDate");
+            Long phoneNumber = resultSet.getLong("phoneNumber");
+            while(resultSet.next()){
+                doctors.add(new Doctor(nCCDoctor,name,email,sex,birthDate,phoneNumber));
+            }
+            return doctors;
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public String getDATABASE_URL() {
         return DATABASE_URL;
