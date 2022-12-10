@@ -10,9 +10,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Scanner;
+import java.text.ParseException;
+import java.util.*;
 
 import static Users.CommonFeatures.createDb;
 
@@ -139,47 +138,43 @@ public class ReadFilesToDB {
 
         long coachCC = 0;
         Coach coach = new Coach("camilasantos@acc.com");
-        String sqlQuery,date = null, equipaAdv=null, horaInicial=null, horaFinal=null, local=null;
-        Connection dbConn = connectDB();
+        String sqlQuery = null,date = null, equipaAdv=null, horaInicial=null, horaFinal=null, local=null;
         try {
-            File myObj = new File("AACRugby\\dados\\games.txt");
+            File myObj = new File("AACRugby\\dados\\practice.txt");
             Scanner myReader = new Scanner(myObj);
             String[] array;
             String data=null;
             while (myReader.hasNextLine()){
                 do{
                     data = myReader.nextLine();
-                    System.out.println(data);
-                    array = data.split(":");
-                    if (Objects.equals(array[0], "date")) {
-                        date=array[1];
+                    array = data.split(";");
+                    if (Objects.equals(array[0], "local")) {
+                        local=array[1];
                     }
-                    else if (Objects.equals(array[0], "equipaAdversaria")) {
-                        equipaAdv = array[1];
+                    else if (Objects.equals(array[0], "date")) {
+                        date = array[1];
                     }
-                    else if (Objects.equals(array[0], "horaInicial")) {
+                    else if (Objects.equals(array[0], "startTime")) {
                         horaInicial = array[1];
                     }
-                    else if (Objects.equals(array[0], "horaFinal")) {
+                    else if (Objects.equals(array[0], "endTime")) {
                         horaFinal = array[1];
-                    }
-                    else if (Objects.equals(array[0], "local")) {
-                        local = array[1];
                     }
                     else if (Objects.equals(array[0], "coachCC")) {
                         coachCC = Long.parseLong(array[1]);
                     }
                 } while(!Objects.equals(data, "") && myReader.hasNextLine());
-                System.out.println(date+"\t"+equipaAdv+"\t"+horaInicial+"\t"+horaFinal+"\t"+local+"\t"+coachCC);
-                ArrayList<Long> playersCC = new ArrayList<>();
-                //playersCC.addAll(())
-                //System.out.println(coach.scheduleTrainingSession(type, local, date, horaFinal, horaFinal));
-                //statement.close();
+                System.out.println(date+"\t"+local+"\t"+horaInicial+"\t"+horaFinal+"\t"+coachCC);
+                Long[] anotherList = new Long[] {585005353L, 412191513L,837587143L,451707431L,255345124L};
+                ArrayList<Long> playersCC = new ArrayList<>(List.of(anotherList));
+                System.out.println(coach.scheduleTrainingSession(playersCC, local, date, horaFinal, horaFinal));
             }
             myReader.close();
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
     }
 

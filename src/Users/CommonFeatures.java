@@ -1,7 +1,7 @@
 package Users;
 
-import logic.Appointment;
 import logic.Game;
+import logic.MedicalAppointment;
 import logic.Practise;
 
 import java.io.File;
@@ -25,10 +25,15 @@ public abstract class CommonFeatures {
     
     public static Connection createDb() throws SQLException {
         //File f = new File("AACRugby.db");
-        File f = new File("bd\\AACRugby.db");
+        File f = new File("AACRugby\\bd\\AACRugby.db");
         String DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
-        Connection dbConn = DriverManager.getConnection(DATABASE_URL);
+        Connection db = DriverManager.getConnection(DATABASE_URL);
+        dbConn = db;
         return dbConn;
+    }
+
+    public void closeDb() throws SQLException {
+        dbConn.close();
     }
 
     public static Connection getDbConnection() throws SQLException {
@@ -42,9 +47,12 @@ public abstract class CommonFeatures {
         while(resultSet.next()){
             String email = resultSet.getString("email");
             Long nCC = resultSet.getLong("nCC");
-            if(this.email.equals(e))
+            if(this.email.equals(e)) {
+                closeDb();
                 return nCC;
+            }
         }
+        closeDb();
         return null;
     }
 
@@ -52,13 +60,10 @@ public abstract class CommonFeatures {
         return email;
     }
 
-    public ArrayList<Appointment> getAppointments() throws SQLException {
-        ArrayList<Appointment> appointments = new ArrayList<>();
+    public ArrayList<MedicalAppointment> getAppointments() throws SQLException {
+        ArrayList<MedicalAppointment> appointments = new ArrayList<>();
         Statement statement = getDbConnection().createStatement();
-        String sqlQuery = "SELECT typeUserId FROM user WHERE nCC = "+getnCC(getEmail())+"";
-        ResultSet resultSet1 = statement.executeQuery(sqlQuery);
-        int type  = resultSet1.getInt("typeUserId");
-        String query = "SELECT * FROM medicalAppointment WHERE playerCC = " + getnCC(getEmail()) +" OR doctorCC = " + getnCC(email)+"";
+        String query = "SELECT * FROM medicalAppointment";
         ResultSet resultSet = statement.executeQuery(query);
         while(resultSet.next()){
             String initialTime = resultSet.getString("startTime");
@@ -66,12 +71,9 @@ public abstract class CommonFeatures {
             String date = resultSet.getString("date");
             Long playerCC = resultSet.getLong("playerCC");
             Long doctorCC = resultSet.getLong("doctorCC");
-            if(type==1)
-                appointments.add(new Appointment(doctorCC, initialTime, finalTime, date));
-            else if(type==2)
-                appointments.add(new Appointment(playerCC,  initialTime, finalTime, date));
-
+            appointments.add(new MedicalAppointment(doctorCC, initialTime, finalTime, date, playerCC));
         }
+        closeDb();
         return appointments;
 
     }
@@ -101,6 +103,8 @@ public abstract class CommonFeatures {
                 games.add(new Game(nCCCoach, horaInicio, horaFinal, local, players, equipaAdv, date));
                 players.clear();
             }
+            closeDb();
+
             return games;
 
         } catch (SQLException e) {
@@ -132,7 +136,8 @@ public abstract class CommonFeatures {
             practises.add(new Practise(nCCCoach, players,horaInicio,horaFinal,local,date));
             players.clear();
         }
-        return practises;
+            closeDb();
+            return practises;
 
     } catch (SQLException e) {
         throw new RuntimeException(e);
@@ -153,6 +158,7 @@ public abstract class CommonFeatures {
             while (resultSet.next()) {
                 players.add(new Player(nCCPlayer, name, email, sex, birthDate, phoneNumber));
             }
+            closeDb();
             return players;
 
         } catch (SQLException e) {
@@ -177,6 +183,7 @@ public abstract class CommonFeatures {
                     players.add(new Player(nCCPlayer, name, email, sex, birthDate, phoneNumber));
                 }
             }
+            closeDb();
             return players;
 
         } catch (SQLException e) {
@@ -194,6 +201,7 @@ public abstract class CommonFeatures {
             while (resultSet.next()) {
                 managers.add(new Manager(email));
             }
+            closeDb();
             return managers;
 
         } catch (SQLException e) {
@@ -211,6 +219,7 @@ public abstract class CommonFeatures {
             while(resultSet.next()){
                 coaches.add(new Coach(email));
             }
+            closeDb();
             return coaches;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -232,6 +241,7 @@ public abstract class CommonFeatures {
             while(resultSet.next()){
                 doctors.add(new Doctor(nCCDoctor,name,email,sex,birthDate,phoneNumber));
             }
+            closeDb();
             return doctors;
         }catch (SQLException e) {
             throw new RuntimeException(e);

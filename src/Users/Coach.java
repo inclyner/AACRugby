@@ -1,6 +1,7 @@
 package Users;
 
 import logic.Game;
+import logic.MedicalAppointment;
 import logic.Practise;
 
 import java.io.File;
@@ -17,6 +18,7 @@ import java.util.Date;
 public class Coach extends CommonFeatures {
 
     private ArrayList<Long> cc = new ArrayList<Long>();
+    CommonFeatures cf;
 
     public ArrayList<Long> getCc() {
         return cc;
@@ -197,23 +199,16 @@ public class Coach extends CommonFeatures {
         LocalTime initialTime = LocalTime.parse(startTime);
         LocalTime finalTime = LocalTime.parse(endTime);
 
-        Statement statement1 = getDbConnection().createStatement();
-        String queryPlayersAppointments = "SELECT * FROM medicalAppointment";
-        ResultSet resultSet = statement1.executeQuery(queryPlayersAppointments);
-        while(resultSet.next()){
-            int idPlayer = resultSet.getInt("playerCC");
-            String auxbegin = resultSet.getString("startTime");
-            String auxend = resultSet.getString("endTime");
-            String date1 = resultSet.getString("date");
-            Date practiseDateMarked = new SimpleDateFormat("dd-MM-yyyy").parse(date1);
-            LocalTime begin = LocalTime.parse(auxbegin);
-            LocalTime end = LocalTime.parse(auxend);
-            for(Long p: playersCC){
-                if(p == idPlayer){
-                    if(practiseDateMarked==practiseDate) {
-                        if (begin.isAfter(initialTime) || end.isBefore(finalTime))
-                            playersCC.remove(p);
-                    }
+        Statement statement = getDbConnection().createStatement();
+        for(MedicalAppointment appointment: getAppointments()){
+            if(getAppointments().size()==0) break;
+            LocalTime begin = LocalTime.parse(appointment.getInitialTime());
+            LocalTime end = LocalTime.parse(appointment.getFinalTime());
+            Date date1 = new SimpleDateFormat("dd-MM-yyyy").parse(appointment.getDate());
+            if(playersCC.contains(appointment.getPlayerCC())) {
+                if (date1 == practiseDate) {
+                    if (begin.isAfter(initialTime) || end.isBefore(finalTime))
+                        playersCC.remove(appointment.getPlayerCC());
                 }
             }
         }
@@ -235,7 +230,6 @@ public class Coach extends CommonFeatures {
                     }
                 }
             }
-
             }
 
         for(Practise practise: getPractise()){
@@ -257,16 +251,23 @@ public class Coach extends CommonFeatures {
             }
         }
         try {
-            Statement statement = getDbConnection().createStatement();
-            String sqlQuery= "INSERT INTO practise VALUES(NULL,'"+local+"','"+date+"','"+startTime+"','"+endTime+"','"+getnCC(getEmail())+"')";
+            String sqlQuery= "INSERT INTO practice VALUES(NULL,'"+local+"','"+date+"','"+startTime+"','"+endTime+"','"+getnCC(getEmail())+"')";
             statement.executeUpdate(sqlQuery);
+            System.out.println("idGame");
+            statement.close();
+
             sqlQuery = "SELECT id from game WHERE local='"+"local' " + "AND date='"+"date'";
             ResultSet resultSet1 = statement.executeQuery(sqlQuery);
-            int idGame = resultSet.getInt("id");
-            for(Long p: playersCC)
-                sqlQuery = "INSERT INTO game_player VALUES("+idGame+","+p+","+"NULL"+")";
+            int idGame = resultSet1.getInt("id");
+            for(Long p: playersCC) {
+                sqlQuery = "INSERT INTO game_player VALUES(" + idGame + "," + p + "," + "NULL" + ")";
+                statement.executeUpdate(sqlQuery);
+                statement.close();
+            }
         }catch (SQLException e){
+            System.out.println(e.getMessage());
             throw new RuntimeException();
+
         }
         return "Operation Successful";
     }
