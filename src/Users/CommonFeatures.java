@@ -17,9 +17,7 @@ public abstract class CommonFeatures {
     private Long phoneNumber;
     private String DATABASE_URL;
     private static Connection dbConn;
-    public CommonFeatures(){
-
-    };//efeitos de teste
+    public CommonFeatures(){};//efeitos de teste
 
     public CommonFeatures(String email) throws SQLException {this.email = email;}
 

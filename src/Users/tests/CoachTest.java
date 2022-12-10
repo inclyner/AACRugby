@@ -42,11 +42,11 @@ class CoachTest {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        try {
+        /*try {
             coach.InsertUsersFromTxt();
         } catch (SQLException e){
             throw new RuntimeException();
-        }
+        }*/
         ArrayList<Long> cc = coach.getCc();
         assertEquals("Extra players",coach.callUpPlayers(cc, 12));
     }
@@ -59,11 +59,11 @@ class CoachTest {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        try {
+        /*try {
             coach.InsertUsersFromTxt();
         } catch (SQLException e){
             throw new RuntimeException();
-        }
+        }*/
         ArrayList<Long> cc = coach.getCc();
         int i=0;
         while(i<10) {
@@ -81,11 +81,11 @@ class CoachTest {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        try {
+        /*try {
             coach.InsertUsersFromTxt();
         } catch (SQLException e){
             throw new RuntimeException();
-        }
+        }*/
         ArrayList<Long> cc = coach.getCc();
         int i=0;
         while(i<3) {
@@ -103,11 +103,11 @@ class CoachTest {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        try {
+        /*try {
             coach.InsertUsersFromTxt();
         } catch (SQLException e){
             throw new RuntimeException();
-        }
+        }*/
         ArrayList<Long> cc = coach.getCc();
         int i=0;
         while(i<3) {

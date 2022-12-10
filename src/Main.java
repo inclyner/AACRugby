@@ -23,10 +23,10 @@ public class Main {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        try {
+        /*try {
             coach.InsertUsersFromTxt();
         } catch (SQLException e){
             throw new RuntimeException();
-        }
+        }*/
     }
 }
