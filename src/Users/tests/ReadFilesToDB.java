@@ -14,6 +14,11 @@ import java.util.Scanner;
 
 public class ReadFilesToDB {
 
+    public Connection connectDB() throws SQLException {
+        File f = new File("AACRugby\\bd\\AACRugby.db");
+        String DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
+        return DriverManager.getConnection(DATABASE_URL);
+    }
     public void insertUsersFromTxt() throws SQLException {
         int type=0;
         Float height=null, weight=null;
@@ -82,9 +87,52 @@ public class ReadFilesToDB {
         }
     }
     public void insertGames() throws SQLException{
-        File f = new File("AACRugby\\bd\\AACRugby.db");
-        String DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
-        Connection dbConn = DriverManager.getConnection(DATABASE_URL);
+        Connection dbConn = connectDB();
+        long coachCC = 0;
+        String sqlQuery,date = null, equipaAdv=null, horaInicial=null, horaFinal=null, local=null;
+        try {
+            File myObj = new File("AACRugby\\dados\\games.txt");
+            Scanner myReader = new Scanner(myObj);
+            String[] array;
+            String data=null;
+            while (myReader.hasNextLine()){
+                do{
+                    data = myReader.nextLine();
+                    System.out.println(data);
+                    array = data.split(":");
+                    if (Objects.equals(array[0], "date")) {
+                        date=array[1];
+                    }
+                    else if (Objects.equals(array[0], "equipaAdversaria")) {
+                        equipaAdv = array[1];
+                    }
+                    else if (Objects.equals(array[0], "horaInicial")) {
+                        horaInicial = array[1];
+                    }
+                    else if (Objects.equals(array[0], "horaFinal")) {
+                        horaFinal = array[1];
+                    }
+                    else if (Objects.equals(array[0], "local")) {
+                        local = array[1];
+                    }
+                    else if (Objects.equals(array[0], "coachCC")) {
+                        coachCC = Long.parseLong(array[1]);
+                    }
+                } while(!Objects.equals(data, "") && myReader.hasNextLine());
+                System.out.println(date+"\t"+equipaAdv+"\t"+horaInicial+"\t"+horaFinal+"\t"+local+"\t"+coachCC);
+                Statement statement = dbConn.createStatement();
+                sqlQuery= "INSERT INTO game VALUES(NULL,'"+date+"','"+equipaAdv+"','"+horaInicial+"','"+horaFinal+"','"+local+"','"+coachCC+"')";
+                statement.executeUpdate(sqlQuery);
+                statement.close();
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+    public void insertPractise() throws SQLException{
+
         long coachCC = 0;
         String sqlQuery,date = null, equipaAdv=null, horaInicial=null, horaFinal=null, local=null;
         try {
@@ -132,6 +180,7 @@ public class ReadFilesToDB {
     public static void main(String[] args) throws SQLException {
         ReadFilesToDB readFilestoDB = new ReadFilesToDB();
         //readFilestoDB.insertUsersFromTxt();
-        readFilestoDB.insertGames();
+        //readFilestoDB.insertGames();
+        readFilestoDB.insertPractise();
     }
 }

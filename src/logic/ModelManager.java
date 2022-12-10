@@ -1,17 +1,17 @@
 package logic;
 
 //import Users.CommonFeatures;
-import Users.CommonFeatures;
+import Users.*;
 
 import java.io.File;
 import java.sql.*;
 
 public class ModelManager {
-    CommonFeatures cF;
-    public ModelManager() throws SQLException {
-        //super();
-        //this.cF = new CommonFeatures();
-    }
+    Manager manager;
+    Coach coach;
+    Doctor doctor;
+    Player player;
+    public ModelManager() throws SQLException {}
     public boolean login(String email, String password) throws SQLException {
         File f = new File("bd\\AACRugby.db");
         String DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
@@ -24,6 +24,8 @@ public class ModelManager {
             String e = resultSet.getString("email");
             String p = resultSet.getString("password");
             if(email.equals(e) && password.equals(p)) {
+                sqlQuery="UPDATE user SET logged="+true+"";
+                statement.executeUpdate(sqlQuery);
                 resultSet.close();
                 statement.close();
                 return true;
@@ -55,5 +57,8 @@ public class ModelManager {
         statement.close();
         return 0;
     }
+    /*public String insertUser(int type, Long nCC, String name, String email, String pass, String sex, String birthDate, Long phoneNumber, Boolean aptitude, Float height, Float weight, String position){
+
+    }*/
 }
 

@@ -35,27 +35,30 @@ public abstract class CommonFeatures {
        return dbConn = createDb();
     }
 
-    public Long getnCC() throws SQLException {
+    public Long getnCC(String e) throws SQLException {
         Statement statement = getDbConnection().createStatement();
         String query = "SELECT email, nCC from user";
         ResultSet resultSet = statement.executeQuery(query);
         while(resultSet.next()){
             String email = resultSet.getString("email");
             Long nCC = resultSet.getLong("nCC");
-            if(this.email.equals(email))
+            if(this.email.equals(e))
                 return nCC;
         }
         return null;
     }
 
+    public String getEmail() {
+        return email;
+    }
 
     public ArrayList<Appointment> getAppointments() throws SQLException {
         ArrayList<Appointment> appointments = new ArrayList<>();
         Statement statement = getDbConnection().createStatement();
-        String sqlQuery = "SELECT typeUserId FROM user WHERE nCC = "+getnCC()+"";
+        String sqlQuery = "SELECT typeUserId FROM user WHERE nCC = "+getnCC(getEmail())+"";
         ResultSet resultSet1 = statement.executeQuery(sqlQuery);
         int type  = resultSet1.getInt("typeUserId");
-        String query = "SELECT * FROM medicalAppointment WHERE playerCC = " + getnCC() +" OR doctorCC = " + getnCC()+"";
+        String query = "SELECT * FROM medicalAppointment WHERE playerCC = " + getnCC(getEmail()) +" OR doctorCC = " + getnCC(email)+"";
         ResultSet resultSet = statement.executeQuery(query);
         while(resultSet.next()){
             String initialTime = resultSet.getString("startTime");

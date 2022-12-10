@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 
 public class Manager extends CommonFeatures {
 
-    public Manager(Long nCC, String name, String email, String sex, String birthDate, Long phoneNumber) throws SQLException {
+    public Manager(String email) throws SQLException {
         super(email);
     }
 
