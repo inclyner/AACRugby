@@ -1,15 +1,26 @@
 package Users;
 
+import logic.MedicalAppointment;
+import logic.Practise;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
 public class Doctor extends CommonFeatures{
     public Doctor(Long nCC, String name, String email, String sex, String birthDate, Long phoneNumber) throws SQLException {
+        super(email);
+    }
+
+    public Doctor(String email) throws SQLException {
         super(email);
     }
 
@@ -67,20 +78,55 @@ public class Doctor extends CommonFeatures{
         }
     }
 
-    public String ScheduleMedicalAppointments(Long playerCC, Date date, Time startTime, Time endTime){
+    public String ScheduleMedicalAppointments(Long playerCC, String date, String startTime, String endTime) throws ParseException, SQLException {
+        Calendar cal = Calendar.getInstance();
+        cal.getTime();
+        Date dataAtual = cal.getTime();
+        Date practiseDate = new SimpleDateFormat("dd-MM-yyyy").parse(date);
+        if(dataAtual.after(practiseDate)) return "You need a time machine for that";
+
+        LocalTime initialTime = LocalTime.parse(startTime);
+        LocalTime finalTime = LocalTime.parse(endTime);
+
+        for(MedicalAppointment appointment: getAppointments()){
+            if(getAppointments().size()==0) break;
+            LocalTime begin = LocalTime.parse(appointment.getInitialTime());
+            LocalTime end = LocalTime.parse(appointment.getFinalTime());
+            Date date1 = new SimpleDateFormat("dd-MM-yyyy").parse(appointment.getDate());
+            if(appointment.getPlayerCC().equals(playerCC) && getnCC(this.getEmail()).equals(appointment.getnCCAuthor())) {
+                if (date1 == practiseDate) {
+                    if (begin.isAfter(initialTime) || end.isBefore(finalTime))
+                       return "Player is not able to attend at this time.";
+                }
+            }
+        }
+
+        for(Practise practise: getPractise()){
+            if(getPractise().size()==0) break;
+            LocalTime begin = LocalTime.parse(practise.getInitialTime());
+            LocalTime end = LocalTime.parse(practise.getFinalTime());
+            Date date1 = new SimpleDateFormat("dd-MM-yyyy").parse(practise.getDate());
+            if(practiseDate==date1 && getnCC(this.getEmail()).equals(practise.getnCCAuthor())){
+                if (begin.isAfter(initialTime) || end.isBefore(finalTime))
+                    return "You are busy with a practise, choose another time";
+            }
+                if(practise.getPlayers().contains(playerCC)){
+                    if(date1==practiseDate) {
+                        if (begin.isAfter(initialTime) || end.isBefore(finalTime))
+                            return "Player is not able to attend at this time.";
+                    }
+                }
+            }
+
+
+
+
+
         try {
             Statement statement = getDbConnection().createStatement();
-            String sqlQuery = "SELECT * FROM medicalAppointment";
-            ResultSet resultSet = statement.executeQuery(sqlQuery);
-            while (resultSet.next()) {
-                Long cc = resultSet.getLong("playerCC");
-                Date d = resultSet.getDate("date");
-                Time ts = resultSet.getTime("startTime");
-                Time te = resultSet.getTime("endTime");
-                if (Objects.equals(playerCC, cc) && Objects.equals(date, d) && Objects.equals(startTime, ts) && Objects.equals(endTime, te))
-                    return "Medical Appointment already exist";
-            }
-            sqlQuery = "INSERT INTO medicalAppointment (doctorCC, playerCC, date, startTime, endTime) VALUES ('"
+
+
+            String sqlQuery = "INSERT INTO medicalAppointment VALUES (NULL,'"
                         + getnCC(getEmail()) + "','"+ playerCC + "','" + date + "','" + startTime + "','" + endTime + "')";
             statement.executeUpdate(sqlQuery);
             statement.close();

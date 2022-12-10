@@ -177,10 +177,10 @@ public class Manager extends CommonFeatures {
     }
 
 
-    public boolean deleteUser(ArrayList<Long> listaCc) throws SQLException {
+    public void deleteUser(ArrayList<Long> listaCc) throws SQLException {
         int ncc=0;
         Statement statement = getDbConnection().createStatement();
-        String sqlQuery1 = "SELECT nCC FROM user";
+        String sqlQuery1 = "SELECT * FROM user";
         ResultSet resultSet = statement.executeQuery(sqlQuery1);
         listaCc.forEach((n) -> {
             try {
@@ -215,7 +215,6 @@ public class Manager extends CommonFeatures {
                 throw new RuntimeException(e);
                 }
         });
-        return false;
     }
 
     public String approveChangeRequest(int id, boolean bool) {

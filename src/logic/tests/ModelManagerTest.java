@@ -1,11 +1,13 @@
 package logic.tests;
 
-import Users.Player;
 import logic.ModelManager;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
+
 
 import java.sql.SQLException;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 class ModelManagerTest {
 
         @Test

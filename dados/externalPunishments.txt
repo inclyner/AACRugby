@@ -1,14 +1,11 @@
-playerCC:255345124
-coachCC:770909795
-notes:Missed a game
-numberGames:3
+playerCC;585005353
+notes;Missed a game
+numberGames;3
 
-playerCC:987654904
-coachCC:770909795
-notes:lost temper
-numberGames:6
+playerCC;412191513
+notes;lost temper
+numberGames;6
 
-playerCC:785345904
-coachCC:770909795
-notes:bad sportsmanship
-numberGames:1
+playerCC;837587143
+notes;bad sportsmanship
+numberGames;1
