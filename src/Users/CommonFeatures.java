@@ -127,7 +127,6 @@ public abstract class CommonFeatures {
             String horaFinal = resultSet.getString("endTime");
             String local = resultSet.getString("local");
             Long nCCCoach = resultSet.getLong("coachCC");
-
             String sqlQuery = "SELECT playerCC from practice_player WHERE idPractice = " + idPractice+"";
             ResultSet resultSet1 = statement.executeQuery(sqlQuery);
             while (resultSet1.next()){
