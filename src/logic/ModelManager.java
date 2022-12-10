@@ -36,7 +36,7 @@ public class ModelManager {
             String e = resultSet.getString("email");
             String p = resultSet.getString("password");
             boolean logged = resultSet.getBoolean("logged");
-            if(email.equals(e) && password.equals(p) && !logged) {
+            if(email.equals(e) && password.equals(p)) {
                 sqlQuery="UPDATE user SET logged="+true+"";
                 statement.executeUpdate(sqlQuery);
                 resultSet.close();
@@ -52,16 +52,18 @@ public class ModelManager {
     }
 
     public String insertUser(int type, String nCC, String name, String email, String pass, String sex, String birthDate, String phoneNumber, String aptitude, String height, String weight, String position) throws SQLException{
-        if(checksTypeUser(emailLogged) == 4){
-            Manager manager1 = new Manager();
-            return manager1.insertUser(type, nCC, name, email, pass, sex,birthDate, phoneNumber,  aptitude, height, weight,position);
-        }
-        return "Unable to add User";
+        //if(checksTypeUser(emailLogged) == 4){
+        Manager manager1 = new Manager();
+        return manager1.insertUser(type, nCC, name, email, pass, sex,birthDate, phoneNumber,  aptitude, height, weight,position);
+        //}
+        //return "Unable to add User";
     }
 
     public ArrayList<Player> getAllPlayer(){
         Manager manager1 = new Manager();
-        return  manager1.getPlayers();
+        for(Player p: manager1.getPlayers())
+            System.out.println(p);
+        return manager1.getPlayers();
     }
 
     public ArrayList<Coach> getAllCoach(){
@@ -78,6 +80,16 @@ public class ModelManager {
         Manager manager1 = new Manager();
         return  manager1.getDoctors();
     }
+    public ArrayList<ChangeRequest> getAllRequests() throws SQLException {
+        Manager manager1 = new Manager();
+        return  manager1.getChangeRequests();
+    }
+    public String deleteUsers(ArrayList<String> emails) throws SQLException {
+        Manager manager1 = new Manager(emailLogged);
+        return manager1.deleteUser(emails);
+    }
+
+
 
     public String getNameUser(String email) throws SQLException {
         File f = new File("bd\\AACRugby.db");
@@ -89,6 +101,26 @@ public class ModelManager {
         while (resultSet.next()) {
             String e = resultSet.getString("email");
             if(email.equals(e)) {
+                String name = resultSet.getString("name");
+                resultSet.close();
+                statement.close();
+                return name;
+            }
+        }
+        resultSet.close();
+        statement.close();
+        return null;
+    }
+    public String getNameUserNcc(Long nCC) throws SQLException {
+        File f = new File("bd\\AACRugby.db");
+        String DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
+        Connection dbConn = DriverManager.getConnection(DATABASE_URL);
+        Statement statement = dbConn.createStatement();
+        String sqlQuery = "SELECT nCC, name from user";
+        ResultSet resultSet = statement.executeQuery(sqlQuery);
+        while (resultSet.next()) {
+            Long n = resultSet.getLong("nCC");
+            if(n.equals(nCC)) {
                 String name = resultSet.getString("name");
                 resultSet.close();
                 statement.close();

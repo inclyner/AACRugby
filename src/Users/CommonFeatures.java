@@ -1,5 +1,6 @@
 package Users;
 
+import logic.ChangeRequest;
 import logic.Game;
 import logic.MedicalAppointment;
 import logic.Practise;
@@ -22,7 +23,7 @@ public abstract class CommonFeatures {
 
     public CommonFeatures(String email) throws SQLException {this.email = email;}
 
-    
+
     public static Connection createDb() throws SQLException {
         //File f = new File("AACRugby.db");
         File f = new File("bd\\AACRugby.db");
@@ -37,7 +38,7 @@ public abstract class CommonFeatures {
     }
 
     public static Connection getDbConnection() throws SQLException {
-       return dbConn = createDb();
+        return dbConn = createDb();
     }
 
     public Long getnCC(String e) throws SQLException {
@@ -47,7 +48,7 @@ public abstract class CommonFeatures {
         while(resultSet.next()){
             String email = resultSet.getString("email");
             Long nCC = resultSet.getLong("nCC");
-            if(this.email.equals(e)) {
+            if(email.equals(e)) {
                 closeDb();
                 return nCC;
             }
@@ -58,6 +59,21 @@ public abstract class CommonFeatures {
 
     public String getEmail() {
         return email;
+    }
+    public ArrayList<ChangeRequest> getChangeRequests() throws SQLException {
+        ArrayList<ChangeRequest> changeRequests = new ArrayList<>();
+        Statement statement = getDbConnection().createStatement();
+        String query = "SELECT * FROM changeRequest";
+        ResultSet resultSet = statement.executeQuery(query);
+        while(resultSet.next()){
+            String newInfo = resultSet.getString("newInfo");
+            String oldInfo = resultSet.getString("oldInfo");
+            Long playerCC = resultSet.getLong("playerCC");
+            changeRequests.add(new ChangeRequest(newInfo, oldInfo, playerCC));
+        }
+        closeDb();
+        return changeRequests;
+
     }
 
     public ArrayList<MedicalAppointment> getAppointments() throws SQLException {
@@ -113,48 +129,48 @@ public abstract class CommonFeatures {
     }
 
     public ArrayList<Practise> getPractise(){
-    ArrayList<Practise> practises = new ArrayList<>();
-    ArrayList<Long> players = new ArrayList<>();
+        ArrayList<Practise> practises = new ArrayList<>();
+        ArrayList<Long> players = new ArrayList<>();
 
         try {
-        Statement statement = getDbConnection().createStatement();
-        String query = "SELECT * from practice";
-        ResultSet resultSet = statement.executeQuery(query);
-        while (resultSet.next()){
-            int idPractice = resultSet.getInt("id");
-            String date = resultSet.getString("date");
-            String horaInicio = resultSet.getString("startTime");
-            String horaFinal = resultSet.getString("endTime");
-            String local = resultSet.getString("local");
-            Long nCCCoach = resultSet.getLong("coachCC");
-            String sqlQuery = "SELECT playerCC from practice_player WHERE idPractice = " + idPractice+"";
-            ResultSet resultSet1 = statement.executeQuery(sqlQuery);
-            while (resultSet1.next()){
-                players.add(resultSet1.getLong("playerCC"));
+            Statement statement = getDbConnection().createStatement();
+            String query = "SELECT * from practice";
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()){
+                int idPractice = resultSet.getInt("id");
+                String date = resultSet.getString("date");
+                String horaInicio = resultSet.getString("startTime");
+                String horaFinal = resultSet.getString("endTime");
+                String local = resultSet.getString("local");
+                Long nCCCoach = resultSet.getLong("coachCC");
+                String sqlQuery = "SELECT playerCC from practice_player WHERE idPractice = " + idPractice+"";
+                ResultSet resultSet1 = statement.executeQuery(sqlQuery);
+                while (resultSet1.next()){
+                    players.add(resultSet1.getLong("playerCC"));
+                }
+                practises.add(new Practise(nCCCoach, players,horaInicio,horaFinal,local,date));
+                players.clear();
             }
-            practises.add(new Practise(nCCCoach, players,horaInicio,horaFinal,local,date));
-            players.clear();
-        }
             closeDb();
             return practises;
 
-    } catch (SQLException e) {
-        throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
-}
     public ArrayList<Player> getPlayers() {
         ArrayList<Player> players = new ArrayList<>();
         try {
             Statement statement = getDbConnection().createStatement();
             String query = "SELECT * from user WHERE typeUserId=2";
             ResultSet resultSet = statement.executeQuery(query);
-            Long nCCPlayer = resultSet.getLong("nCC");
-            String name = resultSet.getString("name");
-            String email = resultSet.getString("email");
-            String sex = resultSet.getString("sex");
-            String birthDate = resultSet.getString("birthDate");
-            Long phoneNumber = resultSet.getLong("phoneNumber");
             while (resultSet.next()) {
+                Long nCCPlayer = resultSet.getLong("nCC");
+                String name = resultSet.getString("name");
+                String email = resultSet.getString("email");
+                String sex = resultSet.getString("sex");
+                String birthDate = resultSet.getString("birthDate");
+                Long phoneNumber = resultSet.getLong("phoneNumber");
                 players.add(new Player(nCCPlayer, name, email, sex, birthDate, phoneNumber));
             }
             closeDb();
@@ -170,14 +186,14 @@ public abstract class CommonFeatures {
             Statement statement = getDbConnection().createStatement();
             String query = "SELECT * from user WHERE typeUserId=2";
             ResultSet resultSet = statement.executeQuery(query);
-            Long nCCPlayer = resultSet.getLong("nCC");
-            String name = resultSet.getString("name");
-            String email = resultSet.getString("email");
-            String sex = resultSet.getString("sex");
-            String birthDate = resultSet.getString("birthDate");
-            Long phoneNumber = resultSet.getLong("phoneNumber");
-            Boolean aptitude = resultSet.getBoolean("aptitude");
             while (resultSet.next()) {
+                Long nCCPlayer = resultSet.getLong("nCC");
+                String name = resultSet.getString("name");
+                String email = resultSet.getString("email");
+                String sex = resultSet.getString("sex");
+                String birthDate = resultSet.getString("birthDate");
+                Long phoneNumber = resultSet.getLong("phoneNumber");
+                Boolean aptitude = resultSet.getBoolean("aptitude");
                 if(aptitude){
                     players.add(new Player(nCCPlayer, name, email, sex, birthDate, phoneNumber));
                 }
@@ -214,8 +230,8 @@ public abstract class CommonFeatures {
             Statement statement = getDbConnection().createStatement();
             String query = "SELECT * from user WHERE typeuserId=3";
             ResultSet resultSet = statement.executeQuery(query);
-            String email = resultSet.getString("email");
             while(resultSet.next()){
+                String email = resultSet.getString("email");
                 coaches.add(new Coach(email));
             }
             closeDb();
@@ -231,13 +247,14 @@ public abstract class CommonFeatures {
             Statement statement = getDbConnection().createStatement();
             String query = "SELECT * from user WHERE typeuserId=1";
             ResultSet resultSet = statement.executeQuery(query);
-            Long nCCDoctor = resultSet.getLong("nCC");
-            String name = resultSet.getString("name");
-            String email = resultSet.getString("email");
-            String sex = resultSet.getString("sex");
-            String birthDate = resultSet.getString("birthDate");
-            Long phoneNumber = resultSet.getLong("phoneNumber");
+
             while(resultSet.next()){
+                Long nCCDoctor = resultSet.getLong("nCC");
+                String name = resultSet.getString("name");
+                String email = resultSet.getString("email");
+                String sex = resultSet.getString("sex");
+                String birthDate = resultSet.getString("birthDate");
+                Long phoneNumber = resultSet.getLong("phoneNumber");
                 doctors.add(new Doctor(nCCDoctor,name,email,sex,birthDate,phoneNumber));
             }
             closeDb();

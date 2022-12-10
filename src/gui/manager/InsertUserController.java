@@ -66,7 +66,7 @@ public class InsertUserController {
 
     private String sexSelected;
     private ObservableList<String> typeOfUsersList = FXCollections.observableArrayList(
-            "Coach","Player","Doctor");
+            "Doctor", "Player", "Coach");
     private ObservableList<String> AptitudeList = FXCollections.observableArrayList(
             "Fit","Not Fit");
     private ObservableList<String> PositionsList = FXCollections.observableArrayList(
@@ -120,7 +120,6 @@ public class InsertUserController {
                 message = "The user must be at least 15 years old!";
             }
 
-
             if(error){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle(tittle);
@@ -131,7 +130,18 @@ public class InsertUserController {
                     sexSelected= "Female";
                 else
                     sexSelected="Male";
-                main.getModelManager().insertUser(cmbTypeUser.getSelectionModel().getSelectedIndex(), tfCitizenCardNumber.getText(), tfName.getText(), tfEmail.getText() ,tfPassword.getText(), sexSelected, tfBirthDate.toString(), tfPhoneNumber.getText(), cmbAptitude.getSelectionModel().getSelectedItem(), tfHeight.getText(), tfWeight.getText(), cmbPosition.getSelectionModel().getSelectedItem());
+                String r = main.getModelManager().insertUser(cmbTypeUser.getSelectionModel().getSelectedIndex()+1, tfCitizenCardNumber.getText(), tfName.getText(), tfEmail.getText() ,tfPassword.getText(), sexSelected, tfBirthDate.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), tfPhoneNumber.getText(), cmbAptitude.getSelectionModel().getSelectedItem(), tfHeight.getText(), tfWeight.getText(), cmbPosition.getSelectionModel().getSelectedItem());
+                if(r.equals("User is now in the System")) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Great");
+                    alert.setContentText(r);
+                    alert.showAndWait();
+                }else{
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Invalid Info");
+                    alert.setContentText(r);
+                    alert.showAndWait();
+                }
                 //main.changeScene("manager\\InsertUserView.fxml");
             }
 
@@ -164,13 +174,13 @@ public class InsertUserController {
             cmbAptitude.setDisable(true);
             cmbPosition.setDisable(true);
 
-            tfWeight.setText("");
-            tfHeight.setText("");
+            tfWeight.setText(null);
+            tfHeight.setText(null);
 
-            labelAptitude.setText("");
-            labelHeight.setText("");
-            labelWeight.setText("");
-            labelPosition.setText("");
+            labelAptitude.setText(null);
+            labelHeight.setText(null);
+            labelWeight.setText(null);
+            labelPosition.setText(null);
         }
     }
 
@@ -250,10 +260,10 @@ public class InsertUserController {
         cmbAptitude.setItems(AptitudeList);
         cmbPosition.setItems(PositionsList);
 
-        labelAptitude.setText("");
-        labelHeight.setText("");
-        labelWeight.setText("");
-        labelPosition.setText("");
+        labelAptitude.setText(null);
+        labelHeight.setText(null);
+        labelWeight.setText(null);
+        labelPosition.setText(null);
     }
 
 }

@@ -1,5 +1,8 @@
 package gui.manager;
 
+import Users.Coach;
+import Users.Doctor;
+import Users.Manager;
 import Users.Player;
 import gui.Main;
 import javafx.collections.FXCollections;
@@ -64,7 +67,7 @@ public class DeleteUserController {
     void onSaveBtnClick(ActionEvent event) {
         try {
             Main main = new Main();
-            ArrayList<String> names = new ArrayList<>();
+            ArrayList<String> emails = new ArrayList<>();
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Delete Users");
             alert.setContentText("Are you sure you want to delete the selected users?");
@@ -76,10 +79,12 @@ public class DeleteUserController {
 
                 for(TableDeleteSetter tb : deleteTableView.getItems()){
                     if(tb.getCheckBox().isSelected()){
-                        names.add(tb.getName());
+                        emails.add(tb.getEmail());
                     }
                 }
-                System.out.println(names);
+                main.getModelManager().deleteUsers(emails);
+                System.out.println(emails);
+                deleteTableView.setItems(getTable());
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -98,27 +103,35 @@ public class DeleteUserController {
         deleteTableView.setItems(getTable());
     }
 
-    // JÁ NAO DA ERRO
     private ObservableList<TableDeleteSetter> getTable() {
         try {
             Main main = new Main();
             ArrayList<Player> players = main.getModelManager().getAllPlayer();
+            ArrayList<Doctor> doctors = main.getModelManager().getAllDoctor();
+            ArrayList<Coach> coaches = main.getModelManager().getAllCoach();
+            ArrayList<Manager> managers = main.getModelManager().getAllManager();
             ObservableList<TableDeleteSetter> tabela = FXCollections.observableArrayList();
             System.out.println(players);
-
-            for(Player player : players){
-                TableDeleteSetter tab = new TableDeleteSetter(player.getEmail(),"Player",player.getEmail());
+            for(Player p: players){
+                String name = main.getModelManager().getNameUser(p.getEmail());
+                TableDeleteSetter tab = new TableDeleteSetter(name,"Player",p.getEmail());
                 tabela.add(tab);
             }
-
-            /*
-            for (int i = 0; i < 20; i++) {
-
-                CheckBox checkBox = new CheckBox();
-
-                TableDeleteSetter data = new TableDeleteSetter("2" , "Rodrigo", "rodrigo@aac.pt");
-                tabela.add(data);
-            }*/
+            for(Coach p: coaches){
+                String name = main.getModelManager().getNameUser(p.getEmail());
+                TableDeleteSetter tab = new TableDeleteSetter(name,"Coach",p.getEmail());
+                tabela.add(tab);
+            }
+            for(Manager p: managers){
+                String name = main.getModelManager().getNameUser(p.getEmail());
+                TableDeleteSetter tab = new TableDeleteSetter(name,"Manager",p.getEmail());
+                tabela.add(tab);
+            }
+            for(Doctor p: doctors){
+                String name = main.getModelManager().getNameUser(p.getEmail());
+                TableDeleteSetter tab = new TableDeleteSetter(name,"Doctor",p.getEmail());
+                tabela.add(tab);
+            }
 
             return tabela;
         }catch (SQLException e) {

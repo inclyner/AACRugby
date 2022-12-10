@@ -11,10 +11,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import logic.ChangeRequest;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class ApproveRequestsController {
+
 
     @FXML
     private TableColumn<TableRequests, String> fromValue;
@@ -72,7 +75,7 @@ public class ApproveRequestsController {
     }
 
     @FXML
-    void initialize() {
+    void initialize() throws SQLException {
         fromValue.setCellValueFactory(new PropertyValueFactory<>("fromValue"));
         toValue.setCellValueFactory(new PropertyValueFactory<>("toValue"));
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -81,12 +84,14 @@ public class ApproveRequestsController {
         requestsTableView.setItems((getTable()));
     }
 
-    private ObservableList<TableRequests> getTable() {
+    private ObservableList<TableRequests> getTable() throws SQLException {
+        Main main = new Main();
         ObservableList<TableRequests> tabela = FXCollections.observableArrayList();
-        for (int i = 0; i < 20; i++) {
+        ArrayList<ChangeRequest> requests = main.getModelManager().getAllRequests();
 
-            TableRequests data = new TableRequests("Rodrigo", "email","rodrigo@aac.pt","rodri@aac.pt");
-            tabela.add(data);
+        for (ChangeRequest changeRequest: requests){
+            TableRequests tab = new TableRequests(main.getModelManager().getNameUserNcc(changeRequest.getPlayerCC()), "Email", changeRequest.getOldInfo(), changeRequest.getNewInfo());
+            tabela.add(tab);
         }
 
         return tabela;
