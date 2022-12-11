@@ -66,22 +66,42 @@ public class CoachMainController {
 
     @FXML
     void onClickInsertNotes(ActionEvent event) {
-
+        try {
+            Main main = new Main();
+            main.changeScene("coach\\InsertPlayersNotesView.fxml");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
     void onClickPunishmentBtn(ActionEvent event) {
-
+        try {
+            Main main = new Main();
+            main.changeScene("coach\\InsertExternalPunishmentView.fxml");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
     void onClickReportBtn(ActionEvent event) {
-
+        try {
+            Main main = new Main();
+            main.changeScene("coach\\ReportNonAttendanceView.fxml");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
     void onClickScheduleBtn(ActionEvent event) {
-
+        try {
+            Main main = new Main();
+            main.changeScene("coach\\SchedulePracticeView.fxml");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
