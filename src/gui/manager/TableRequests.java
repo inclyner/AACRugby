@@ -1,5 +1,5 @@
 package gui.manager;
-
+// not done not tested
 public class TableRequests {
     private String name;
     private String requestedChange;

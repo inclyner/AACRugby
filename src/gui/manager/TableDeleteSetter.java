@@ -1,5 +1,5 @@
 package gui.manager;
-
+// not done not tested
 import javafx.scene.control.CheckBox;
 
 public class TableDeleteSetter {

@@ -1,5 +1,4 @@
 package gui.doctor;
-
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
