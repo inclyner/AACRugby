@@ -28,19 +28,44 @@ public class Coach extends CommonFeatures {
         super(email);
     }
 
-    public String InsertPlayersPunishement(Long playerCC, String notes, int nGames){
-
+    public String InsertPlayersPunishement(String name, String notes, int nGames){
+        //Falta obter cc do coach para meter na base de dados a ultima pessoa q alterou tudo
+        if (name == null || notes == null /*|| String.valueOf(nGames) == null*/) {
+            return "Falta de argumentos";
+        }
         try {
             Statement statement = getDbConnection().createStatement();
-                    String sqlQuery = "INSERT INTO externalPunishments VALUES (NULL,'"+playerCC+"','"+getnCC(getEmail())+"','"+notes+"','"+nGames+"')";
-                    statement.executeUpdate(sqlQuery);
+            String sqlQuery = "SELECT nCC, name FROM user WHERE typeUserId=2";
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            while (resultSet.next()) {
+                long nCC = resultSet.getLong("nCC");
+                String n = resultSet.getString("name");
+                if (Objects.equals(n, name)) {
+                    String sqlQuery1 = "SELECT * FROM externalPunishments";
+                    ResultSet resultSet1 = statement.executeQuery(sqlQuery1);
+                    while (resultSet1.next()) {
+                        if (Objects.equals(resultSet1.getLong("playerCC"), nCC)) {
+                            notes=resultSet1.getString("notes").concat(notes);
+                            nGames+=resultSet1.getInt("numberGames");
+                            sqlQuery1 = "UPDATE externalPunishments SET coachCC ='" + 423455848L + "', notes ='" + notes + "', numberGames ='" + nGames + "'WHERE playerCC=" + nCC;
+                            statement.executeUpdate(sqlQuery1);
+                            resultSet.close();
+                            resultSet1.close();
+                            statement.close();
+                            return "Update the notes";
+                        }
+                    }
+                    //Alterar a parte de coachCC, esta mal
+                    sqlQuery1 = "INSERT INTO externalPunishments (playerCC, coachCC, notes, numberGames) VALUES ('"+nCC+"','"+nCC+"','"+notes+"','"+nGames+"')";
+                    statement.executeUpdate(sqlQuery1);
                     statement.close();
-            return "External Punishment is inserted in the database";
-
-
+                    return "Insert notes";
+                }
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return "Nothing";
     }
 
     public String callUpPlayers(ArrayList<Long>playersCC, int idgame) {
@@ -74,7 +99,7 @@ public class Coach extends CommonFeatures {
         }
     }
 
-    public void reportNonAttendance(Long CC){
+    public void repportNonAttendance(Long CC){
         int n=1;
         try {
             Statement statement = getDbConnection().createStatement();
@@ -228,14 +253,14 @@ public class Coach extends CommonFeatures {
         try {
             String sqlQuery= "INSERT INTO practice VALUES(NULL,'"+local+"','"+date+"','"+startTime+"','"+endTime+"','"+getnCC(getEmail())+"')";
             statement.executeUpdate(sqlQuery);
+            System.out.println("idGame");
             statement.close();
 
-            sqlQuery = "SELECT id from practice WHERE local='"+local + "' AND date='"+date +"' AND startTime='" + startTime + "'";
-            System.out.println(sqlQuery);
+            sqlQuery = "SELECT id from game WHERE local='"+"local' " + "AND date='"+"date'";
             ResultSet resultSet1 = statement.executeQuery(sqlQuery);
-            int id = resultSet1.getInt("id");
+            int idGame = resultSet1.getInt("id");
             for(Long p: playersCC) {
-                sqlQuery = "INSERT INTO practice_player VALUES(" + id + "," + p + ")";
+                sqlQuery = "INSERT INTO game_player VALUES(" + idGame + "," + p + "," + "NULL" + ")";
                 statement.executeUpdate(sqlQuery);
                 statement.close();
             }
