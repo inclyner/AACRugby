@@ -60,6 +60,28 @@ public abstract class CommonFeatures {
     public String getEmail() {
         return email;
     }
+
+    public String getNameUser(String email) throws SQLException {
+        File f = new File("bd\\AACRugby.db");
+        String DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
+        Connection dbConn = DriverManager.getConnection(DATABASE_URL);
+        Statement statement = dbConn.createStatement();
+        String sqlQuery = "SELECT email, name from user";
+        ResultSet resultSet = statement.executeQuery(sqlQuery);
+        while (resultSet.next()) {
+            String e = resultSet.getString("email");
+            if(email.equals(e)) {
+                String name = resultSet.getString("name");
+                resultSet.close();
+                statement.close();
+                return name;
+            }
+        }
+        resultSet.close();
+        statement.close();
+        return null;
+    }
+
     public ArrayList<ChangeRequest> getChangeRequests() throws SQLException {
         ArrayList<ChangeRequest> changeRequests = new ArrayList<>();
         Statement statement = getDbConnection().createStatement();

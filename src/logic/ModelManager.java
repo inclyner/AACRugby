@@ -23,6 +23,7 @@ public class ModelManager {
     public String getNameLogged() {
         return nameLogged;
     }
+
     public ModelManager() throws SQLException {}
     public boolean login(String email, String password) throws SQLException {
         File f = new File("bd\\AACRugby.db");
@@ -105,6 +106,24 @@ public class ModelManager {
     public ArrayList<MedicalAppointment> getAllAppointments(){
         Manager manager1 = new Manager();
         return manager1.getAppointments();
+    }
+
+    public Long getNcc(String email){
+        Manager manager1 = new Manager();
+        try {
+            return manager1.getnCC(email);
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    public String callup(ArrayList<Long> ncc){
+        try {
+            Coach coach = new Coach(getEmailLogged());
+        } catch (SQLException throwables) {
+            throw new RuntimeException();
+        }
+        return coach.callUpPlayers(ncc, 1);
     }
 
     public String getNameUser(String email) throws SQLException {
