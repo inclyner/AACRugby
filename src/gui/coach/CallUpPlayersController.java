@@ -3,6 +3,7 @@ package gui.coach;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import Users.Player;
@@ -12,10 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class CallUpPlayersController {
@@ -39,6 +37,9 @@ public class CallUpPlayersController {
     private TableColumn<TableCallUpGame, String> name;
 
     @FXML
+    private TableColumn<TableCallUpGame, String> email;
+
+    @FXML
     private TableView<TableCallUpGame> tableViewCallUpPlayers;
 
     @FXML
@@ -48,15 +49,61 @@ public class CallUpPlayersController {
     void onClickBtnBack(ActionEvent event) {
         try {
             Main main = new Main();
-            main.changeScene("coach\\CoachMainView.fxml");
+
+            if(isAnyUserSelected()){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Canceling Operation");
+                alert.setContentText("Are you sure you want do cancel the operation?");
+                Optional<ButtonType> option = alert.showAndWait();
+                if (option.get() == ButtonType.CANCEL)
+                    return;
+                else if (option.get() == ButtonType.OK)
+                    main.changeScene("coach\\CoachMainView.fxml");
+            } else
+                main.changeScene("coach\\CoachMainView.fxml");
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        /*try {
+            Main main = new Main();
+            main.changeScene("coach\\CoachMainView.fxml");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }*/
     }
 
     @FXML
     void onClickBtnSave(ActionEvent event) {
+        try {
+            Main main = new Main();
+            ArrayList<Long> nCC = new ArrayList<>();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Call up Players");
+            alert.setContentText("Are you sure you want to call up this players?");
+            Optional<ButtonType> option = alert.showAndWait();
 
+            if (option.get() == ButtonType.CANCEL)
+                return;
+            else if (option.get() == ButtonType.OK){
+                for(TableCallUpGame tb : tableViewCallUpPlayers.getItems()){
+                    if(tb.getCheckBox().isSelected()){
+                        nCC.add(main.getModelManager().getNcc(tb.getEmail()));
+                    }
+                }
+                String a = main.getModelManager().callup(nCC);
+                Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                if (!a.equals("Insert date about call up in the database")) {
+                    alert1.setTitle("Call up");
+                    alert1.setContentText(a);
+                    alert1.showAndWait();
+                }
+                System.out.println(nCC);
+                tableViewCallUpPlayers.setItems(getTable());
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
@@ -78,12 +125,27 @@ public class CallUpPlayersController {
 
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         callToGame.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
+        email.setCellValueFactory(new PropertyValueFactory<>("email"));
 
         tableViewCallUpPlayers.setItems(getTable());
     }
 
     private ObservableList<TableCallUpGame> getTable() {
         try {
+            Main main = new Main();
+            ArrayList<Player> players = main.getModelManager().getAllPlayer();
+            ObservableList<TableCallUpGame> tabela = FXCollections.observableArrayList();
+            System.out.println(players);
+            for(Player p: players){
+                String name = main.getModelManager().getNameUser(p.getEmail());
+                TableCallUpGame tab = new TableCallUpGame (p.getNameUser(p.getEmail()), p.getEmail());
+                tabela.add(tab);
+            }
+            return tabela;
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        /*try {
             Main main = new Main();
             //ArrayList<Player> players = main.getModelManager().getAllPlayer();
             ObservableList<TableCallUpGame> tabela = FXCollections.observableArrayList();
@@ -92,7 +154,7 @@ public class CallUpPlayersController {
             for(Player player : players){
                 TableCallUpGame tab = new TableCallUpGame(player.getEmail());
                 tabela.add(tab);
-            }*/
+            }
 
 
             for (int i = 0; i < 20; i++) {
@@ -104,7 +166,15 @@ public class CallUpPlayersController {
             return tabela;
         }catch (SQLException e) {
             throw new RuntimeException(e);
-        }
+        }*/
     }
 
+    private boolean isAnyUserSelected(){
+        for(TableCallUpGame tb : tableViewCallUpPlayers.getItems()){
+            if(tb.getCheckBox().isSelected()){
+                return true;
+            }
+        }
+        return false;
+    }
 }

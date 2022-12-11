@@ -119,9 +119,9 @@ public class ModelManager {
 
     public String callup(ArrayList<Long> ncc){
         try {
-            Coach coach = new Coach(getEmailLogged());
+            this.coach= new Coach(getEmailLogged());
         } catch (SQLException throwables) {
-            throw new RuntimeException();
+            throwables.printStackTrace();
         }
         return coach.callUpPlayers(ncc, 1);
     }
