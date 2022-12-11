@@ -17,6 +17,8 @@ public class ModelManager {
     public static String emailLogged;
     private static String nameLogged;
 
+
+
     public String getEmailLogged() {
         return emailLogged;
     }

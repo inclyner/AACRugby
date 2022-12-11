@@ -99,8 +99,8 @@ public class ApproveRequestsController {
         ArrayList<ChangeRequest> requests = main.getModelManager().getAllRequests();
 
         for (ChangeRequest changeRequest: requests){
-           // TableRequests tab = new TableRequests(main.getModelManager().getNameUserNcc(changeRequest.getPlayerCC()), "Email", changeRequest.getOldInfo(), changeRequest.getNewInfo());
-            //tabela.add(tab);
+            TableRequests tab = new TableRequests(main.getModelManager().getNameUserNcc(String.valueOf(changeRequest.getPlayerCC())), "Email", changeRequest.getOldInfo(), changeRequest.getNewInfo());
+            tabela.add(tab);
         }
 
         return tabela;

@@ -1,11 +1,12 @@
 package gui.player;
-
+// not done not tested
 import gui.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
@@ -68,7 +69,6 @@ public class PlayerPersonalDataController {
 
         try {
             Main main = new Main();
-
             if(wereChangesNotSaved()){
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Canceling Operation");
@@ -164,8 +164,12 @@ public class PlayerPersonalDataController {
 
 
     @FXML
-    void initialize() {
+    void initialize() throws SQLException {
         cmbPersonalData.setItems(optionsViewPersonalData);
+        Main m = new Main();
+        String userName = m.getModelManager().getNameUser(m.getModelManager().getEmailLogged());
+        tfName.setText(userName);
+
     }
 
     private boolean wereChangesNotSaved() {
