@@ -8,7 +8,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="AACRugby" level="project" />
-    <orderEntry type="library" name="activation" level="project" />
+    <orderEntry type="library" exported="" name="activation" level="project" />
     <orderEntry type="library" exported="" name="javafx-swt" level="project" />
     <orderEntry type="module-library">
       <library name="JUnit4">
@@ -36,10 +36,10 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" exported="" name="charm-glisten-6.2.2" level="application" />
+    <orderEntry type="library" name="charm-glisten-6.2.2" level="application" />
     <orderEntry type="library" exported="" name="lib" level="application" />
-    <orderEntry type="library" exported="" name="lib1" level="application" />
-    <orderEntry type="library" exported="" name="sqlite-jdbc-3.27.2.1" level="application" />
+    <orderEntry type="library" name="lib1" level="application" />
+    <orderEntry type="library" name="sqlite-jdbc-3.27.2.1" level="application" />
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
@@ -59,7 +59,7 @@
       </library>
     </orderEntry>
     <orderEntry type="library" exported="" name="sqlite-jdbc-3.39.3.01" level="project" />
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
           <root url="file://C:/Program Files/Java/javafx-sdk-19/lib" />
@@ -78,7 +78,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/charm-glisten-6.2.2.jar!/" />
@@ -105,5 +105,8 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" exported="" name="mail" level="project" />
+    <orderEntry type="library" name="smtp-1.6.2" level="project" />
+    <orderEntry type="library" exported="" name="aspose-email-22.11-jdk16" level="application" />
   </component>
 </module>
