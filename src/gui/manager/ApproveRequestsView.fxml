@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="476.0" prefWidth="608.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.manager.ApproveRequestsController">
    <children>
-      <TableView fx:id="requestsTableView" layoutX="58.0" layoutY="74.0" onMouseClicked="#onCkickTableRow" prefHeight="200.0" prefWidth="506.0">
+      <TableView fx:id="requestsTableView" layoutX="58.0" layoutY="74.0" onMouseClicked="#onClickTableRow" prefHeight="200.0" prefWidth="506.0">
         <columns>
           <TableColumn fx:id="name" prefWidth="122.39996337890625" text="name" />
           <TableColumn fx:id="requestedChange" prefWidth="128.800048828125" text="Requested Change" />
@@ -18,7 +18,7 @@
             <TableColumn fx:id="toValue" prefWidth="141.60003662109375" text="toValue" />
         </columns>
       </TableView>
-      <Button fx:id="btnDeny" layoutX="403.0" layoutY="304.0" mnemonicParsing="false" onAction="#onCliclDenyBtn" prefHeight="62.0" prefWidth="98.0" style="-fx-background-color: rgba(193,166,112,255);" text="Deny">
+      <Button fx:id="btnDeny" layoutX="403.0" layoutY="304.0" mnemonicParsing="false" onAction="#onClickDenyBtn" prefHeight="62.0" prefWidth="98.0" style="-fx-background-color: rgba(193,166,112,255);" text="Deny">
          <font>
             <Font size="13.0" />
          </font>

@@ -10,7 +10,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.Optional;
 
 public class PlayerPersonalDataController {
@@ -66,15 +65,28 @@ public class PlayerPersonalDataController {
 
     @FXML
     void onClickBtnBack(ActionEvent event) {
+
         try {
             Main main = new Main();
-            main.changeScene("player\\PlayerMainView.fxml");
 
+            if(wereChangesNotSaved()){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Canceling Operation");
+                alert.setContentText("Are you sure you want do cancel the operation?");
+                Optional<ButtonType> option = alert.showAndWait();
+                if (option.get() == ButtonType.CANCEL)
+                    return;
+                else if (option.get() == ButtonType.OK)
+                    main.changeScene("player\\PlayerMainView.fxml");
+            } else
+                main.changeScene("player\\PlayerMainView.fxml");
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
+
 
     @FXML
     void onSelectTypeOfData(ActionEvent event) {
@@ -97,8 +109,25 @@ public class PlayerPersonalDataController {
     }
 
     @FXML
-    void onClivkBtnSave(ActionEvent event) {
-
+    void onClickBtnSave(ActionEvent event) throws SQLException{
+        Main main = new Main();
+        if(wereChangesNotSaved()){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Send request to change data");
+            alert.setContentText("Are you sure you want to send a request to change data?");
+            Optional<ButtonType> option = alert.showAndWait();
+            String userCC = main.getModelManager().getNameUserNcc(tfCC.getText());
+            if (option.get() == ButtonType.CANCEL)
+                return;
+            else if (option.get() == ButtonType.OK){
+                if (tfEmail.getText() != main.getModelManager().getEmailUserNcc(userCC)) {
+                    main.getModelManager().requestChange(main.getModelManager().getEmailUserNcc(userCC),tfEmail.getText());
+                }
+                if(tfPhoneNumber.getText() != main.getModelManager().getPhoneNumberUserNcc(userCC)) {
+                    main.getModelManager().requestChange(main.getModelManager().getPhoneNumberUserNcc(userCC), tfPhoneNumber.getText());
+                }
+            }
+        }
     }
 
     @FXML
@@ -117,6 +146,7 @@ public class PlayerPersonalDataController {
             tfEmail.setEditable(false);
             tfEmail.setFocusTraversable(false);
         }
+
     }
 
     @FXML
@@ -137,4 +167,23 @@ public class PlayerPersonalDataController {
     void initialize() {
         cmbPersonalData.setItems(optionsViewPersonalData);
     }
+
+    private boolean wereChangesNotSaved() {
+        try {
+            Main main = new Main();
+            String userCC = main.getModelManager().getNameUserNcc(tfCC.getText());
+            //tfEmail tfPhoneNumber
+            if(tfPhoneNumber.getText()!=main.getModelManager().getPhoneNumberUserNcc(userCC)|| tfEmail.getText()!=main.getModelManager().getEmailUserNcc(userCC)){
+                return true;
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        return false;
+    }
+
 }

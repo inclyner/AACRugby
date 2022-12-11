@@ -87,6 +87,7 @@ public class Manager extends CommonFeatures {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }*/
+
         String terminate ="";
         Pattern special = Pattern.compile("[!@#$%&*()_+=`£@;,//<>§€^ºª|<>?{}«»´\\[\\]~-]");
         Pattern letter = Pattern.compile("[a-zA-z]");
