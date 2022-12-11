@@ -2,6 +2,7 @@ package Users;
 
 import logic.SendEmail;
 
+import javax.mail.MessagingException;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -76,7 +77,7 @@ public class Manager extends CommonFeatures {
         }
     }
 
-    public String insertUser(int type, String nCC, String name, String email, String pass, String sex, String birthDate, String phoneNumber, String aptitude, String height, String weight, String position) {
+    public String insertUser(int type, String nCC, String name, String email, String pass, String sex, String birthDate, String phoneNumber, String aptitude, String height, String weight, String position) throws SQLException, MessagingException {
         Long cartao=null, phone=null;
         Float peso =null, altura =null;
 
@@ -86,6 +87,7 @@ public class Manager extends CommonFeatures {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }*/
+
         String terminate ="";
         Pattern special = Pattern.compile("[!@#$%&*()_+=`£@;,//<>§€^ºª|<>?{}«»´\\[\\]~-]");
         Pattern letter = Pattern.compile("[a-zA-z]");
@@ -129,7 +131,7 @@ public class Manager extends CommonFeatures {
         cartao = Long.parseLong(nCC);
         //Check height
         if (height!=null) {
-            if(approveWeight(height)!=null) return approveWeight(height);
+            if(approveHeight(height)!=null) return approveWeight(height);
             altura = Float.parseFloat(height);
              if(altura > 300.0) return "There's no one that high";
             else if(altura<100.0) return "We don't want anyone that small";
@@ -142,10 +144,9 @@ public class Manager extends CommonFeatures {
         if(peso > 200.0) return "Weight's too high";
             else if(peso<40.0) return "Weight's too low";
         }
+        Statement statement = getDbConnection().createStatement();
         //Check Unique Values
-
         try {
-            Statement statement = getDbConnection().createStatement();
             String query = "SELECT nCC, email from user";
             ResultSet resultSet = statement.executeQuery(query);
             System.out.println();
@@ -155,7 +156,6 @@ public class Manager extends CommonFeatures {
                 String e = resultSet.getString("email");
                 if (email.equals(e)) terminate="Email Already Exists";
             }
-            statement.close();
             resultSet.close();
             if(!terminate.equals("")) return terminate;
         } catch (SQLException e) {
@@ -163,11 +163,11 @@ public class Manager extends CommonFeatures {
         }
 
         try {
-            Statement statement = getDbConnection().createStatement();
             String sqlQuery = "INSERT INTO user VALUES ("+cartao+",'"+"false"+"','"+email.toLowerCase()+"','"+name.toLowerCase()+"','"+pass.toLowerCase()+"','"+birthDate+"','"+sex.toLowerCase()+"',"+phone+",'"+aptitude+"','"+position+"',"+peso+","+altura+",'"+type+"')";
-            System.out.println(sqlQuery);
             statement.executeUpdate(sqlQuery);
             statement.close();
+            closeDb();
+
         }catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -179,17 +179,22 @@ public class Manager extends CommonFeatures {
 
     public String deleteUser(ArrayList<String> listaEmail) throws SQLException {
         String resposta = null;
+        ArrayList<Integer> ides = new ArrayList<>();
         Statement statement = getDbConnection().createStatement();
-        String sqlQuery1 = "SELECT email, typeUserId FROM user";
-        ResultSet resultSet = statement.executeQuery(sqlQuery1);
-        listaEmail.forEach((n) -> {
-            try {
+
+        for(String e : listaEmail) {
+            String sqlQuery1 = "SELECT email, typeUserId FROM user";
+            ResultSet resultSet = statement.executeQuery(sqlQuery1);
             while (resultSet.next()) {
                 String email = resultSet.getString("email");
                 int type = resultSet.getInt("typeUserId");
-                if (Objects.equals(n, email)) {
-                    /*if (type == 2) {
-                        String sqlQuery = "DELETE FROM medicalAppointment WHERE playerCC=" + getnCC(email) +";";
+                if (e.equals(email)) {
+                    if(type==1){
+                        String sqlQuery = "DELETE FROM medicalAppointment WHERE doctorCC=" + getnCC(email);
+                        statement.executeUpdate(sqlQuery);
+                    }
+                    else if (type == 2) {
+                        String sqlQuery = "DELETE FROM medicalAppointment WHERE playerCC=" + getnCC(email);
                         statement.executeUpdate(sqlQuery);
 
                         sqlQuery = "SELECT * FROM practice_player WHERE playerCC=" + getnCC(email);
@@ -206,17 +211,46 @@ public class Manager extends CommonFeatures {
                                 statement.executeUpdate(sqlQuery);
                             }
                         }
-                    }*/
-                    String sqlQuery="DELETE FROM user WHERE nCC = " + getnCC(email)+";";
+                    }
+                    else if(type==3){
+                        String query = "SELECT coachCC FROM game WHERE coachCC=" + getnCC(email);
+                        ResultSet resultSet1 = statement.executeQuery(query);
+                        if(resultSet1.next()) return "Can't delete Coach";
+
+                        query = "SELECT id FROM practice WHERE coachCC IN (" + getnCC(email)+");";
+                        ResultSet resultSet2 = statement.executeQuery(query);
+                        resultSet2.getMetaData();
+                        while (resultSet2.next()){
+                            int id = resultSet2.getInt("id");
+                            System.out.println("RESULTSET:"+resultSet2.getRow());
+                            System.out.println("ID"+id);
+                            ides.add(id);
+                        }
+                        for(Integer i: ides) {
+                            String sqlQuery = "DELETE FROM practice_player WHERE idPractice=" + i;
+                            statement.executeUpdate(sqlQuery);
+                        }
+                        /*while (resultSet2.next()){
+                            System.out.println("RESULTSET:"+resultSet2.getRow());
+                            int id = resultSet2.getInt("id");
+                            System.out.println(id);
+                            String sqlQuery = "DELETE FROM practice_player WHERE idPractice=" + id;
+                            statement.executeUpdate(sqlQuery);
+                        }*/
+
+
+                        String sqlQuery = "DELETE FROM practice WHERE coachCC=" + getnCC(email);
+                        statement.executeUpdate(sqlQuery);
+
+                    }
+                    String sqlQuery="DELETE FROM user WHERE email = '" + email+"'";
                     statement.executeUpdate(sqlQuery);
-
                 }
+
             }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-                }
-        });
+            statement.close();
 
+        }
         closeDb();
         return "Users Deleted";
     }

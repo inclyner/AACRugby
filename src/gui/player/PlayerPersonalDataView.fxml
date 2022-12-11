@@ -74,7 +74,7 @@
             <Font size="13.0" />
          </font>
       </Label>
-      <Button fx:id="btnSave" layoutX="474.0" layoutY="408.0" mnemonicParsing="false" onAction="#onClivkBtnSave" prefHeight="30.0" prefWidth="59.0" style="-fx-background-color: rgba(193,166,112,255);" text="Save">
+      <Button fx:id="btnSave" layoutX="474.0" layoutY="408.0" mnemonicParsing="false" onAction="#onClickBtnSave" prefHeight="30.0" prefWidth="59.0" style="-fx-background-color: rgba(193,166,112,255);" text="Save">
          <font>
             <Font size="13.0" />
          </font>

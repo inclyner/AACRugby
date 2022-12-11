@@ -3,6 +3,7 @@ package logic;
 //import Users.CommonFeatures;
 import Users.*;
 
+import javax.mail.MessagingException;
 import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class ModelManager {
         return false;
     }
 
-    public String insertUser(int type, String nCC, String name, String email, String pass, String sex, String birthDate, String phoneNumber, String aptitude, String height, String weight, String position) throws SQLException{
+    public String insertUser(int type, String nCC, String name, String email, String pass, String sex, String birthDate, String phoneNumber, String aptitude, String height, String weight, String position) throws SQLException, MessagingException {
         //if(checksTypeUser(emailLogged) == 4){
         Manager manager1 = new Manager();
         return manager1.insertUser(type, nCC, name, email, pass, sex,birthDate, phoneNumber,  aptitude, height, weight,position);
@@ -146,7 +147,7 @@ public class ModelManager {
         statement.close();
         return null;
     }
-    public String getNameUserNcc(Long nCC) throws SQLException {
+    public String getNameUserNcc(String nCC) throws SQLException {
         File f = new File("bd\\AACRugby.db");
         String DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
         Connection dbConn = DriverManager.getConnection(DATABASE_URL);
@@ -154,7 +155,7 @@ public class ModelManager {
         String sqlQuery = "SELECT nCC, name from user";
         ResultSet resultSet = statement.executeQuery(sqlQuery);
         while (resultSet.next()) {
-            Long n = resultSet.getLong("nCC");
+            String n = resultSet.getString("nCC");
             if(n.equals(nCC)) {
                 String name = resultSet.getString("name");
                 resultSet.close();
@@ -166,6 +167,29 @@ public class ModelManager {
         statement.close();
         return null;
     }
+
+    public String getPhoneNumberUserNcc(String nCC) throws SQLException {
+        File f = new File("bd\\AACRugby.db");
+        String DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
+        Connection dbConn = DriverManager.getConnection(DATABASE_URL);
+        Statement statement = dbConn.createStatement();
+        String sqlQuery = "SELECT phoneNumber from user";
+        ResultSet resultSet = statement.executeQuery(sqlQuery);
+        while (resultSet.next()) {
+            String n = resultSet.getString("nCC");
+            if(n.equals(nCC)) {
+                String name = resultSet.getString("phoneNumber");
+                resultSet.close();
+                statement.close();
+                return name;
+            }
+
+        }
+        resultSet.close();
+        statement.close();
+        return null;
+    }
+
 
 
     public int checksTypeUser(String email) throws SQLException{
@@ -189,5 +213,37 @@ public class ModelManager {
         return 0;
     }
 
+    public String getEmailUserNcc(String nCC) {
+        File f = new File("bd\\AACRugby.db");
+        String DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
+        Connection dbConn = null;
+        try {
+            dbConn = DriverManager.getConnection(DATABASE_URL);
+            Statement statement = dbConn.createStatement();
+            String sqlQuery = "SELECT email from user";
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            while (resultSet.next()) {
+                String n = resultSet.getString("nCC");
+                if(n.equals(nCC)) {
+                    String name = resultSet.getString("email");
+                    resultSet.close();
+                    statement.close();
+                    return name;
+                }
+
+            }
+            resultSet.close();
+            statement.close();
+            return null;
+        } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
+    }
+
+    public void requestChange(String oldInfo,String newInfo) throws SQLException {
+        Player p = new Player();
+        p.requestChangePersonalData(oldInfo, newInfo);
+
+    }
 }
 

@@ -5,6 +5,7 @@ import Users.CommonFeatures;
 import Users.Doctor;
 import Users.Manager;
 
+import javax.mail.MessagingException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
@@ -23,14 +24,15 @@ public class ReadFilesToDB {
         String DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
         return DriverManager.getConnection(DATABASE_URL);
     }
-    public void insertUsersFromTxt() throws SQLException {
+    public void insertUsersFromTxt() throws SQLException, MessagingException {
         int type=0;
         Float height=null, weight=null;
         Long nCC=0L , phoneNumber=0L;
         Manager manager = new Manager();
         String name=null, email=null, sex=null, birthDate=null, password=null, position=null, typeS;
         boolean aptitude=true;
-        try {
+        System.out.println(manager.insertUser(3, "770909795", "Camila Santos", "camilasantos@acc.com", "pas5//", "Female", "09-04-2022", "903421728".toString(), null, null, null, null));
+        /*try {
             File myObj = new File("dados\\users.txt");
             Scanner myReader = new Scanner(myObj);
             String[] array;
@@ -80,15 +82,16 @@ public class ReadFilesToDB {
                             else weight=Float.parseFloat(array[1]);
                         }
                     } while(!Objects.equals(data, "") && myReader.hasNextLine());
-                    System.out.println(nCC + "    "+ name +"    "+ type +"    "+ email +"    "+ password +"    "+ sex + "    "+birthDate + "    "+phoneNumber+ "    "+ aptitude + "    "+position);
-                    //System.out.println(manager.insertUser(type, nCC, name, email, password, sex, birthDate, phoneNumber, aptitude, height, weight, position));
+                assert height != null;
+                assert weight != null;
+                System.out.println(manager.insertUser(type, nCC.toString(), name, email, password, sex, birthDate, phoneNumber.toString(), String.valueOf(aptitude), null, null, position));
 
             }
             myReader.close();
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
-        }
+        }*/
     }
     public void insertGames() throws SQLException{
         Connection dbConn = connectDB();
@@ -103,7 +106,7 @@ public class ReadFilesToDB {
                 do{
                     data = myReader.nextLine();
                     System.out.println(data);
-                    array = data.split(":");
+                    array = data.split(";");
                     if (Objects.equals(array[0], "date")) {
                         date=array[1];
                     }
@@ -206,7 +209,6 @@ public class ReadFilesToDB {
                     }
 
                 } while(!Objects.equals(data, "") && myReader.hasNextLine());
-                System.out.println(playerCC+"\t"+date+"\t"+horaInicial+"\t"+horaFinal+"\t");
                 System.out.println(doc.ScheduleMedicalAppointments(playerCC,date,horaInicial,horaFinal));
             }
             myReader.close();
@@ -255,11 +257,11 @@ public class ReadFilesToDB {
         }
     }
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, MessagingException {
         ReadFilesToDB readFilestoDB = new ReadFilesToDB();
-        //readFilestoDB.insertUsersFromTxt(); //woks
+        readFilestoDB.insertUsersFromTxt(); //woks
         //readFilestoDB.insertGames();//works
-        //readFilestoDB.insertPractice(); //works
+        readFilestoDB.insertPractice(); //works
         //readFilestoDB.insertAppointments(); //work
         //readFilestoDB.insertExternalPunishments();//work
     }

@@ -238,8 +238,9 @@ public abstract class CommonFeatures {
             Statement statement = getDbConnection().createStatement();
             String query = "SELECT * from user WHERE typeUserId=4";
             ResultSet resultSet = statement.executeQuery(query);
-            String email = resultSet.getString("email");
+
             while (resultSet.next()) {
+                String email = resultSet.getString("email");
                 managers.add(new Manager(email));
             }
             closeDb();

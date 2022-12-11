@@ -100,7 +100,6 @@ public class Doctor extends CommonFeatures{
                 }
             }
         }
-
         for(Practise practise: getPractise()){
             if(getPractise().size()==0) break;
             LocalTime begin = LocalTime.parse(practise.getInitialTime());
@@ -119,17 +118,13 @@ public class Doctor extends CommonFeatures{
             }
 
 
-
-
-
         try {
             Statement statement = getDbConnection().createStatement();
-
-
             String sqlQuery = "INSERT INTO medicalAppointment VALUES (NULL,'"
                         + getnCC(getEmail()) + "','"+ playerCC + "','" + date + "','" + startTime + "','" + endTime + "')";
             statement.executeUpdate(sqlQuery);
             statement.close();
+            closeDb();
             return "Medical Appointment insert in database";
         }catch (SQLException e){
             throw new RuntimeException();
