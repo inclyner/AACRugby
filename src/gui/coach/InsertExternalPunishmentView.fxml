@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="476.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.coach.InsertExternalPunishmentController">
    <children>
       <Label layoutX="48.0" layoutY="44.0" text="Insert External Punishment for Player">

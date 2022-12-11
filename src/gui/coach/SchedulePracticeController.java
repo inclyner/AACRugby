@@ -2,12 +2,15 @@ package gui.coach;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 
 import gui.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.util.converter.DateTimeStringConverter;
 
 public class SchedulePracticeController {
 
@@ -56,7 +59,7 @@ public class SchedulePracticeController {
     }
 
     @FXML
-    void initialize() {
+    void initialize()  {
         assert btnBack != null : "fx:id=\"btnBack\" was not injected: check your FXML file 'SchedulePracticeView.fxml'.";
         assert btnSave != null : "fx:id=\"btnSave\" was not injected: check your FXML file 'SchedulePracticeView.fxml'.";
         assert chbSelectAll != null : "fx:id=\"chbSelectAll\" was not injected: check your FXML file 'SchedulePracticeView.fxml'.";
@@ -67,6 +70,13 @@ public class SchedulePracticeController {
         assert tfEndTime != null : "fx:id=\"tfEndTime\" was not injected: check your FXML file 'SchedulePracticeView.fxml'.";
         assert tfLocal != null : "fx:id=\"tfLocal\" was not injected: check your FXML file 'SchedulePracticeView.fxml'.";
 
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+            tfBeginTime.setTextFormatter(new TextFormatter<>(new DateTimeStringConverter(format), format.parse("00:00")));
+            tfEndTime.setTextFormatter(new TextFormatter<>(new DateTimeStringConverter(format), format.parse("00:00")));
+        } catch (ParseException e){
+            System.err.println(e);
+        }
     }
 
 }
