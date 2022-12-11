@@ -2,7 +2,7 @@ package logic.tests;
 
 import Users.Player;
 import logic.ModelManager;
-import org.junit.Test;
+import org.testng.annotations.Test;
 
 import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;

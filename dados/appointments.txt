@@ -1,23 +1,19 @@
-doctorCC:129136635
-playerCC:585005353
-date:09-01-2023
-startTime:15:00
-endTime:15:30
+date;09-01-2023
+startTime;15:00
+endTime;15:30
+playerCC;585005353
 
-doctorCC:857269735
-playerCC:412191513
-date:13-01-2023
-startTime:17:00
-endTime:17:30
+date;13-01-2023
+startTime;17:00
+endTime;17:30
+playerCC;412191513
 
-doctorCC:42102385
-playerCC:451707431
-date:19-01-2023
-startTime:16:30
-endTime:17:00
+date;19-01-2023
+startTime;16:30
+endTime;17:00
+playerCC;451707431
 
-doctorCC:857269735
-playerCC:255345124
-date:22-01-2023
-startTime:9:00
-endTime:9:30
+date;22-01-2023
+startTime;09:00
+endTime;09:30
+playerCC;255345124

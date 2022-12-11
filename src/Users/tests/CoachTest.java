@@ -20,7 +20,7 @@ class CoachTest {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        assertEquals("Insert notes",coach.InsertPlayersPunishement("Camilo Tavares", "ola as d", 2));
+        assertEquals("Insert notes",coach.InsertPlayersPunishement(585005353L, "ola as d", 2));
     }
 
     @Test
@@ -31,7 +31,7 @@ class CoachTest {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        assertEquals("Update notes",coach.InsertPlayersPunishement("Camilo Tavares", "ola as d", 2));
+        assertEquals("Update notes",coach.InsertPlayersPunishement(585005353L, "ola as d", 2));
     }
 
     @Test

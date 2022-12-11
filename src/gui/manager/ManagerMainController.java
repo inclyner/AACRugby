@@ -8,6 +8,7 @@ import gui.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
@@ -27,6 +28,9 @@ public class ManagerMainController {
 
     @FXML
     private Button btnInsertUser;
+
+    @FXML
+    private Label lbHello;
 
     @FXML
     void onClickInsertUser(MouseEvent event) {
@@ -63,11 +67,12 @@ public class ManagerMainController {
 
     @FXML
     void initialize() {
-
-        assert btnAproveRequests != null : "fx:id=\"btnAproveRequests\" was not injected: check your FXML file 'ManagerMainView.fxml'.";
-        assert btnDeleteUser != null : "fx:id=\"btnDeleteUser\" was not injected: check your FXML file 'ManagerMainView.fxml'.";
-        assert btnInsertUser != null : "fx:id=\"btnInsertUser\" was not injected: check your FXML file 'ManagerMainView.fxml'.";
-
+       try {
+            Main main = new Main();
+            lbHello.setText("Hello manager " + main.getModelManager().getNameLogged() +"!");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

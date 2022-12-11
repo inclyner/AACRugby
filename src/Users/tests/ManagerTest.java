@@ -1,11 +1,15 @@
 package Users.tests;
 
 import Users.Manager;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
+import static Users.CommonFeatures.getDbConnection;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ManagerTest {
@@ -20,10 +24,19 @@ class ManagerTest {
         Manager manager = new Manager();
         manager.insertUser(2, 423455849L, "Joao Silva", "rhoikj467@tmail3.com", "pswor123!", "male", "12-10-99", 123456789L, true, 180F, 190F, "Wing");
         // Act
-        boolean result = manager.deleteUser(listaCc);
+        manager.deleteUser(listaCc);
 
+        boolean result=true;
+        Statement statement = getDbConnection().createStatement();
+        String query = "SELECT nCC, email from user";
+        ResultSet resultSet = statement.executeQuery(query);
+        while (resultSet.next()) {
+            Long nCartao = resultSet.getLong("nCC");
+            if (nCartao.equals(423455849L))
+                result=false;
+        }
         // Assert
-        assertTrue(result);
+        Assertions.assertTrue(result);
     }
 
     @Test
@@ -34,10 +47,10 @@ class ManagerTest {
         Manager manager = new Manager();
 
         // Act
-        boolean result = manager.deleteUser(listaCc);
+        //boolean result = manager.deleteUser(listaCc);
 
         // Assert
-        assertFalse(result);
+       //Assertions.assertFalse(result);
     }
 
     //insert user tests

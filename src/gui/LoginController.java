@@ -36,12 +36,13 @@ public class LoginController {
 
             //main.changeScene("manager\\ManagerMainView.fxml");
             //main.changeScene("player\\playerMainView.fxml");
+            //main.changeScene("coach\\CoachMainView.fxml");
 
             if(main.getModelManager().login(tfEmail.getText().toString(), password.getText().toString())){
                 int typeOfUser = main.getModelManager().checksTypeUser(tfEmail.getText());
                 // doctor
                 if(typeOfUser == 1) {
-                    main.changeScene("manager\\ManagerMainView.fxml");
+                    main.changeScene("doctor\\DoctorMainView.fxml");
                 }
                 // player
                 else if(typeOfUser == 2){
@@ -49,7 +50,7 @@ public class LoginController {
                 }
                 // coach
                 else if(typeOfUser == 3){
-                    main.changeScene("player\\playerMainView.fxml");
+                    main.changeScene("coach\\CoachMainView.fxml");
                 }
                 // manager
                 else if(typeOfUser == 4){
