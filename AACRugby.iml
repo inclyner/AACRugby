@@ -37,5 +37,8 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="sqlite-jdbc-3.39.3.01" level="project" />
+    <orderEntry type="library" name="smtp-1.6.2" level="project" />
+    <orderEntry type="library" name="mail" level="project" />
+    <orderEntry type="library" exported="" name="aspose-email-22.11-javadoc" level="application" />
   </component>
 </module>

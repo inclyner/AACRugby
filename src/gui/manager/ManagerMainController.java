@@ -2,12 +2,16 @@ package gui.manager;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import gui.Main;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -70,6 +74,7 @@ public class ManagerMainController {
        try {
             Main main = new Main();
             lbHello.setText("Hello manager " + main.getModelManager().getNameLogged() +"!");
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

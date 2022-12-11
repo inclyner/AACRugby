@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Border;
 
+import javax.mail.MessagingException;
 import javax.swing.text.html.Option;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -149,6 +150,8 @@ public class InsertUserController {
 
         } catch (SQLException e){
             System.out.println("Aqui" + e);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
         }
     }
 

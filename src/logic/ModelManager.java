@@ -3,6 +3,7 @@ package logic;
 //import Users.CommonFeatures;
 import Users.*;
 
+import javax.mail.MessagingException;
 import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class ModelManager {
         return false;
     }
 
-    public String insertUser(int type, String nCC, String name, String email, String pass, String sex, String birthDate, String phoneNumber, String aptitude, String height, String weight, String position) throws SQLException{
+    public String insertUser(int type, String nCC, String name, String email, String pass, String sex, String birthDate, String phoneNumber, String aptitude, String height, String weight, String position) throws SQLException, MessagingException {
         //if(checksTypeUser(emailLogged) == 4){
         Manager manager1 = new Manager();
         return manager1.insertUser(type, nCC, name, email, pass, sex,birthDate, phoneNumber,  aptitude, height, weight,position);
