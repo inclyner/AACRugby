@@ -13,11 +13,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import logic.ChangeRequest;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+
+
 import java.util.ArrayList;
 
 public class ApproveRequestsController {
-
 
     @FXML
     private TableColumn<TableRequests, String> fromValue;
@@ -43,7 +46,7 @@ public class ApproveRequestsController {
     private Button btnDeny;
 
     @FXML
-    void onCkickTableRow(MouseEvent event) {
+    void onClickTableRow(MouseEvent event) {
         TableRequests value = requestsTableView.getSelectionModel().getSelectedItem();
         System.out.println(value.getName());
     }
@@ -51,11 +54,17 @@ public class ApproveRequestsController {
     @FXML
     void onClickApproveBtn(ActionEvent event) {
         TableRequests value = requestsTableView.getSelectionModel().getSelectedItem();
-        if(value == null){
-            System.out.println("NOTHING IS SELECTED");
-        } else {
-            String name = value.getName();
-            System.out.println(name + " removed");
+        try {
+            Main main = new Main();
+            if (value == null) {
+                System.out.println("Nothing is selected!");
+            } else {
+               String name = value.getName();
+                //main.getModelManager().;
+                System.out.println(name + " removed");
+            }
+        }catch (SQLException e){
+            System.out.println(e);
         }
     }
 
@@ -70,7 +79,7 @@ public class ApproveRequestsController {
     }
 
     @FXML
-    void onCliclDenyBtn(ActionEvent event) {
+    void onClickDenyBtn(ActionEvent event) {
 
     }
 
@@ -90,8 +99,8 @@ public class ApproveRequestsController {
         ArrayList<ChangeRequest> requests = main.getModelManager().getAllRequests();
 
         for (ChangeRequest changeRequest: requests){
-            TableRequests tab = new TableRequests(main.getModelManager().getNameUserNcc(changeRequest.getPlayerCC()), "Email", changeRequest.getOldInfo(), changeRequest.getNewInfo());
-            tabela.add(tab);
+            //TableRequests tab = new TableRequests(main.getModelManager().getNameUserNcc(changeRequest.getPlayerCC()), "Email", changeRequest.getOldInfo(), changeRequest.getNewInfo());
+            //tabela.add(tab);
         }
 
         return tabela;

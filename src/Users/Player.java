@@ -16,6 +16,10 @@ public class Player extends CommonFeatures{
         super(email);
     }
 
+    public Player() {
+
+    }
+
     public void setWeight(double weight){
         this.weight = weight;
     }
