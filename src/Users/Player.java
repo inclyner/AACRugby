@@ -34,7 +34,7 @@ public class Player extends CommonFeatures{
     }
 
 
-    public String requestChangePersonalData(String oldInfo, String newInfo) {
+    public void requestChangePersonalData(String oldInfo, String newInfo) {
         try {
             Statement statement = getDbConnection().createStatement();
             String sqlQuery = "SELECT email, phoneNumber FROM user WHERE type=2";
@@ -48,10 +48,11 @@ public class Player extends CommonFeatures{
                 statement.executeUpdate(sqlQuery2);
             }
             statement.close();
+            closeDb();
         }catch (SQLException e){
             throw new RuntimeException();
         }
-        return "Request change data sent";
+
     }
 
 }

@@ -127,7 +127,7 @@ public class ModelManager {
         statement.close();
         return null;
     }
-    public String getNameUserNcc(Long nCC) throws SQLException {
+    public String getNameUserNcc(String nCC) throws SQLException {
         File f = new File("bd\\AACRugby.db");
         String DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
         Connection dbConn = DriverManager.getConnection(DATABASE_URL);
@@ -135,7 +135,7 @@ public class ModelManager {
         String sqlQuery = "SELECT nCC, name from user";
         ResultSet resultSet = statement.executeQuery(sqlQuery);
         while (resultSet.next()) {
-            Long n = resultSet.getLong("nCC");
+            String n = resultSet.getString("nCC");
             if(n.equals(nCC)) {
                 String name = resultSet.getString("name");
                 resultSet.close();
