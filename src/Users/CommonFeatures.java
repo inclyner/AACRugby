@@ -8,6 +8,7 @@ import logic.Practise;
 import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public abstract class CommonFeatures {
 
@@ -137,18 +138,41 @@ public abstract class CommonFeatures {
                 String local = resultSet.getString("local");
                 Long nCCCoach = resultSet.getLong("coachCC");
 
-                String sqlQuery = "SELECT playerCC from game_player WHERE idGame = " + idGame+"";
+                /*String sqlQuery = "SELECT playerCC from game_player WHERE idGame = " + idGame+"";
                 ResultSet resultSet1 = statement.executeQuery(sqlQuery);
                 while (resultSet1.next()){
                     players.add(resultSet1.getLong("id"));
-                }
-                games.add(new Game(nCCCoach, horaInicio, horaFinal, local, players, equipaAdv, date));
-                players.clear();
+                }*/
+                games.add(new Game(nCCCoach, horaInicio, horaFinal, local, equipaAdv, date));
+                //players.clear();
             }
             closeDb();
-
             return games;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    public String getNameGame(Game game){
+        try {
+            Statement statement = getDbConnection().createStatement();
+            String query = "SELECT * from game";
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()){
+                if(Objects.equals(game.getId(), resultSet.getInt("id"))) {
+                    String date = resultSet.getString("date");
+                    String equipaAdv = resultSet.getString("equipaAdversaria");
+                    String horaInicio = resultSet.getString("horaInicial");
+                    String horaFinal = resultSet.getString("horaFinal");
+                    String local = resultSet.getString("local");
+                    Long nCCCoach = resultSet.getLong("coachCC");
+                    String result = equipaAdv + ", " + date + " (" + horaInicio + "/" + horaFinal + "), " + local;
+                    System.out.println(result);
+                    return result;
+                }
+            }
+            closeDb();
+            return "Error";
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

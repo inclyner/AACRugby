@@ -4,9 +4,13 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import Users.Player;
 import gui.Main;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -41,11 +45,46 @@ public class ScheduleAppointmentsController {
 
     @FXML
     void onClickSaveBtn(ActionEvent event) {
+        String title = null;
+        String message = null;
+        boolean error = false;
+        try{
+            Main main = new Main();
+            if(cmbPlayers.getSelectionModel().getSelectedItem()==null ||
+                    tfTime.getText().isEmpty()){
+                error=true;
+                title = "Missing data!";
+                message = "You must fill all the required fields";
+            }
+            if(error){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(title);
+                alert.setContentText(message);
+                alert.showAndWait();
+            }
 
+        }catch(SQLException e){
+            throw new RuntimeException(e);
+        }
     }
 
+    private ObservableList<String> getPlayers(){
+        try {
+            Main main = new Main();
+            ArrayList<Player> players = main.getModelManager().getAllPlayer();
+            ObservableList<String> names = FXCollections.observableArrayList();
+            for(Player p: players){
+                String name = main.getModelManager().getNameUser(p.getEmail());
+                names.add(name);
+            }
+            return names;
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
     @FXML
     void initialize() {
+        cmbPlayers.setItems(getPlayers());
         assert btnBack != null : "fx:id=\"btnBack\" was not injected: check your FXML file 'ScheduleAppointmentsView.fxml'.";
         assert btnSave != null : "fx:id=\"btnSave\" was not injected: check your FXML file 'ScheduleAppointmentsView.fxml'.";
         assert cmbPlayers != null : "fx:id=\"cmbPlayers\" was not injected: check your FXML file 'ScheduleAppointmentsView.fxml'.";
