@@ -169,9 +169,9 @@ public class PlayerPersonalDataController {
         cmbPersonalData.setItems(optionsViewPersonalData);
         Main m = new Main();
         LocalDate currentDate;
-        String nCC= m.getModelManager().getNcc(m.getModelManager().getEmailLogged());
+        //String nCC= m.getModelManager().getNcc(m.getModelManager().getEmailLogged());
 
-        tfEmail.setText(m.getModelManager().getEmailLogged());
+        /*tfEmail.setText(m.getModelManager().getEmailLogged());
         tfName.setText(m.getModelManager().getNameUser(m.getModelManager().getEmailLogged()));
         tfPhoneNumber.setText(m.getModelManager().getPhoneNumberUserNcc(nCC));
         tfCC.setText(nCC);
@@ -184,7 +184,7 @@ public class PlayerPersonalDataController {
         tfHeight.setText(m.getModelManager().getHeightnCC(nCC));
         tfWeight.setText(m.getModelManager().getWeightnCC(nCC));
         cmbPosition.setValue(m.getModelManager().getpositionnCC(nCC));
-        cmbAptitude.setValue(m.getModelManager().getAptitudenCC(nCC));
+        cmbAptitude.setValue(m.getModelManager().getAptitudenCC(nCC));*/
 
     }
 

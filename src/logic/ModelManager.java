@@ -9,10 +9,10 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class ModelManager {
-    Manager manager;
-    Coach coach;
-    Doctor doctor;
-    Player player;
+    Manager manager= new Manager(getEmailLogged());
+    Coach coach=new Coach(getEmailLogged());
+    Doctor doctor = new Doctor(getEmailLogged());
+    Player player = new Player();
 
     public static String emailLogged;
     private static String nameLogged;
@@ -57,17 +57,19 @@ public class ModelManager {
 
     public String insertUser(int type, String nCC, String name, String email, String pass, String sex, String birthDate, String phoneNumber, String aptitude, String height, String weight, String position) throws SQLException, MessagingException {
         //if(checksTypeUser(emailLogged) == 4){
-        Manager manager1 = new Manager();
-        return manager1.insertUser(type, nCC, name, email, pass, sex,birthDate, phoneNumber,  aptitude, height, weight,position);
+        return manager.insertUser(type, nCC, name, email, pass, sex,birthDate, phoneNumber,  aptitude, height, weight,position);
         //}
         //return "Unable to add User";
     }
 
     public ArrayList<Player> getAllPlayer(){
         Manager manager1 = new Manager();
-        for(Player p: manager1.getPlayers())
-            System.out.println(p);
         return manager1.getPlayers();
+    }
+
+    public void approveReq(Long id, boolean answer){
+        Manager manager1 = new Manager();
+        manager1.approveChangeRequest(id, answer);
     }
 
     public ArrayList<Coach> getAllCoach(){
@@ -93,8 +95,6 @@ public class ModelManager {
         manager1.deleteUser(emails);
     }
 
-
-
     public ArrayList<Game> getAllGames(){
         Manager manager1 = new Manager();
         return  manager1.getGames();
@@ -117,33 +117,37 @@ public class ModelManager {
         return String.valueOf(manager1.getnCC(email));
     }
 
-    public String callup(ArrayList<String> ncc) throws SQLException {
-
+    public String callup(ArrayList<Long> ncc) throws SQLException {
         this.coach= new Coach(getEmailLogged());
-
         return coach.callUpPlayers(ncc, 1);
     }
-
-    public String getNameUser(String email) throws SQLException {
+    public Long getnCCChange(String newInfo, String oldValue) throws SQLException {
         File f = new File("bd\\AACRugby.db");
         String DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
         Connection dbConn = DriverManager.getConnection(DATABASE_URL);
         Statement statement = dbConn.createStatement();
-        String sqlQuery = "SELECT email, name from user";
+        String sqlQuery = "SELECT * from changeRequest WHERE oldInfo='"+oldValue+"' AND newInfo='"+newInfo+"'";
         ResultSet resultSet = statement.executeQuery(sqlQuery);
         while (resultSet.next()) {
-            String e = resultSet.getString("email");
-            if(email.equals(e)) {
-                String name = resultSet.getString("name");
+            String o = resultSet.getString("oldInfo");
+            String n = resultSet.getString("newInfo");
+            if(o.equals(oldValue) && n.equals(newInfo)) {
+                Long nCC = resultSet.getLong("playerCC");
                 resultSet.close();
                 statement.close();
-                return name;
+                return nCC;
             }
         }
         resultSet.close();
         statement.close();
+        dbConn.close();
         return null;
     }
+
+    public String getNameUser(String email) throws SQLException {
+        return coach.getNameUser(email);
+    }
+
     public String getNameUserNcc(String nCC) throws SQLException {
         File f = new File("bd\\AACRugby.db");
         String DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
@@ -162,6 +166,7 @@ public class ModelManager {
         }
         resultSet.close();
         statement.close();
+        dbConn.close();
         return null;
     }
 
@@ -359,5 +364,13 @@ public class ModelManager {
         Player p = new Player();
         p.requestChangePersonalData(oldInfo, newInfo);
 
+    }
+
+    public String getNameOfGame(Game p) {
+        return coach.getNameGame(p);
+    }
+
+    public void getinsertNotesAboutPlayer(Long ncc, int id, String text, boolean b) {
+        coach.insertNotesAboutPlayer(ncc, id, text, b);
     }
 }

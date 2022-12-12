@@ -39,7 +39,13 @@ public class Main {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        c.insertNotesAboutPlayer(457896321L, 1, "asdfasfa", true);
+        ArrayList<Game> g = c.getGames();
+        System.out.println(g);
+        for (Game p: g)
+            System.out.println(c.getNameGame(p));
+        System.out.println("w");
+        //c.repportNonAttendance(585005353L);
+        c.insertNotesAboutPlayer(585005355L, 1, "asdfasfa", true);
 
     }
 }

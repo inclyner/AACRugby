@@ -112,7 +112,7 @@ public class Coach extends CommonFeatures {
                 if (Objects.equals(cc, CC)) {
                     n = resultSet.getInt("counter");
                     n++;
-                    sqlQuery = "UPDATE nonAtendance SET counter='" + n + "'WHERE nCC ='" + CC + "';";
+                    sqlQuery = "UPDATE nonAtendance SET counter='" + n + "'WHERE playerCC ='" + CC + "';";
                     statement.executeUpdate(sqlQuery);
                     resultSet.close();
                     statement.close();
@@ -127,13 +127,16 @@ public class Coach extends CommonFeatures {
             closeDb();
         }
         catch (SQLException e){
+            System.out.println(e.getMessage());
             throw new RuntimeException();
         }
     }
 
     public void insertNotesAboutPlayer(Long cc, int idgame, String notes, boolean fit){
         String aux;
+        String sqlQuery2;
         try {
+            closeDb();
             Statement statement = getDbConnection().createStatement();
             String sqlQuery = "SELECT * FROM game_player";
             ResultSet resultSet = statement.executeQuery(sqlQuery);
@@ -144,11 +147,14 @@ public class Coach extends CommonFeatures {
                 if (Objects.equals(playercc, cc) && Objects.equals(idGame, idgame)) {
                     aux = resultSet.getString("notes");
                     if(aux!=null)
-                        sqlQuery = "UPDATE game_player SET notes='" + notes.concat(aux) + "'WHERE playerCC ='" + cc + "'AND idGame='" + idgame + "';";
+                        sqlQuery2 = "UPDATE game_player SET notes='" + notes.concat(aux) + "' WHERE playerCC ='" + cc + "' AND idGame='" + idgame + "';";
                     else
-                        sqlQuery = "UPDATE game_player SET notes='" + notes + "'WHERE playerCC ='" + cc + "'AND idGame='" + idgame + "';";
-                    statement.executeUpdate(sqlQuery);
+                        sqlQuery2 = "UPDATE game_player SET notes='" + notes + "' WHERE playerCC ='" + cc + "' AND idGame='" + idgame + "';";
+                    statement.executeUpdate(sqlQuery2);
+                    statement.close();
                     resultSet.close();
+                    closeDb();
+                    statement=getDbConnection().createStatement();
                     String sqlQuery1 = "SELECT nCC, aptitude FROM user WHERE typeUserId=2";
                     ResultSet resultSet1 = statement.executeQuery(sqlQuery1);
                     while (resultSet1.next()) {
@@ -170,13 +176,11 @@ public class Coach extends CommonFeatures {
                     }
                 }
             }
-            statement.close();
+            //create data
             closeDb();
             statement = getDbConnection().createStatement();
-            //create data
             sqlQuery = "INSERT INTO game_player (idGame, playerCC, notes) VALUES ('" + idgame + "','" + cc + "','" + notes + "')";
             statement.executeUpdate(sqlQuery);
-            System.out.println("w");
             String sqlQuery1 = "SELECT nCC, aptitude FROM user WHERE typeUserId=2";
             ResultSet resultSet1 = statement.executeQuery(sqlQuery1);
             while (resultSet1.next()) {
