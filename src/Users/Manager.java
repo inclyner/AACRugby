@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.sql.*;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -87,7 +86,6 @@ public class Manager extends CommonFeatures {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }*/
-
         String terminate ="";
         Pattern special = Pattern.compile("[!@#$%&*()_+=`£@;,//<>§€^ºª|<>?{}«»´\\[\\]~-]");
         Pattern letter = Pattern.compile("[a-zA-z]");
@@ -133,15 +131,15 @@ public class Manager extends CommonFeatures {
         if (height!=null) {
             if(approveHeight(height)!=null) return approveWeight(height);
             altura = Float.parseFloat(height);
-             if(altura > 300.0) return "There's no one that high";
+            if(altura > 300.0) return "There's no one that high";
             else if(altura<100.0) return "We don't want anyone that small";
         }
 
         //Check weight
         if (weight!=null) {
-        if(approveWeight(weight)!=null) return approveWeight(weight);
-        peso = Float.parseFloat(weight);
-        if(peso > 200.0) return "Weight's too high";
+            if(approveWeight(weight)!=null) return approveWeight(weight);
+            peso = Float.parseFloat(weight);
+            if(peso > 200.0) return "Weight's too high";
             else if(peso<40.0) return "Weight's too low";
         }
         Statement statement = getDbConnection().createStatement();
@@ -255,10 +253,10 @@ public class Manager extends CommonFeatures {
         return "Users Deleted";
     }
 
-    public String approveChangeRequest(int id, boolean bool) {
+    public String approveChangeRequest(Long id, boolean bool) {
         try {
             Statement statement = getDbConnection().createStatement();
-            String sqlQuery = "SELECT * FROM changeRequest WHERE id=" + id+"";
+            String sqlQuery = "SELECT * FROM changeRequest WHERE playerCC=" + id;
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             String oldInfo = resultSet.getString("oldInfo");
             String newInfo = resultSet.getString("newInfo");
@@ -266,14 +264,15 @@ public class Manager extends CommonFeatures {
             if(cc == null) return "Player not found";
             if (bool) {
                 if (approveCellPhone(newInfo)==null) {
-                    sqlQuery="UPDATE user SET phoneNumber = '" + newInfo + "' WHERE nCC=" + cc+"";
+                    sqlQuery="UPDATE user SET phoneNumber = '" + newInfo + "' WHERE nCC=" + id;
                 } else if (Objects.equals(checkEmail(newInfo), "")) {
-                    sqlQuery = "UPDATE user SET email = '" + newInfo + "' WHERE nCC=" + cc +"";
+                    sqlQuery = "UPDATE user SET email = '" + newInfo + "' WHERE nCC=" + id;
                 }else return "Invalid Values";
                 statement.executeUpdate(sqlQuery);
             }
-            sqlQuery = "DELETE FROM changeRequest WHERE id=" + id;
+            sqlQuery = "DELETE FROM changeRequest WHERE playerCC=" + id;
             statement.executeUpdate(sqlQuery);
+            closeDb();
             return "Option Validated";
         } catch (SQLException e) {
             throw new RuntimeException(e);
