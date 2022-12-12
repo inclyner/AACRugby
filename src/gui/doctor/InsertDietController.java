@@ -4,6 +4,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import Users.Player;
@@ -12,10 +13,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
+import logic.Game;
 
 public class InsertDietController {
 
@@ -49,22 +48,21 @@ public class InsertDietController {
 
     @FXML
     void onClickSaveBtn(ActionEvent event) {
-        String title = null;
-        String message = null;
-        boolean error = false;
         try{
             Main main = new Main();
-            if(tfDiet.getText().isEmpty() ||
-            cmbPlayers.getSelectionModel().getSelectedItem()==null){
-                error=true;
-                title = "Missing data!";
-                message = "You must fill all the required fields";
-            }
-            if(error){
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle(title);
-                alert.setContentText(message);
-                alert.showAndWait();
+            ArrayList<Long> nCC = new ArrayList<>();
+            ArrayList<Player> players = main.getModelManager().getAllPlayer();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Insert diet for player");
+            alert.setContentText("Are you sure you want to insert this diet?");
+            Optional<ButtonType> option = alert.showAndWait();
+            int indexp=cmbPlayers.getSelectionModel().getSelectedIndex();
+            Long ncc=players.get(indexp).getnCC(players.get(indexp).getEmail());
+            if (option.get() == ButtonType.CANCEL)
+                return;
+            else if (option.get() == ButtonType.OK){
+                main.getModelManager().getinsertDiet(ncc, tfDiet.getText());
+                main.changeScene("doctor\\DoctorMainView.fxml");
             }
         }catch(SQLException e){
             throw new RuntimeException(e);

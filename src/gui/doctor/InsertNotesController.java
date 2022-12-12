@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import Users.Player;
@@ -13,10 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import logic.MedicalAppointment;
 
 public class InsertNotesController {
@@ -42,6 +40,9 @@ public class InsertNotesController {
     @FXML
     private TextArea tfNotes;
 
+    private ObservableList<String> AptitudeList = FXCollections.observableArrayList(
+            "Fit","Not Fit");
+
     @FXML
     void onClickBackBtn(ActionEvent event) {
         try {
@@ -54,25 +55,22 @@ public class InsertNotesController {
 
     @FXML
     void onClickSaveBtn(ActionEvent event){
-        String title = null;
-        String message = null;
-        boolean error = false;
         try{
-            Main main = new Main();
-            if(cmbAptitude.getSelectionModel().getSelectedItem()==null ||
-            cmbPlayers.getSelectionModel().getSelectedItem()==null ||
-            tfNotes.getText().isEmpty()){
-                error=true;
-                title = "Missing data!";
-                message = "You must fill all the required fields";
-            }
-            if(error){
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle(title);
-                alert.setContentText(message);
-                alert.showAndWait();
-            }
-
+        Main main = new Main();
+        ArrayList<Long> nCC = new ArrayList<>();
+        ArrayList<Player> players = main.getModelManager().getAllPlayer();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Insert notes about player");
+        alert.setContentText("Are you sure you want to insert this notes?");
+        Optional<ButtonType> option = alert.showAndWait();
+        int indexp=cmbPlayers.getSelectionModel().getSelectedIndex();
+        Long ncc=players.get(indexp).getnCC(players.get(indexp).getEmail());
+        if (option.get() == ButtonType.CANCEL)
+            return;
+        else if (option.get() == ButtonType.OK) {
+            main.getModelManager().getinsertAppointmentNotes(ncc, tfNotes.getText());
+            main.changeScene("doctor\\DoctorMainView.fxml");
+        }
         }catch(SQLException e){
             throw new RuntimeException(e);
         }
@@ -92,8 +90,7 @@ public class InsertNotesController {
         }
     }
 
-    private ObservableList<String> AptitudeList = FXCollections.observableArrayList(
-            "Fit","Not Fit");
+
     @FXML
     void initialize() {
         cmbPlayers.setItems(getPlayers());

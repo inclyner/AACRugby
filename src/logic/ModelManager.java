@@ -373,4 +373,13 @@ public class ModelManager {
     public void getinsertNotesAboutPlayer(Long ncc, int id, String text, boolean b) {
         coach.insertNotesAboutPlayer(ncc, id, text, b);
     }
+
+    public void getinsertDiet(Long nCC, String notes){
+        doctor.InsertDiet(nCC,notes);
+    }
+
+    public void getinsertAppointmentNotes(Long ncc, String notes) {
+        doctor.InsertNotes(ncc,notes);
+    }
+
 }

@@ -7,7 +7,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="AACRUGBY" level="project" />
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
@@ -21,37 +20,6 @@
           <root url="jar://$MODULE_DIR$/aspose-email-22.11-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="library" exported="" name="bin" level="project" />
-    <orderEntry type="library" exported="" name="jre1.8" level="project" />
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="file://C:/Program Files/Java/javafx-17.0.2-javadoc" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES />
-        <JAVADOC />
-        <SOURCES>
-          <root url="file://C:/Program Files/Java/javafx-sdk-19" />
-        </SOURCES>
-        <jarDirectory url="file://C:/Program Files/Java/javafx-sdk-19" recursive="false" type="SOURCES" />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="file://C:/Program Files/Java/javafx-sdk-19/lib" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-        <jarDirectory url="file://C:/Program Files/Java/javafx-sdk-19/lib" recursive="false" />
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
@@ -70,73 +38,55 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" exported="" name="JavaFxLib" level="application" />
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://C:/Program Files/Java/javafx-sdk-17.0.2/lib/javafx.web.jar!/" />
+          <root url="jar://$MODULE_DIR$/charm-glisten-6.2.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/commons-beanutils-1.9.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/commons-codec-1.15.jar!/" />
+          <root url="jar://$MODULE_DIR$/commons-collections-3.2.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/commons-digester-2.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/commons-collections4-4.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/commons-lang3-3.12.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/commons-validator-1.7.jar!/" />
+          <root url="jar://$MODULE_DIR$/commons-logging-1.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/controlsfx-11.1.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/ical4j-4.0.0-beta2.jar!/" />
+          <root url="jar://$MODULE_DIR$/ikonli-core-12.3.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/ikonli-javafx-12.3.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/ikonli-fontawesome-pack-12.3.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/javafx-base-19-linux.jar!/" />
+          <root url="jar://$MODULE_DIR$/javafx-controls-19-linux.jar!/" />
+          <root url="jar://$MODULE_DIR$/javafx-graphics-19-linux.jar!/" />
+          <root url="jar://$MODULE_DIR$/jool-java-8-0.9.14.jar!/" />
+          <root url="jar://$MODULE_DIR$/threeten-extra-1.7.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/slf4j-api-1.7.36.jar!/" />
+          <root url="jar://$MODULE_DIR$/view-11.12.3.jar!/" />
+          <root url="file://$MODULE_DIR$" />
+          <root url="file://$MODULE_DIR$" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/ical4j-4.0.0-beta2.jar!/" />
+          <root url="file://$MODULE_DIR$" />
+          <root url="file://$MODULE_DIR$/src" />
+        </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
+    <orderEntry type="module-library">
+      <library name="JUnit5.8.1">
         <CLASSES>
-          <root url="jar://C:/Program Files/Java/javafx-sdk-17.0.2/lib/javafx-swt.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://C:/Program Files/Java/javafx-sdk-17.0.2/lib/javafx.base.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://C:/Program Files/Java/javafx-sdk-17.0.2/lib/javafx.controls.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://C:/Program Files/Java/javafx-sdk-17.0.2/lib/javafx.fxml.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://C:/Program Files/Java/javafx-sdk-17.0.2/lib/javafx.graphics.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://C:/Program Files/Java/javafx-sdk-17.0.2/lib/javafx.media.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://C:/Program Files/Java/javafx-sdk-17.0.2/lib/javafx.swing.jar!/" />
+          <root url="jar://$USER_HOME$/.m2/repository/org/junit/jupiter/junit-jupiter/5.8.1/junit-jupiter-5.8.1.jar!/" />
+          <root url="jar://$USER_HOME$/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.8.1/junit-jupiter-api-5.8.1.jar!/" />
+          <root url="jar://$USER_HOME$/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar!/" />
+          <root url="jar://$USER_HOME$/.m2/repository/org/junit/platform/junit-platform-commons/1.8.1/junit-platform-commons-1.8.1.jar!/" />
+          <root url="jar://$USER_HOME$/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar!/" />
+          <root url="jar://$USER_HOME$/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.8.1/junit-jupiter-params-5.8.1.jar!/" />
+          <root url="jar://$USER_HOME$/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.8.1/junit-jupiter-engine-5.8.1.jar!/" />
+          <root url="jar://$USER_HOME$/.m2/repository/org/junit/platform/junit-platform-engine/1.8.1/junit-platform-engine-1.8.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

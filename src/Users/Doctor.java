@@ -24,56 +24,63 @@ public class Doctor extends CommonFeatures{
         super(email);
     }
 
-    public String InsertDiet(Long cc, String notes) {
-        try{
-            Statement statement = getDbConnection().createStatement();
-            String sqlQuery = "SELECT * FROM dietNotes";
-            ResultSet resultSet = statement.executeQuery(sqlQuery);
-            while (resultSet.next()) {
-                long playercc = resultSet.getInt("playerCC");
-                if (Objects.equals(playercc, cc)){
-                    String aux = resultSet.getString("notes");
-                    sqlQuery = "UPDATE dietNotes SET notes='" + notes.concat(aux) + "', doctorCC ='" + getnCC(getEmail()) + "'WHERE nCC ='" + cc + "';";
-                    statement.executeUpdate(sqlQuery);
-                    resultSet.close();
-                    statement.close();
-                    return "Update diet notes";
-                }
-            }
-            //create diet notes
-            sqlQuery = "INSERT INTO dietNotes (playerCC, doctorCC, notes) VALUES ('" + cc + "','" + getnCC(getEmail()) + "','" + notes + "')";
-            statement.executeUpdate(sqlQuery);
-            resultSet.close();
-            statement.close();
-            return "Create diet notes";
-        } catch (SQLException e) {
-            throw new RuntimeException();
-        }
-    }
+   public String InsertDiet(Long cc, String notes){
+       int i=1;
+       String sqlQuery2="";
+       try{
+           Statement statement = getDbConnection().createStatement();
+           String sqlQuery = "SELECT * FROM dietNotes";
+           ResultSet resultSet = statement.executeQuery(sqlQuery);
+           while (resultSet.next()) {
+               Long playercc = resultSet.getLong("playerCC");
+               Long doctorcc = resultSet.getLong("doctorCC");
+               if (playercc.equals(cc) && doctorcc.equals(getnCC(getEmail()))){
+                   i=0;
 
+               }
+           }
+           if(i==0){
+               sqlQuery2 = "UPDATE dietNotes SET diet='" + notes + "', doctorCC ='" + getnCC(getEmail()) + "'WHERE playerCC ='" + cc + "';";
+           }else if(i==1){
+               sqlQuery2 = "INSERT INTO dietNotes (playerCC, doctorCC, diet) VALUES ('" + cc + "','" + getnCC(getEmail()) + "','" + notes + "')";
+           }
+           statement.executeUpdate(sqlQuery2);
+           resultSet.close();
+           statement.close();
+           closeDb();
+           return "Create diet notes";
+       } catch (SQLException e) {
+           System.out.println(e.getMessage());
+           throw new RuntimeException();
+       }
+   }
     public String InsertNotes(Long cc, String notes){
+        int i=1;
+        String sqlQuery2="";
         try{
             Statement statement = getDbConnection().createStatement();
             String sqlQuery = "SELECT * FROM medicalNotes";
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             while (resultSet.next()) {
-                long playercc = resultSet.getInt("playerCC");
-                if (Objects.equals(playercc, cc)){
-                    String aux = resultSet.getString("notes");
-                    sqlQuery = "UPDATE medicalNotes SET notes='" + notes.concat(aux) + "', doctorCC ='" + getnCC(getEmail()) + "'WHERE nCC ='" + cc + "';";
-                    statement.executeUpdate(sqlQuery);
-                    resultSet.close();
-                    statement.close();
-                    return "Update medical notes";
+                Long playercc = resultSet.getLong("playerCC");
+                Long doctorcc = resultSet.getLong("doctorCC");
+                if (playercc.equals(cc) && doctorcc.equals(getnCC(getEmail()))){
+                    i=0;
+
                 }
             }
-            //create diet notes
-            sqlQuery = "INSERT INTO medicalNotes (playerCC, doctorCC, notes) VALUES ('" + cc + "','" + getnCC(getEmail()) + "','" + notes + "')";
-            statement.executeUpdate(sqlQuery);
+            if(i==0){
+                sqlQuery2 = "UPDATE medicalNotes SET notes='" + notes + "', doctorCC ='" + getnCC(getEmail()) + "'WHERE playerCC ='" + cc + "';";
+            }else if(i==1){
+                sqlQuery2 = "INSERT INTO medicalNotes (playerCC, doctorCC, notes) VALUES ('" + cc + "','" + getnCC(getEmail()) + "','" + notes + "')";
+            }
+            statement.executeUpdate(sqlQuery2);
             resultSet.close();
             statement.close();
+            closeDb();
             return "Create medical notes";
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException();
         }
     }

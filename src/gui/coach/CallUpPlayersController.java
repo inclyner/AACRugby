@@ -84,7 +84,7 @@ public class CallUpPlayersController {
             alert.setTitle("Call up Players");
             alert.setContentText("Are you sure you want to call up this players?");
             Optional<ButtonType> option = alert.showAndWait();
-            for()
+            //for()
 
             if (option.get() == ButtonType.CANCEL)
                 return;
