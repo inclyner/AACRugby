@@ -119,12 +119,12 @@ public class ModelManager {
     public String getNcc(String email) throws SQLException {
         Manager manager1 = new Manager();
 
-            return String.valueOf(manager1.getnCC(email));
+        return String.valueOf(manager1.getnCC(email));
     }
 
     public String callup(ArrayList<String> ncc) throws SQLException {
 
-            this.coach= new Coach(getEmailLogged());
+        this.coach= new Coach(getEmailLogged());
 
         return coach.callUpPlayers(ncc, 1);
     }
@@ -229,7 +229,7 @@ public class ModelManager {
         while (resultSet.next()) {
             String n = resultSet.getString("nCC");
             if(n.equals(nCC)) {
-                String height = resultSet.getString("height");
+                String height = resultSet.getString("height-cm");
                 resultSet.close();
                 statement.close();
                 return height;
@@ -242,21 +242,75 @@ public class ModelManager {
     }
 
     public String getWeightnCC(String nCC) throws SQLException {
+
         File f = new File("bd\\AACRugby.db");
         String DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
-        Connection dbConn = DriverManager.getConnection(DATABASE_URL);
+        Connection dbConn = null;
+        dbConn = DriverManager.getConnection(DATABASE_URL);
+
         Statement statement = dbConn.createStatement();
         String sqlQuery = "SELECT * from user";
         ResultSet resultSet = statement.executeQuery(sqlQuery);
         while (resultSet.next()) {
             String n = resultSet.getString("nCC");
             if(n.equals(nCC)) {
-                String weight = resultSet.getString("weight");
+                String weight = resultSet.getString("weight-kg");
                 resultSet.close();
                 statement.close();
                 return weight;
             }
 
+        }
+        resultSet.close();
+        statement.close();
+        return "Not Available";
+    }
+
+    public String getAptitudenCC(String nCC) throws SQLException {
+
+        File f = new File("bd\\AACRugby.db");
+        String DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
+        Connection dbConn = null;
+        dbConn = DriverManager.getConnection(DATABASE_URL);
+
+        Statement statement = dbConn.createStatement();
+        String sqlQuery = "SELECT * from user";
+        ResultSet resultSet = statement.executeQuery(sqlQuery);
+        while (resultSet.next()) {
+            String n = resultSet.getString("nCC");
+            if(n.equals(nCC)) {
+                String aptitude = resultSet.getString("aptitude");
+                resultSet.close();
+                statement.close();
+                if(aptitude.equals("true"))
+                    return "Is fit";
+                else if(aptitude.equals("false"))
+                    return "Not fit";
+            }
+        }
+        resultSet.close();
+        statement.close();
+        return "Not Available";
+    }
+
+    public String getpositionnCC(String nCC) throws SQLException {
+
+        File f = new File("bd\\AACRugby.db");
+        String DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
+        Connection dbConn = null;
+        dbConn = DriverManager.getConnection(DATABASE_URL);
+
+        Statement statement = dbConn.createStatement();
+        String sqlQuery = "SELECT * from user";
+        ResultSet resultSet = statement.executeQuery(sqlQuery);
+        while (resultSet.next()) {
+            String n = resultSet.getString("nCC");
+            if(n.equals(nCC)) {
+                String position = resultSet.getString("position");
+                resultSet.close();
+                statement.close();
+                return position;
+            }
         }
         resultSet.close();
         statement.close();
@@ -310,23 +364,23 @@ public class ModelManager {
         File f = new File("bd\\AACRugby.db");
         String DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
         Connection dbConn = null;
-            dbConn = DriverManager.getConnection(DATABASE_URL);
-            Statement statement = dbConn.createStatement();
-            String sqlQuery = "SELECT email from user";
-            ResultSet resultSet = statement.executeQuery(sqlQuery);
-            while (resultSet.next()) {
-                String n = resultSet.getString("nCC");
-                if(n.equals(nCC)) {
-                    String name = resultSet.getString("email");
-                    resultSet.close();
-                    statement.close();
-                    return name;
-                }
-
+        dbConn = DriverManager.getConnection(DATABASE_URL);
+        Statement statement = dbConn.createStatement();
+        String sqlQuery = "SELECT email from user";
+        ResultSet resultSet = statement.executeQuery(sqlQuery);
+        while (resultSet.next()) {
+            String n = resultSet.getString("nCC");
+            if(n.equals(nCC)) {
+                String name = resultSet.getString("email");
+                resultSet.close();
+                statement.close();
+                return name;
             }
-            resultSet.close();
-            statement.close();
-            return null;
+
+        }
+        resultSet.close();
+        statement.close();
+        return null;
 
     }
 
@@ -336,4 +390,3 @@ public class ModelManager {
 
     }
 }
-
