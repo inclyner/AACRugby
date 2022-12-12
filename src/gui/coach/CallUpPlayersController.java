@@ -47,6 +47,9 @@ public class CallUpPlayersController {
     private CheckBox chbSelectAllPlayers;
 
     @FXML
+    private ComboBox<String> cmbGame;
+
+    @FXML
     void onClickBtnBack(ActionEvent event) {
         try {
             Main main = new Main();
@@ -84,7 +87,6 @@ public class CallUpPlayersController {
             alert.setTitle("Call up Players");
             alert.setContentText("Are you sure you want to call up this players?");
             Optional<ButtonType> option = alert.showAndWait();
-            for()
 
             if (option.get() == ButtonType.CANCEL)
                 return;

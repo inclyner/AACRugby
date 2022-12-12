@@ -56,10 +56,7 @@ public class ModelManager {
     }
 
     public String insertUser(int type, String nCC, String name, String email, String pass, String sex, String birthDate, String phoneNumber, String aptitude, String height, String weight, String position) throws SQLException, MessagingException {
-        //if(checksTypeUser(emailLogged) == 4){
         return manager.insertUser(type, nCC, name, email, pass, sex,birthDate, phoneNumber,  aptitude, height, weight,position);
-        //}
-        //return "Unable to add User";
     }
 
     public ArrayList<Player> getAllPlayer(){
@@ -67,9 +64,9 @@ public class ModelManager {
         return manager1.getPlayers();
     }
 
-    public void approveReq(Long id, boolean answer){
+    public String approveReq(Long id, boolean answer){
         Manager manager1 = new Manager();
-        manager1.approveChangeRequest(id, answer);
+        return manager1.approveChangeRequest(id, answer);
     }
 
     public ArrayList<Coach> getAllCoach(){

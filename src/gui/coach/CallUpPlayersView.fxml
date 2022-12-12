@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="476.0" prefWidth="608.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.coach.CallUpPlayersController">
+<AnchorPane prefHeight="476.0" prefWidth="608.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.coach.CallUpPlayersController">
    <children>
       <Label layoutX="47.0" layoutY="39.0" text="Call Up Players for next game">
          <font>
@@ -42,5 +42,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </CheckBox>
+      <ComboBox fx:id="cmbGame" layoutX="390.0" layoutY="76.0" prefWidth="150.0" />
+      <Label layoutX="298.0" layoutY="80.0" prefHeight="19.0" prefWidth="82.0" text="Future Games:" />
    </children>
 </AnchorPane>
