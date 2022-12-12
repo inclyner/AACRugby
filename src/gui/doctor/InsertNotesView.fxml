@@ -20,7 +20,7 @@
       <Label layoutX="51.0" layoutY="197.0" text="Medical Appointments Notes: " />
       <ComboBox fx:id="cmbPlayers" layoutX="50.0" layoutY="97.0" prefWidth="150.0" />
       <Label layoutX="388.0" layoutY="71.0" text="Aptitude: " />
-      <TextArea layoutX="67.0" layoutY="225.0" prefHeight="150.0" prefWidth="489.0" />
+      <TextArea fx:id="tfNotes" layoutX="67.0" layoutY="225.0" prefHeight="150.0" prefWidth="489.0" />
       <ComboBox fx:id="cmbAptitude" layoutX="388.0" layoutY="97.0" prefWidth="150.0" />
       <Button fx:id="btnBack" layoutX="56.0" layoutY="402.0" mnemonicParsing="false" onAction="#onClickBackBtn" prefHeight="38.0" prefWidth="54.0" style="-fx-background-color: rgba(193,166,112,255);" text="Back">
          <font>

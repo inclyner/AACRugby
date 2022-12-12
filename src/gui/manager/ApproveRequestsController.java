@@ -1,5 +1,5 @@
 package gui.manager;
-
+//not done not tested
 import gui.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -99,8 +99,8 @@ public class ApproveRequestsController {
         ArrayList<ChangeRequest> requests = main.getModelManager().getAllRequests();
 
         for (ChangeRequest changeRequest: requests){
-           // TableRequests tab = new TableRequests(main.getModelManager().getNameUserNcc(changeRequest.getPlayerCC()), "Email", changeRequest.getOldInfo(), changeRequest.getNewInfo());
-            //tabela.add(tab);
+            TableRequests tab = new TableRequests(main.getModelManager().getNameUserNcc(String.valueOf(changeRequest.getPlayerCC())), "Email", changeRequest.getOldInfo(), changeRequest.getNewInfo());
+            tabela.add(tab);
         }
 
         return tabela;

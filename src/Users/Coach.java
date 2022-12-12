@@ -4,8 +4,6 @@ import logic.Game;
 import logic.MedicalAppointment;
 import logic.Practise;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.*;
@@ -70,7 +68,7 @@ public class Coach extends CommonFeatures {
         return "Nothing";
     }
 
-    public String callUpPlayers(ArrayList<Long>playersCC, int idgame) {
+    public String callUpPlayers(ArrayList<String> playersCC, int idgame) {
         int i=0;
         if (playersCC.size()-1>18) /*|| String.valueOf(idgame)==null*/
             return "Extra players";

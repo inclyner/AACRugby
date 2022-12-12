@@ -9,8 +9,8 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class ModelManager {
-    Manager manager = new Manager(getEmailLogged());
-    Coach coach = new Coach(getEmailLogged());
+    Manager manager;
+    Coach coach;
     Doctor doctor;
     Player player;
 
@@ -55,45 +55,49 @@ public class ModelManager {
 
     public String insertUser(int type, String nCC, String name, String email, String pass, String sex, String birthDate, String phoneNumber, String aptitude, String height, String weight, String position) throws SQLException, MessagingException {
         //if(checksTypeUser(emailLogged) == 4){
-        return manager.insertUser(type, nCC, name, email, pass, sex,birthDate, phoneNumber,  aptitude, height, weight,position);
+        Manager manager1 = new Manager();
+        return manager1.insertUser(type, nCC, name, email, pass, sex,birthDate, phoneNumber,  aptitude, height, weight,position);
         //}
         //return "Unable to add User";
     }
 
     public ArrayList<Player> getAllPlayer(){
-        return manager.getPlayers();
+        Manager manager1 = new Manager();
+        for(Player p: manager1.getPlayers())
+            System.out.println(p);
+        return manager1.getPlayers();
     }
 
     public ArrayList<Coach> getAllCoach(){
-        return  manager.getCoaches();
+        Manager manager1 = new Manager();
+        return  manager1.getCoaches();
     }
 
     public ArrayList<Manager> getAllManager(){
-        return  manager.getManagers();
+        Manager manager1 = new Manager();
+        return  manager1.getManagers();
     }
 
     public ArrayList<Doctor> getAllDoctor(){
-        return  manager.getDoctors();
+        Manager manager1 = new Manager();
+        return  manager1.getDoctors();
     }
     public ArrayList<ChangeRequest> getAllRequests() throws SQLException {
-        return  manager.getChangeRequests();
+        Manager manager1 = new Manager();
+        return  manager1.getChangeRequests();
     }
     public String deleteUsers(ArrayList<String> emails) throws SQLException {
-        return manager.deleteUser(emails);
+        Manager manager1 = new Manager(emailLogged);
+        return manager1.deleteUser(emails);
     }
+
+
 
     public ArrayList<Game> getAllGames(){
-        return  manager.getGames();
-    }
-
-    public String getNameOfGame(Game game){
         Manager manager1 = new Manager();
-        return  manager1.getNameGame(game);
+        return  manager1.getGames();
     }
 
-    public void getinsertNotesAboutPlayer(Long cc, int idgame, String notes, boolean fit){
-        coach.insertNotesAboutPlayer(cc, idgame, notes, fit);
-    }
 
     public ArrayList<Practise> getAllPractise(){
         Manager manager1 = new Manager();

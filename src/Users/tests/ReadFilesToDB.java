@@ -259,10 +259,10 @@ public class ReadFilesToDB {
 
     public static void main(String[] args) throws SQLException, MessagingException {
         ReadFilesToDB readFilestoDB = new ReadFilesToDB();
-        readFilestoDB.insertUsersFromTxt(); //woks
-        //readFilestoDB.insertGames();//works
+        readFilestoDB.insertUsersFromTxt(); //works
+        readFilestoDB.insertGames();//works
         readFilestoDB.insertPractice(); //works
-        //readFilestoDB.insertAppointments(); //work
-        //readFilestoDB.insertExternalPunishments();//work
+        readFilestoDB.insertAppointments(); //work
+        readFilestoDB.insertExternalPunishments();//work
     }
 }
