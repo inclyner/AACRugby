@@ -176,7 +176,6 @@ public class PlayerPersonalDataController {
         tfCC.setText(nCC);
 
         String dateString=m.getModelManager().getBirthDatenCC(nCC);
-        DatePicker datePicker = new DatePicker();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyy");
         tfBirthDate.setValue(LocalDate.parse(dateString, formatter));
         tfAge.setText(String.valueOf(Utils.calculateAge(Utils.getDateAsLocalDate(String.valueOf(tfBirthDate.getValue())), Utils.getCurrentDate())));

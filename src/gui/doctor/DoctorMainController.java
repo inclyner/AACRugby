@@ -67,6 +67,7 @@ public class DoctorMainController {
             Main main = new Main();
             lbHello.setText("Hello doctor " + main.getModelManager().getNameLogged() +"!");
 
+
     }
 
 }
