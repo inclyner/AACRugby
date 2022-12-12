@@ -98,8 +98,10 @@ public class CallUpPlayersController {
                     alert1.setContentText(a);
                     alert1.showAndWait();
                 }
-                System.out.println(nCC);
-                tableViewCallUpPlayers.setItems(getTable());
+                else{
+                    main.changeScene("coach\\CoachMainView.fxml");
+                }
+                //tableViewCallUpPlayers.setItems(getTable());
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -135,7 +137,7 @@ public class CallUpPlayersController {
             Main main = new Main();
             ArrayList<Player> players = main.getModelManager().getAllPlayer();
             ObservableList<TableCallUpGame> tabela = FXCollections.observableArrayList();
-            System.out.println(players);
+            //System.out.println(players);
             for(Player p: players){
                 String name = main.getModelManager().getNameUser(p.getEmail());
                 TableCallUpGame tab = new TableCallUpGame (p.getNameUser(p.getEmail()), p.getEmail());
