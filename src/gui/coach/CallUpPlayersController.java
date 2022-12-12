@@ -2,14 +2,14 @@ package gui.coach;
 //not done not Tested
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import Users.Player;
 import gui.Main;
 import gui.manager.TableDeleteSetter;
+import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -96,7 +96,7 @@ public class CallUpPlayersController {
                         nCC.add(Long.parseLong(main.getModelManager().getNcc(tb.getEmail())));
                     }
                 }
-                String a = main.getModelManager().callup(nCC);
+                String a = main.getModelManager().callup(nCC, 1);
                 Alert alert1 = new Alert(Alert.AlertType.ERROR);
                 if (!a.equals("Insert date about call up in the database")) {
                     alert1.setTitle("Call up");
@@ -130,6 +130,7 @@ public class CallUpPlayersController {
     @FXML
     void initialize() {
 
+        //ObservableList<Game> games.addAll();
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         callToGame.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
         email.setCellValueFactory(new PropertyValueFactory<>("email"));
@@ -137,15 +138,15 @@ public class CallUpPlayersController {
         tableViewCallUpPlayers.setItems(getTable());
     }
 
+
     private ObservableList<TableCallUpGame> getTable() {
         try {
             Main main = new Main();
             ArrayList<Player> players = main.getModelManager().getAllPlayer();
             ObservableList<TableCallUpGame> tabela = FXCollections.observableArrayList();
             //System.out.println(players);
-            for(Player p: players){
-                String name = main.getModelManager().getNameUser(p.getEmail());
-                TableCallUpGame tab = new TableCallUpGame (p.getNameUser(p.getEmail()), p.getEmail());
+            for(Player p: main.getModelManager().getPlayersAvailable()){
+                TableCallUpGame tab = new TableCallUpGame(p.getNameUser(p.getEmail()), p.getEmail());
                 tabela.add(tab);
             }
             return tabela;

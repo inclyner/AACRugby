@@ -20,6 +20,10 @@ public class Player extends CommonFeatures{
 
     }
 
+    public Boolean getAptitude() {
+        return aptitude;
+    }
+
     public void setWeight(double weight){
         this.weight = weight;
     }

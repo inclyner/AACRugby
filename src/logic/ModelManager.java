@@ -115,9 +115,9 @@ public class ModelManager {
         return String.valueOf(manager.getnCC(email));
     }
 
-    public String callup(ArrayList<Long> ncc) throws SQLException {
+    public String callup(ArrayList<Long> ncc, int id) throws SQLException {
         this.coach= new Coach(getEmailLogged());
-        return coach.callUpPlayers(ncc, 1);
+        return coach.callUpPlayers(ncc, id);
     }
     public Long getnCCChange(String newInfo, String oldValue) throws SQLException {
         File f = new File("bd\\AACRugby.db");
@@ -389,6 +389,9 @@ public class ModelManager {
         return coach.getNameGame(p);
     }
 
+    public ArrayList<Player> getPlayersAvailable(){
+        return coach.getPlayersAvailable();
+    }
 
 
     public void getinsertNotesAboutPlayer(Long ncc, int id, String text, boolean b) {

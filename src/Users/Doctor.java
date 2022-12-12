@@ -1,5 +1,6 @@
 package Users;
 
+import logic.Game;
 import logic.MedicalAppointment;
 import logic.Practise;
 
@@ -89,17 +90,17 @@ public class Doctor extends CommonFeatures{
         LocalTime initialTime = LocalTime.parse(startTime);
         LocalTime finalTime = initialTime.plusMinutes(30);
 
-
         for(MedicalAppointment appointment: getAppointments()){
             if(getAppointments().size()==0) break;
             LocalTime begin = LocalTime.parse(appointment.getInitialTime());
             LocalTime end = LocalTime.parse(appointment.getFinalTime());
             Date date1 = new SimpleDateFormat("dd-MM-yyyy").parse(appointment.getDate());
+
             if(appointment.getPlayerCC().equals(playerCC) || getnCC(this.getEmail()).equals(appointment.getnCCAuthor())) {
-                if (date1 == practiseDate) {
+                if (date1.equals(practiseDate)) {
                     if (begin.isAfter(initialTime) || end.isBefore(finalTime))
                        return "Player or Doctor can't attend at this time.";
-                    else if(begin==initialTime || end==finalTime)
+                    if(begin.equals(initialTime) || end.equals(finalTime))
                         return "Player or Doctor can't attend at this time.";
                 }
             }
@@ -113,25 +114,45 @@ public class Doctor extends CommonFeatures{
                 if (date1 == practiseDate) {
                     if (begin.isAfter(initialTime) || end.isBefore(finalTime))
                         return "You can't attend at this time.";
-                    else if(begin==initialTime || end==finalTime)
+                    if(begin.equals(initialTime) || end.equals(finalTime))
                         return "You can't attend at this time.";
                 }
             }
                 if(practise.getPlayers().contains(playerCC)){
-                    if (date1 == practiseDate) {
+                    if (date1.equals(practiseDate)) {
                         if (begin.isAfter(initialTime) || end.isBefore(finalTime))
                             return "Player is not able to attend at this time.";
-                        else if(begin==initialTime || end==finalTime)
+                        if(begin.equals(initialTime) || end.equals(finalTime))
                             return "Player is not able to attend at this time.";
                     }
                 }
             }
-
+        for(Game game: getGames()){
+            if(getGames().size()==0) break;
+            LocalTime begin = LocalTime.parse(game.getInitialTime());
+            LocalTime end = LocalTime.parse(game.getFinalTime());
+            Date date1 = new SimpleDateFormat("dd-MM-yyyy").parse(game.getDate());
+            if(getnCC(this.getEmail()).equals(game.getnCCAuthor())) {
+                if (date1.equals(practiseDate)) {
+                    if (begin.isAfter(initialTime) || end.isBefore(finalTime))
+                        return "You can't attend at this time.";
+                    if(begin.equals(initialTime) || end.equals(finalTime))
+                        return "You can't attend at this time.";
+                }
+            }
+            if(game.getPlayers().contains(playerCC)){
+                if (date1.equals(practiseDate)) {
+                    if (begin.isAfter(initialTime) || end.isBefore(finalTime))
+                        return "Player is not able to attend at this time.";
+                    if(begin.equals(initialTime) || end.equals(finalTime))
+                        return "Player is not able to attend at this time.";
+                }
+            }
+        }
 
         try {
             Statement statement = getDbConnection().createStatement();
-            String sqlQuery = "INSERT INTO medicalAppointment VALUES (NULL,'"
-                        + getnCC(getEmail()) + "','"+ playerCC + "','" + date + "','" + startTime + "','" + finalTime.toString() + "')";
+            String sqlQuery = "INSERT INTO medicalAppointment VALUES (NULL,'" + getnCC(getEmail()) + "','"+ playerCC + "','" + date + "','" + startTime + "','" + finalTime.toString() + "')";
             statement.executeUpdate(sqlQuery);
             statement.close();
             closeDb();

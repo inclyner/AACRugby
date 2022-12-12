@@ -70,6 +70,7 @@ public class Coach extends CommonFeatures {
 
     public String callUpPlayers(ArrayList<Long> playersCC, int idgame) {
         int i=0;
+        System.out.println(playersCC.size());
         if (playersCC.size()-1>18) /*|| String.valueOf(idgame)==null*/
             return "Extra players";
         else if (playersCC.size()-1<15)
@@ -227,8 +228,10 @@ public class Coach extends CommonFeatures {
             LocalTime end = LocalTime.parse(appointment.getFinalTime());
             Date date1 = new SimpleDateFormat("dd-MM-yyyy").parse(appointment.getDate());
             if(playersCC.contains(appointment.getPlayerCC())) {
-                if (date1 == practiseDate) {
+                if (date1.equals(practiseDate)) {
                     if (begin.isAfter(initialTime) || end.isBefore(finalTime))
+                        playersCC.remove(appointment.getPlayerCC());
+                    else if(begin.equals(initialTime) || end.equals(finalTime))
                         playersCC.remove(appointment.getPlayerCC());
                 }
             }
@@ -242,16 +245,20 @@ public class Coach extends CommonFeatures {
             if(practiseDate==date1 && getnCC(this.getEmail()).equals(game.getnCCAuthor())){
                 if (begin.isAfter(initialTime) || end.isBefore(finalTime))
                     return "You are busy with a game, choose another time";
+                if(begin.equals(initialTime) || end.equals(finalTime))
+                    return "You are busy with a game, choose another time";
             }
             for(Long p: playersCC){
                 if(game.getPlayers().contains(p)){
                     if(date1==practiseDate) {
                         if (begin.isAfter(initialTime) || end.isBefore(finalTime))
                             playersCC.remove(p);
+                        else if(begin.equals(initialTime) || end.equals(finalTime))
+                            playersCC.remove(p);
                     }
                 }
             }
-            }
+        }
 
         for(Practise practise: getPractise()){
             if(getPractise().size()==0) break;
@@ -261,11 +268,15 @@ public class Coach extends CommonFeatures {
             if(practiseDate==date1 && getnCC(this.getEmail()).equals(practise.getnCCAuthor())){
                 if (begin.isAfter(initialTime) || end.isBefore(finalTime))
                     return "You are busy with a practise, choose another time";
+                else if(begin.equals(initialTime) || end.equals(finalTime))
+                    return "You are busy with a practise, choose another time";
             }
             for(Long p: playersCC){
                 if(practise.getPlayers().contains(p)){
                     if(date1==practiseDate) {
                         if (begin.isAfter(initialTime) || end.isBefore(finalTime))
+                            playersCC.remove(p);
+                        else if(begin.equals(initialTime) || end.equals(finalTime))
                             playersCC.remove(p);
                     }
                 }
