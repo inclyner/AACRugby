@@ -52,6 +52,7 @@ public class Coach extends CommonFeatures {
                             resultSet.close();
                             resultSet1.close();
                             statement.close();
+                            closeDb();
                             return "Update the notes";
                         }
                     }
@@ -59,6 +60,7 @@ public class Coach extends CommonFeatures {
                     sqlQuery1 = "INSERT INTO externalPunishments (playerCC, coachCC, notes, numberGames) VALUES ('"+nCC+"','"+nCC+"','"+notes+"','"+nGames+"')";
                     statement.executeUpdate(sqlQuery1);
                     statement.close();
+                    closeDb();
                     return "Insert notes";
                 }
             }
@@ -83,6 +85,7 @@ public class Coach extends CommonFeatures {
                 if (Objects.equals(id, idgame)){
                     resultSet.close();
                     statement.close();
+                    closeDb();
                     return "Already have call up of this game";
                 }
             }
@@ -93,6 +96,7 @@ public class Coach extends CommonFeatures {
             }
             resultSet.close();
             statement.close();
+            closeDb();
             return "Insert date about call up in the database";
         }catch (SQLException e){
             throw new RuntimeException();
@@ -114,6 +118,7 @@ public class Coach extends CommonFeatures {
                     statement.executeUpdate(sqlQuery);
                     resultSet.close();
                     statement.close();
+                    closeDb();
                     return;
                 }
             }
@@ -121,6 +126,7 @@ public class Coach extends CommonFeatures {
             statement.executeUpdate(sqlQuery);
             resultSet.close();
             statement.close();
+            closeDb();
         }
         catch (SQLException e){
             throw new RuntimeException();
@@ -131,7 +137,7 @@ public class Coach extends CommonFeatures {
         String aux;
         try {
             Statement statement = getDbConnection().createStatement();
-            String sqlQuery = "SELECT * FROM game_players";
+            String sqlQuery = "SELECT * FROM game_player";
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             //update
             while (resultSet.next()) {
@@ -139,7 +145,10 @@ public class Coach extends CommonFeatures {
                 int idGame = resultSet.getInt("idGame");
                 if (Objects.equals(playercc, cc) && Objects.equals(idGame, idgame)) {
                     aux = resultSet.getString("notes");
-                    sqlQuery = "UPDATE game_players SET notes='" + notes.concat(aux) + "'WHERE nCC ='" + cc + "'AND idGame='" + idgame + "';";
+                    if(aux!=null)
+                        sqlQuery = "UPDATE game_player SET notes='" + notes.concat(aux) + "'WHERE playerCC ='" + cc + "'AND idGame='" + idgame + "';";
+                    else
+                        sqlQuery = "UPDATE game_player SET notes='" + notes + "'WHERE playerCC ='" + cc + "'AND idGame='" + idgame + "';";
                     statement.executeUpdate(sqlQuery);
                     resultSet.close();
                     String sqlQuery1 = "SELECT nCC, aptitude FROM user WHERE typeUserId=2";
@@ -149,21 +158,26 @@ public class Coach extends CommonFeatures {
                             if (Objects.equals(resultSet1.getBoolean("aptitude"), fit)) {
                                 resultSet1.close();
                                 statement.close();
+                                closeDb();
                                 return;
                             } else {
                                 sqlQuery1 = "UPDATE user SET aptitude='" + fit + "'WHERE nCC ='" + cc + "';";
                                 statement.executeUpdate(sqlQuery1);
                                 resultSet1.close();
                                 statement.close();
+                                closeDb();
                                 return;
                             }
                         }
                     }
                 }
             }
+            statement.close();
+            statement = getDbConnection().createStatement();
             //create data
-            sqlQuery = "INSERT INTO game_players (idGame, playerCC, notes) VALUES ('" + idgame + "','" + cc + "','" + notes + "')";
+            sqlQuery = "INSERT INTO game_player (idGame, playerCC, notes) VALUES ('" + idgame + "','" + cc + "','" + notes + "')";
             statement.executeUpdate(sqlQuery);
+            System.out.println("w");
             String sqlQuery1 = "SELECT nCC, aptitude FROM user WHERE typeUserId=2";
             ResultSet resultSet1 = statement.executeQuery(sqlQuery1);
             while (resultSet1.next()) {
@@ -171,19 +185,23 @@ public class Coach extends CommonFeatures {
                     if (Objects.equals(resultSet1.getBoolean("aptitude"), fit)) {
                         resultSet1.close();
                         statement.close();
+                        closeDb();
                         return;
                     } else {
                         sqlQuery1 = "UPDATE user SET aptitude='" + fit + "'WHERE nCC ='" + cc + "';";
                         statement.executeUpdate(sqlQuery1);
                         resultSet1.close();
                         statement.close();
+                        closeDb();
                         return;
                     }
                 }
             }
             statement.close();
+            closeDb();
         }
         catch (SQLException e){
+            System.out.println(e.getMessage());
             throw new RuntimeException();
         }
     }

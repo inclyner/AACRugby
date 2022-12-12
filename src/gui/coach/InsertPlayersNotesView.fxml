@@ -23,7 +23,7 @@
       </Label>
       <Label layoutX="46.0" layoutY="102.0" text="Game: " />
       <ComboBox fx:id="cmbPlayers" layoutX="407.0" layoutY="97.0" onAction="#onSelectPlayers" prefHeight="28.0" prefWidth="150.0" />
-      <ComboBox fx:id="cmbGames" layoutX="106.0" layoutY="97.0" onAction="#onSelectGames" prefWidth="150.0" />
+      <ComboBox fx:id="cmbGames" layoutX="106.0" layoutY="97.0" onAction="#onSelectGames" prefHeight="28.0"  prefWidth="150.0" />
       <TextArea fx:id="tfGameNotes" layoutX="61.0" layoutY="226.0" prefHeight="156.0" prefWidth="484.0" />
       <Label layoutX="72.0" layoutY="191.0" text="Game Notes: ">
          <font>
