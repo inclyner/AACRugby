@@ -2,9 +2,9 @@ package gui.coach;
 // not done not tested
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import Users.Player;
 import gui.Main;
@@ -51,7 +51,6 @@ public class InsertPlayersNotesController {
     @FXML
     void onClickSaveBtn(ActionEvent event) {
         try {
-            System.out.println(tfGameNotes.getText()+"w");
             Main main = new Main();
             ArrayList<Long> nCC = new ArrayList<>();
             ArrayList<Player> players = main.getModelManager().getAllPlayer();
@@ -74,16 +73,6 @@ public class InsertPlayersNotesController {
         }
     }
 
-    @FXML
-    void onSelectGames(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onSelectPlayers(ActionEvent event) {
-
-    }
-
     private ObservableList<String> getPlayers(){
         try {
             Main main = new Main();
@@ -101,15 +90,20 @@ public class InsertPlayersNotesController {
 
     private ObservableList<String> getGames(){
         try {
+            Calendar cal = Calendar.getInstance();
+            Date dataAtual = cal.getTime();
             Main main = new Main();
-            ArrayList<Game> games = main.getModelManager().getAllGames();
+            ArrayList<Game> g = main.getModelManager().getAllGames();
             ObservableList<String> game = FXCollections.observableArrayList();
-            for(Game p: games){
-                String name = main.getModelManager().getNameOfGame(p);
-                game.add(name);
+            for(Game p: g){
+                Date date = new SimpleDateFormat("dd-MM-yyyy").parse(p.getDate());
+                if(dataAtual.after(date)) {
+                    String name = main.getModelManager().getNameOfGame(p);
+                    game.add(name);
+                }
             }
             return game;
-        }catch (SQLException e){
+        }catch (SQLException | ParseException e){
             throw new RuntimeException();
         }
     }

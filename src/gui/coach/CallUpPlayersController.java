@@ -15,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import logic.Game;
 
 public class CallUpPlayersController {
 
@@ -78,17 +79,19 @@ public class CallUpPlayersController {
         try {
             Main main = new Main();
             ArrayList<Long> nCC = new ArrayList<>();
+            ArrayList<Game> games = main.getModelManager().getAllGames();
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Call up Players");
             alert.setContentText("Are you sure you want to call up this players?");
             Optional<ButtonType> option = alert.showAndWait();
+            for()
 
             if (option.get() == ButtonType.CANCEL)
                 return;
             else if (option.get() == ButtonType.OK){
                 for(TableCallUpGame tb : tableViewCallUpPlayers.getItems()){
                     if(tb.getCheckBox().isSelected()){
-                        nCC.add(main.getModelManager().getNcc(tb.getEmail()));
+                        nCC.add(Long.parseLong(main.getModelManager().getNcc(tb.getEmail())));
                     }
                 }
                 String a = main.getModelManager().callup(nCC);

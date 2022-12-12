@@ -63,10 +63,7 @@ public abstract class CommonFeatures {
     }
 
     public String getNameUser(String email) throws SQLException {
-        File f = new File("bd\\AACRugby.db");
-        String DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
-        Connection dbConn = DriverManager.getConnection(DATABASE_URL);
-        Statement statement = dbConn.createStatement();
+        Statement statement = getDbConnection().createStatement();
         String sqlQuery = "SELECT email, name from user";
         ResultSet resultSet = statement.executeQuery(sqlQuery);
         while (resultSet.next()) {
@@ -75,11 +72,13 @@ public abstract class CommonFeatures {
                 String name = resultSet.getString("name");
                 resultSet.close();
                 statement.close();
+                closeDb();
                 return name;
             }
         }
         resultSet.close();
         statement.close();
+        closeDb();
         return null;
     }
 
@@ -130,7 +129,6 @@ public abstract class CommonFeatures {
             String query = "SELECT * from game";
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()){
-                int idGame = resultSet.getInt("id");
                 String date = resultSet.getString("date");
                 String equipaAdv = resultSet.getString("equipaAdversaria");
                 String horaInicio = resultSet.getString("horaInicial");
@@ -146,6 +144,8 @@ public abstract class CommonFeatures {
                 games.add(new Game(nCCCoach, horaInicio, horaFinal, local, equipaAdv, date));
                 //players.clear();
             }
+            resultSet.close();
+            statement.close();
             closeDb();
             return games;
         } catch (SQLException e) {
@@ -157,6 +157,7 @@ public abstract class CommonFeatures {
         try {
             Statement statement = getDbConnection().createStatement();
             String query = "SELECT * from game";
+            String result;
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()){
                 if(Objects.equals(game.getId(), resultSet.getInt("id"))) {
@@ -165,12 +166,15 @@ public abstract class CommonFeatures {
                     String horaInicio = resultSet.getString("horaInicial");
                     String horaFinal = resultSet.getString("horaFinal");
                     String local = resultSet.getString("local");
-                    Long nCCCoach = resultSet.getLong("coachCC");
-                    String result = equipaAdv + ", " + date + " (" + horaInicio + "/" + horaFinal + "), " + local;
-                    System.out.println(result);
+                    result = equipaAdv + ", " + date + ", (" + horaInicio + "/" + horaFinal + "), " + local;
+                    resultSet.close();
+                    statement.close();
+                    closeDb();
                     return result;
                 }
             }
+            resultSet.close();
+            statement.close();
             closeDb();
             return "Error";
         } catch (SQLException e) {
@@ -314,7 +318,6 @@ public abstract class CommonFeatures {
             throw new RuntimeException(e);
         }
     }
-
 
     public String getDATABASE_URL() {
         return DATABASE_URL;
