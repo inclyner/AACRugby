@@ -13,7 +13,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import logic.ChangeRequest;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -59,9 +58,9 @@ public class ApproveRequestsController {
             if (value == null) {
                 System.out.println("Nothing is selected!");
             } else {
-               String name = value.getName();
-                //main.getModelManager().;
-                System.out.println(name + " removed");
+                Long ncc =  main.getModelManager().getnCCChange(value.getToValue(),value.getFromValue());
+                main.getModelManager().approveReq(ncc, true);
+                requestsTableView.setItems(getTable());
             }
         }catch (SQLException e){
             System.out.println(e);
@@ -79,8 +78,21 @@ public class ApproveRequestsController {
     }
 
     @FXML
-    void onClickDenyBtn(ActionEvent event) {
-
+    void onClickDenyBtn(ActionEvent event) throws SQLException {
+        TableRequests value = requestsTableView.getSelectionModel().getSelectedItem();
+        try {
+            Main main = new Main();
+            if (value == null) {
+                System.out.println("Nothing is selected!");
+            } else {
+                Long ncc =  main.getModelManager().getnCCChange(value.getToValue(),value.getFromValue());
+                System.out.println("manager");
+                main.getModelManager().approveReq(ncc, false);
+                requestsTableView.setItems(getTable());
+            }
+        }catch (SQLException e){
+            System.out.println(e);
+        }
     }
 
     @FXML
@@ -89,7 +101,6 @@ public class ApproveRequestsController {
         toValue.setCellValueFactory(new PropertyValueFactory<>("toValue"));
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         requestedChange.setCellValueFactory(new PropertyValueFactory<>("requestedChange"));
-
         requestsTableView.setItems((getTable()));
     }
 

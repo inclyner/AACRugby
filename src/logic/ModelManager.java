@@ -67,6 +67,11 @@ public class ModelManager {
         return manager1.getPlayers();
     }
 
+    public void approveReq(Long id, boolean answer){
+        Manager manager1 = new Manager();
+        manager1.approveChangeRequest(id, answer);
+    }
+
     public ArrayList<Coach> getAllCoach(){
         Manager manager1 = new Manager();
         return  manager1.getCoaches();
@@ -116,6 +121,28 @@ public class ModelManager {
         this.coach= new Coach(getEmailLogged());
         return coach.callUpPlayers(ncc, 1);
     }
+    public Long getnCCChange(String newInfo, String oldValue) throws SQLException {
+        File f = new File("bd\\AACRugby.db");
+        String DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
+        Connection dbConn = DriverManager.getConnection(DATABASE_URL);
+        Statement statement = dbConn.createStatement();
+        String sqlQuery = "SELECT * from changeRequest WHERE oldInfo='"+oldValue+"' AND newInfo='"+newInfo+"'";
+        ResultSet resultSet = statement.executeQuery(sqlQuery);
+        while (resultSet.next()) {
+            String o = resultSet.getString("oldInfo");
+            String n = resultSet.getString("newInfo");
+            if(o.equals(oldValue) && n.equals(newInfo)) {
+                Long nCC = resultSet.getLong("playerCC");
+                resultSet.close();
+                statement.close();
+                return nCC;
+            }
+        }
+        resultSet.close();
+        statement.close();
+        dbConn.close();
+        return null;
+    }
 
     public String getNameUser(String email) throws SQLException {
         return coach.getNameUser(email);
@@ -139,6 +166,7 @@ public class ModelManager {
         }
         resultSet.close();
         statement.close();
+        dbConn.close();
         return null;
     }
 
