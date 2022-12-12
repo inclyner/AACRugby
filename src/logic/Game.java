@@ -14,12 +14,14 @@ public class Game extends Appointment{
     private ArrayList<Long> players;
     private String oponentTeam;
 
-    public Game(Long nCCAuthor, String initialTime, String finalTime,String local, String oponentTeam, String date) {
+    public Game(int id,Long nCCAuthor, String initialTime, String finalTime,String local, String oponentTeam, String date) {
         super(nCCAuthor, initialTime, finalTime, date);
+        this.id = id;
         this.local = local;
         this.players = players;
         this.oponentTeam = oponentTeam;
     }
+
 
     public String getOponentTeam() {
         return oponentTeam;
@@ -27,6 +29,20 @@ public class Game extends Appointment{
 
     public String getLocal() {
         return local;
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "id=" + id +
+                ", local='" + local + '\'' +
+                ", players=" + players +
+                ", oponentTeam='" + oponentTeam + '\'' +
+                '}';
+    }
+
+    public int getIdPresent() {
+        return id;
     }
 
     public int getId() {
@@ -47,6 +63,7 @@ public class Game extends Appointment{
         }catch (SQLException e){
             throw new RuntimeException();
         }
+
     }
 
     public ArrayList<Long> getPlayers() {

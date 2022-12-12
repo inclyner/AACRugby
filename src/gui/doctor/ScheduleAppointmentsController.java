@@ -4,7 +4,10 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import Users.Player;
@@ -14,6 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import javafx.util.converter.DateTimeStringConverter;
 
 public class ScheduleAppointmentsController {
@@ -63,7 +67,19 @@ public class ScheduleAppointmentsController {
                 alert.showAndWait();
             }
 
-        }catch(SQLException e){
+            Long nCC = main.getModelManager().getNCccName(cmbPlayers.getValue());
+            String r =main.getModelManager().insertMedicalAppointment(nCC, datePicker.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), tfTime.getText());
+            if(r.equals("Medical Appointment inserted in database")){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle(r);
+                alert.showAndWait();
+            }else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(r);
+                alert.showAndWait();
+            }
+
+        }catch(SQLException | ParseException e){
             throw new RuntimeException(e);
         }
     }
@@ -85,6 +101,18 @@ public class ScheduleAppointmentsController {
     @FXML
     void initialize() {
         cmbPlayers.setItems(getPlayers());
+
+        Main main = null;
+        try {
+            main = new Main();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        Stage stage = main.getStg();
+        stage.setResizable(false);
+        stage.setWidth(620);
+        stage.setHeight(510);
+
         assert btnBack != null : "fx:id=\"btnBack\" was not injected: check your FXML file 'ScheduleAppointmentsView.fxml'.";
         assert btnSave != null : "fx:id=\"btnSave\" was not injected: check your FXML file 'ScheduleAppointmentsView.fxml'.";
         assert cmbPlayers != null : "fx:id=\"cmbPlayers\" was not injected: check your FXML file 'ScheduleAppointmentsView.fxml'.";

@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import Utils.Utils;
+import javafx.stage.Stage;
 
 public class InsertUserController {
 
@@ -252,20 +253,30 @@ public class InsertUserController {
 
     @FXML
     void initialize() {
+        try{
+            Main main = new Main();
+            Stage stage = main.getStg();
+            stage.setResizable(false);
+            stage.setWidth(620);
+            stage.setHeight(510);
 
-        tfWeight.setDisable(true);
-        tfHeight.setDisable(true);
-        cmbAptitude.setDisable(true);
-        cmbPosition.setDisable(true);
+            tfWeight.setDisable(true);
+            tfHeight.setDisable(true);
+            cmbAptitude.setDisable(true);
+            cmbPosition.setDisable(true);
 
-        cmbTypeUser.setItems(typeOfUsersList);
-        cmbAptitude.setItems(AptitudeList);
-        cmbPosition.setItems(PositionsList);
+            cmbTypeUser.setItems(typeOfUsersList);
+            cmbAptitude.setItems(AptitudeList);
+            cmbPosition.setItems(PositionsList);
 
-        labelAptitude.setText(null);
-        labelHeight.setText(null);
-        labelWeight.setText(null);
-        labelPosition.setText(null);
+            labelAptitude.setText(null);
+            labelHeight.setText(null);
+            labelWeight.setText(null);
+            labelPosition.setText(null);
+        } catch (SQLException e){
+            System.err.println(e);
+        }
+
     }
 
 }

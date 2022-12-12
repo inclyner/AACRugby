@@ -6,6 +6,7 @@ import Users.*;
 import javax.mail.MessagingException;
 import java.io.File;
 import java.sql.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class ModelManager {
@@ -56,10 +57,7 @@ public class ModelManager {
     }
 
     public String insertUser(int type, String nCC, String name, String email, String pass, String sex, String birthDate, String phoneNumber, String aptitude, String height, String weight, String position) throws SQLException, MessagingException {
-        //if(checksTypeUser(emailLogged) == 4){
         return manager.insertUser(type, nCC, name, email, pass, sex,birthDate, phoneNumber,  aptitude, height, weight,position);
-        //}
-        //return "Unable to add User";
     }
 
     public ArrayList<Player> getAllPlayer(){
@@ -67,9 +65,9 @@ public class ModelManager {
         return manager1.getPlayers();
     }
 
-    public void approveReq(Long id, boolean answer){
+    public String approveReq(Long id, boolean answer){
         Manager manager1 = new Manager();
-        manager1.approveChangeRequest(id, answer);
+        return manager1.approveChangeRequest(id, answer);
     }
 
     public ArrayList<Coach> getAllCoach(){
@@ -95,31 +93,31 @@ public class ModelManager {
         manager1.deleteUser(emails);
     }
 
+    public String insertMedicalAppointment(Long playerCC, String date, String startTime) throws SQLException, ParseException {
+        return doctor.ScheduleMedicalAppointments(playerCC, date, startTime);
+    }
+
     public ArrayList<Game> getAllGames(){
         Manager manager1 = new Manager();
         return  manager1.getGames();
     }
 
-
     public ArrayList<Practise> getAllPractise(){
-        Manager manager1 = new Manager();
-        return  manager1.getPractise();
+        return  manager.getPractise();
     }
 
     public ArrayList<MedicalAppointment> getAllAppointments(){
-        Manager manager1 = new Manager();
-        return manager1.getAppointments();
+        return manager.getAppointments();
     }
 
     public String getNcc(String email) throws SQLException {
-        Manager manager1 = new Manager();
 
-        return String.valueOf(manager1.getnCC(email));
+        return String.valueOf(manager.getnCC(email));
     }
 
-    public String callup(ArrayList<Long> ncc) throws SQLException {
+    public String callup(ArrayList<Long> ncc, int id) throws SQLException {
         this.coach= new Coach(getEmailLogged());
-        return coach.callUpPlayers(ncc, 1);
+        return coach.callUpPlayers(ncc, id);
     }
     public Long getnCCChange(String newInfo, String oldValue) throws SQLException {
         File f = new File("bd\\AACRugby.db");
@@ -146,6 +144,27 @@ public class ModelManager {
 
     public String getNameUser(String email) throws SQLException {
         return coach.getNameUser(email);
+    }
+    public Long getNCccName(String name) throws SQLException {
+        File f = new File("bd\\AACRugby.db");
+        String DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
+        Connection dbConn = DriverManager.getConnection(DATABASE_URL);
+        Statement statement = dbConn.createStatement();
+        String sqlQuery = "SELECT nCC, name from user";
+        ResultSet resultSet = statement.executeQuery(sqlQuery);
+        while (resultSet.next()) {
+            String n = resultSet.getString("name");
+            Long ncc = resultSet.getLong("nCC");
+            if(n.equals(name)) {
+                resultSet.close();
+                statement.close();
+                return ncc;
+            }
+        }
+        resultSet.close();
+        statement.close();
+        dbConn.close();
+        return null;
     }
 
     public String getNameUserNcc(String nCC) throws SQLException {
@@ -342,7 +361,7 @@ public class ModelManager {
         Connection dbConn = null;
         dbConn = DriverManager.getConnection(DATABASE_URL);
         Statement statement = dbConn.createStatement();
-        String sqlQuery = "SELECT email from user";
+        String sqlQuery = "SELECT * from user";
         ResultSet resultSet = statement.executeQuery(sqlQuery);
         while (resultSet.next()) {
             String n = resultSet.getString("nCC");
@@ -356,19 +375,24 @@ public class ModelManager {
         }
         resultSet.close();
         statement.close();
+        dbConn.close();
         return null;
 
     }
 
-    public void requestChange(String oldInfo,String newInfo){
+    public void requestChange(String oldInfo, String newInfo, long l){
         Player p = new Player();
-        p.requestChangePersonalData(oldInfo, newInfo);
-
+        p.requestChangePersonalData(oldInfo, newInfo, l);
     }
 
     public String getNameOfGame(Game p) {
         return coach.getNameGame(p);
     }
+
+    public ArrayList<Player> getPlayersAvailable(){
+        return coach.getPlayersAvailable();
+    }
+
 
     public void getinsertNotesAboutPlayer(Long ncc, int id, String text, boolean b) {
         coach.insertNotesAboutPlayer(ncc, id, text, b);

@@ -31,12 +31,14 @@ public class LoginController {
     @FXML
     void onClickLogin(ActionEvent event) {
         try {
+
             Main main = new Main();
             //System.out.println("Sucesso");
 
             //main.changeScene("manager\\ManagerMainView.fxml");
             //main.changeScene("player\\playerMainView.fxml");
             //main.changeScene("coach\\CoachMainView.fxml");
+            //main.changeScene("doctor\\DoctorMainView.fxml");
 
             if(main.getModelManager().login(tfEmail.getText().toString(), password.getText().toString())){
                 int typeOfUser = main.getModelManager().checksTypeUser(tfEmail.getText());
@@ -84,6 +86,7 @@ public class LoginController {
         assert tfEmail != null : "fx:id=\"cc\" was not injected: check your FXML file 'loginView.fxml'.";
         assert loginBtn != null : "fx:id=\"loginBtn\" was not injected: check your FXML file 'loginView.fxml'.";
         assert password != null : "fx:id=\"password\" was not injected: check your FXML file 'loginView.fxml'.";
+
 
     }
 

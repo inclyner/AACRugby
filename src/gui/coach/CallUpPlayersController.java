@@ -2,19 +2,20 @@ package gui.coach;
 //not done not Tested
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import Users.Player;
 import gui.Main;
 import gui.manager.TableDeleteSetter;
+import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import logic.Game;
 
 public class CallUpPlayersController {
@@ -45,6 +46,9 @@ public class CallUpPlayersController {
 
     @FXML
     private CheckBox chbSelectAllPlayers;
+
+    @FXML
+    private ComboBox<String> cmbGame;
 
     @FXML
     void onClickBtnBack(ActionEvent event) {
@@ -84,7 +88,6 @@ public class CallUpPlayersController {
             alert.setTitle("Call up Players");
             alert.setContentText("Are you sure you want to call up this players?");
             Optional<ButtonType> option = alert.showAndWait();
-            //for()
 
             if (option.get() == ButtonType.CANCEL)
                 return;
@@ -94,7 +97,7 @@ public class CallUpPlayersController {
                         nCC.add(Long.parseLong(main.getModelManager().getNcc(tb.getEmail())));
                     }
                 }
-                String a = main.getModelManager().callup(nCC);
+                String a = main.getModelManager().callup(nCC, 1);
                 Alert alert1 = new Alert(Alert.AlertType.ERROR);
                 if (!a.equals("Insert date about call up in the database")) {
                     alert1.setTitle("Call up");
@@ -128,6 +131,17 @@ public class CallUpPlayersController {
     @FXML
     void initialize() {
 
+        Main main = null;
+        try {
+            main = new Main();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        /*Stage stage = main.getStg();
+        stage.setResizable(false);
+        stage.setWidth(620);
+        stage.setHeight(510);*/
+
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         callToGame.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
         email.setCellValueFactory(new PropertyValueFactory<>("email"));
@@ -135,15 +149,15 @@ public class CallUpPlayersController {
         tableViewCallUpPlayers.setItems(getTable());
     }
 
+
     private ObservableList<TableCallUpGame> getTable() {
         try {
             Main main = new Main();
             ArrayList<Player> players = main.getModelManager().getAllPlayer();
             ObservableList<TableCallUpGame> tabela = FXCollections.observableArrayList();
             //System.out.println(players);
-            for(Player p: players){
-                String name = main.getModelManager().getNameUser(p.getEmail());
-                TableCallUpGame tab = new TableCallUpGame (p.getNameUser(p.getEmail()), p.getEmail());
+            for(Player p: main.getModelManager().getPlayersAvailable()){
+                TableCallUpGame tab = new TableCallUpGame(p.getNameUser(p.getEmail()), p.getEmail());
                 tabela.add(tab);
             }
             return tabela;

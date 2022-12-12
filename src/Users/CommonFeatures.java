@@ -129,6 +129,7 @@ public abstract class CommonFeatures {
             String query = "SELECT * from game";
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()){
+                int idGame = resultSet.getInt("id");
                 String date = resultSet.getString("date");
                 String equipaAdv = resultSet.getString("equipaAdversaria");
                 String horaInicio = resultSet.getString("horaInicial");
@@ -136,12 +137,12 @@ public abstract class CommonFeatures {
                 String local = resultSet.getString("local");
                 Long nCCCoach = resultSet.getLong("coachCC");
 
-                /*String sqlQuery = "SELECT playerCC from game_player WHERE idGame = " + idGame+"";
+                String sqlQuery = "SELECT playerCC from game_player WHERE idGame = " + idGame+"";
                 ResultSet resultSet1 = statement.executeQuery(sqlQuery);
                 while (resultSet1.next()){
                     players.add(resultSet1.getLong("id"));
-                }*/
-                games.add(new Game(nCCCoach, horaInicio, horaFinal, local, equipaAdv, date));
+                }
+                games.add(new Game(idGame,nCCCoach, horaInicio, horaFinal, local, equipaAdv, date));
                 //players.clear();
             }
             resultSet.close();
@@ -247,8 +248,8 @@ public abstract class CommonFeatures {
                 String sex = resultSet.getString("sex");
                 String birthDate = resultSet.getString("birthDate");
                 Long phoneNumber = resultSet.getLong("phoneNumber");
-                Boolean aptitude = resultSet.getBoolean("aptitude");
-                if(aptitude){
+                String aptitude = resultSet.getString("aptitude");
+                if(aptitude.equals("true")){
                     players.add(new Player(nCCPlayer, name, email, sex, birthDate, phoneNumber));
                 }
             }

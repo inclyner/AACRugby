@@ -2,12 +2,17 @@ package gui;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+
+import Utils.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class UserPersonalDataController {
 
@@ -74,7 +79,8 @@ public class UserPersonalDataController {
     }
 
     @FXML
-    void initialize() {
+    void initialize() throws SQLException{
+
         assert btnBack != null : "fx:id=\"btnBack\" was not injected: check your FXML file 'UserPersonalDataView.fxml'.";
         assert btnSave != null : "fx:id=\"btnSave\" was not injected: check your FXML file 'UserPersonalDataView.fxml'.";
         assert tfAge != null : "fx:id=\"tfAge\" was not injected: check your FXML file 'UserPersonalDataView.fxml'.";
@@ -83,6 +89,26 @@ public class UserPersonalDataController {
         assert tfEmail != null : "fx:id=\"tfEmail\" was not injected: check your FXML file 'UserPersonalDataView.fxml'.";
         assert tfName != null : "fx:id=\"tfName\" was not injected: check your FXML file 'UserPersonalDataView.fxml'.";
         assert tfPhoneNumber != null : "fx:id=\"tfPhoneNumber\" was not injected: check your FXML file 'UserPersonalDataView.fxml'.";
+
+
+
+        Main m = new Main();
+        String nCC=m.getModelManager().getNcc(m.getModelManager().getEmailLogged());
+        tfEmail.setText(m.getModelManager().getEmailLogged());
+        tfName.setText(m.getModelManager().getNameUser(m.getModelManager().getEmailLogged()));
+        tfPhoneNumber.setText(m.getModelManager().getPhoneNumberUserNcc(nCC));
+        tfCC.setText(nCC);
+
+        String dateString=m.getModelManager().getBirthDatenCC(nCC);
+        DatePicker datePicker = new DatePicker();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyy");
+        tfBirthDate.setValue(LocalDate.parse(dateString, formatter));
+        tfAge.setText(String.valueOf(Utils.calculateAge(Utils.getDateAsLocalDate(String.valueOf(tfBirthDate.getValue())), Utils.getCurrentDate())));
+
+        Stage stage = m.getStg();
+        stage.setResizable(false);
+        stage.setWidth(620);
+        stage.setHeight(510);
 
     }
 

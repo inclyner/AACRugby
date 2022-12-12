@@ -1,5 +1,6 @@
 package Users;
 
+import logic.Game;
 import logic.SendEmail;
 
 import javax.mail.MessagingException;
@@ -209,6 +210,18 @@ public class Manager extends CommonFeatures {
                                 statement.executeUpdate(sqlQuery);
                             }
                         }
+                        for(Game games: getGames()){
+                            if(games.getPlayers().contains(getnCC(email))){
+                                if(games.getPlayers().size()<=15){
+                                    sqlQuery = "DELETE from game_player WHERE idGame = " + games.getId();
+                                    statement.executeUpdate(sqlQuery);
+                                }
+
+
+                            }
+                        }
+
+
                     }
                     else if(type==3){
                         String query = "SELECT coachCC FROM game WHERE coachCC=" + getnCC(email);

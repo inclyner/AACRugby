@@ -2,9 +2,15 @@ package gui.coach;
 // not done not tested
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import com.calendarfx.model.Calendar;
+import com.calendarfx.model.CalendarSource;
+import com.calendarfx.model.Entry;
+import com.calendarfx.view.CalendarView;
 import gui.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +20,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 public class CoachMainController {
 
@@ -43,6 +50,9 @@ public class CoachMainController {
 
     @FXML
     private Label lbHello;
+
+    @FXML
+    private CalendarView calendarView;
 
     @FXML
     void onClickAccountImage(MouseEvent event) {
@@ -108,10 +118,34 @@ public class CoachMainController {
     void initialize() {
         try {
             Main main = new Main();
-            lbHello.setText("Hello coach " + main.getModelManager().getNameLogged() +"!");
+            lbHello.setText("Hello coach,\n" + main.getModelManager().getNameLogged() +"!");
+
+            Stage stage = main.getStg();
+            stage.setResizable(true);
+            stage.setWidth(1100);
+            stage.setHeight(800);
+
+            Calendar holidays = new Calendar("AAC Rugby Team Calendar");
+            holidays.setStyle(Calendar.Style.STYLE3);
+
+            Entry<String> entry = new Entry<>("Appointment");
+            entry.setInterval(ZonedDateTime.of(2022,12,12,15,0,0,0, ZoneId.systemDefault()),ZonedDateTime.of(2022,12,12,17,0,0,0, ZoneId.systemDefault()));
+
+            holidays.addEntry(entry);
+
+            CalendarSource myCalendarSource = new CalendarSource("My Calendars");
+            myCalendarSource.getCalendars().addAll(holidays);
+
+            calendarView.getCalendarSources().addAll(myCalendarSource);
+
+            calendarView.setShowSearchField(false);
+            calendarView.setShowAddCalendarButton(false);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+
 
     }
 
