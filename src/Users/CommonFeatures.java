@@ -136,20 +136,26 @@ public abstract class CommonFeatures {
                 String horaFinal = resultSet.getString("horaFinal");
                 String local = resultSet.getString("local");
                 Long nCCCoach = resultSet.getLong("coachCC");
-
-                String sqlQuery = "SELECT playerCC from game_player WHERE idGame = " + idGame+"";
-                ResultSet resultSet1 = statement.executeQuery(sqlQuery);
+                String sqlQuery = "SELECT * from game_player WHERE idGame = " + idGame+"";
+                Statement statement1 = getDbConnection().createStatement();
+                ResultSet resultSet1 = statement1.executeQuery(sqlQuery);
                 while (resultSet1.next()){
-                    players.add(resultSet1.getLong("id"));
+                    players.add(resultSet1.getLong("idGame"));
                 }
+                resultSet1.close();
+                statement1.close();
+
                 games.add(new Game(idGame,nCCCoach, horaInicio, horaFinal, local, equipaAdv, date));
+                players = new ArrayList<>();
                 //players.clear();
             }
             resultSet.close();
             statement.close();
+
             closeDb();
             return games;
         } catch (SQLException e) {
+            System.out.println(e);
             throw new RuntimeException(e);
         }
     }

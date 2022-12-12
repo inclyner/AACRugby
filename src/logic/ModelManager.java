@@ -1,7 +1,11 @@
 package logic;
 
 //import Users.CommonFeatures;
-import Users.*;
+
+import Users.Coach;
+import Users.Doctor;
+import Users.Manager;
+import Users.Player;
 
 import javax.mail.MessagingException;
 import java.io.File;
