@@ -209,7 +209,7 @@ public class ReadFilesToDB {
                     }
 
                 } while(!Objects.equals(data, "") && myReader.hasNextLine());
-                System.out.println(doc.ScheduleMedicalAppointments(playerCC,date,horaInicial,horaFinal));
+                System.out.println(doc.ScheduleMedicalAppointments(playerCC,date,horaInicial));
             }
             myReader.close();
         } catch (FileNotFoundException e) {

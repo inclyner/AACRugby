@@ -34,22 +34,15 @@ public class Player extends CommonFeatures{
     }
 
 
-    public void requestChangePersonalData(String oldInfo, String newInfo) {
+    public void requestChangePersonalData(String oldInfo, String newInfo, Long nCC) {
         try {
             Statement statement = getDbConnection().createStatement();
-            String sqlQuery = "SELECT email, phoneNumber FROM user WHERE type=2";
-            ResultSet resultSet = statement.executeQuery(sqlQuery);
-            while(resultSet.next()) {
-                int id = resultSet.getInt("id");
-                oldInfo = resultSet.getString("oldInfo");
-                long nCC = resultSet.getLong("nCC");
-                newInfo = resultSet.getString("newInfo");
-                String sqlQuery2 = "UPDATE changeRequest SET id='" + id + "', " + "newInfo=" + newInfo + "', " +"oldInfo" + oldInfo + "', " + "playerCC='" + nCC;
-                statement.executeUpdate(sqlQuery2);
-            }
+            String sqlQuery2 = "INSERT INTO changeRequest VALUES (NULL,'" + newInfo + "','" + oldInfo + "','" + nCC +"')";
+            statement.executeUpdate(sqlQuery2);
             statement.close();
             closeDb();
         }catch (SQLException e){
+            System.out.println(e.getMessage());
             throw new RuntimeException();
         }
 

@@ -11,4 +11,11 @@ public class MedicalAppointment extends Appointment{
     public Long getPlayerCC() {
         return playerCC;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                "playerCC=" + playerCC +
+                '}';
+    }
 }

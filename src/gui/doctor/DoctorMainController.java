@@ -40,8 +40,6 @@ public class DoctorMainController {
 
             Main main = new Main();
             main.changeScene("doctor\\ScheduleAppointmentsView.fxml");
-
-
     }
 
     @FXML
@@ -65,7 +63,6 @@ public class DoctorMainController {
         assert btnAppointments != null : "fx:id=\"btnAppointments\" was not injected: check your FXML file 'DoctorMainView.fxml'.";
         assert btnInnsertNotes != null : "fx:id=\"btnInnsertNotes\" was not injected: check your FXML file 'DoctorMainView.fxml'.";
         assert btnInsertDiet != null : "fx:id=\"btnInsertDiet\" was not injected: check your FXML file 'DoctorMainView.fxml'.";
-
 
             Main main = new Main();
             lbHello.setText("Hello doctor " + main.getModelManager().getNameLogged() +"!");

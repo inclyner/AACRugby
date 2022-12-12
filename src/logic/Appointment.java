@@ -49,4 +49,14 @@ public class Appointment {
     public String getFinalTime() {
         return finalTime;
     }
+
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "nCCAuthor=" + nCCAuthor +
+                ", initialTime='" + initialTime + '\'' +
+                ", finalTime='" + finalTime + '\'' +
+                ", date='" + date + '\'' +
+                '}';
+    }
 }

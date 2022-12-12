@@ -16,4 +16,13 @@ public class Practise extends Appointment{
     public ArrayList<Long> getPlayers() {
         return players;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                "Practise{" +
+                "local='" + local + '\'' +
+                ", players=" + players +
+                '}';
+    }
 }

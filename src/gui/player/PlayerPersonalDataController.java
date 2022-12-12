@@ -66,6 +66,7 @@ public class PlayerPersonalDataController {
 
     @FXML
     private ImageView pencilPhoneNumber;
+    private boolean clicked = false;
 
     private ObservableList<String> optionsViewPersonalData = FXCollections.observableArrayList(
             "Personal Data","Notes","Diet Information");
@@ -73,9 +74,8 @@ public class PlayerPersonalDataController {
     @FXML
     void onClickBtnBack(ActionEvent event) throws SQLException {
 
-
             Main main = new Main();
-            if(wereChangesNotSaved()){
+            if(clicked){
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Canceling Operation");
                 alert.setContentText("Are you sure you want do cancel the operation?");
@@ -88,8 +88,6 @@ public class PlayerPersonalDataController {
                 main.changeScene("player\\PlayerMainView.fxml");
 
         }
-
-
 
 
     @FXML
@@ -112,32 +110,31 @@ public class PlayerPersonalDataController {
     @FXML
     void onClickBtnSave(ActionEvent event) throws SQLException{
         Main main = new Main();
-        if(wereChangesNotSaved()){
+        if(clicked){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Send request to change data");
             alert.setContentText("Are you sure you want to send a request to change data?");
             Optional<ButtonType> option = alert.showAndWait();
-            String userCC = main.getModelManager().getNameUserNcc(tfCC.getText());
+            String userCC = tfCC.getText();
             if (option.get() == ButtonType.CANCEL)
                 return;
             else if (option.get() == ButtonType.OK){
-                if (tfEmail.getText() != main.getModelManager().getEmailUserNcc(userCC)) {
-                    main.getModelManager().requestChange(main.getModelManager().getEmailUserNcc(userCC),tfEmail.getText());
+                if (!Objects.equals(tfEmail.getText(), main.getModelManager().getEmailUserNcc(userCC))) {
+                    main.getModelManager().requestChange(main.getModelManager().getEmailUserNcc(userCC),tfEmail.getText(), Long.parseLong(userCC));
                 }
-                if(tfPhoneNumber.getText() != main.getModelManager().getPhoneNumberUserNcc(userCC)) {
-                    main.getModelManager().requestChange(main.getModelManager().getPhoneNumberUserNcc(userCC), tfPhoneNumber.getText());
+                if(!Objects.equals(tfPhoneNumber.getText(), main.getModelManager().getPhoneNumberUserNcc(userCC))) {
+                    main.getModelManager().requestChange(main.getModelManager().getPhoneNumberUserNcc(userCC), tfPhoneNumber.getText(),Long.parseLong(userCC));
                 }
             }
         }
     }
 
     @FXML
-    void onSelectBirthDate(ActionEvent event) {
-
-    }
+    void onSelectBirthDate(ActionEvent event) {}
 
     @FXML
     void onClickPencilEmail(MouseEvent event) {
+        clicked=true;
         if(!tfEmail.isEditable()){
             tfEmail.setStyle("-fx-border-color: #c1a670");
             tfEmail.setEditable(true);
@@ -152,6 +149,7 @@ public class PlayerPersonalDataController {
 
     @FXML
     void onClickPencilPhone(MouseEvent event) {
+        clicked=true;
         if(!tfPhoneNumber.isEditable()){
             tfPhoneNumber.setStyle("-fx-border-color: #c1a670");
             tfPhoneNumber.setEditable(true);
@@ -166,12 +164,13 @@ public class PlayerPersonalDataController {
 
     @FXML
     void initialize() throws SQLException {
+        clicked=false;
         cmbPersonalData.setItems(optionsViewPersonalData);
         Main m = new Main();
         LocalDate currentDate;
-        //String nCC= m.getModelManager().getNcc(m.getModelManager().getEmailLogged());
+        String nCC= m.getModelManager().getNcc(m.getModelManager().getEmailLogged());
 
-        /*tfEmail.setText(m.getModelManager().getEmailLogged());
+        tfEmail.setText(m.getModelManager().getEmailLogged());
         tfName.setText(m.getModelManager().getNameUser(m.getModelManager().getEmailLogged()));
         tfPhoneNumber.setText(m.getModelManager().getPhoneNumberUserNcc(nCC));
         tfCC.setText(nCC);
@@ -184,15 +183,9 @@ public class PlayerPersonalDataController {
         tfHeight.setText(m.getModelManager().getHeightnCC(nCC));
         tfWeight.setText(m.getModelManager().getWeightnCC(nCC));
         cmbPosition.setValue(m.getModelManager().getpositionnCC(nCC));
-        cmbAptitude.setValue(m.getModelManager().getAptitudenCC(nCC));*/
+        cmbAptitude.setValue(m.getModelManager().getAptitudenCC(nCC));
 
     }
 
-    private boolean wereChangesNotSaved() throws SQLException {
-            Main main = new Main();
-            String userCC = tfCC.getText();
-            //tfEmail tfPhoneNumber
-        return !Objects.equals(tfPhoneNumber.getText(), main.getModelManager().getPhoneNumberUserNcc(userCC)) || !Objects.equals(tfEmail.getText(), main.getModelManager().getEmailUserNcc(userCC));
-    }
 
 }

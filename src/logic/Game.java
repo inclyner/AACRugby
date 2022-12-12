@@ -29,6 +29,16 @@ public class Game extends Appointment{
         return local;
     }
 
+    @Override
+    public String toString() {
+        return "Game{" +
+                "id=" + id +
+                ", local='" + local + '\'' +
+                ", players=" + players +
+                ", oponentTeam='" + oponentTeam + '\'' +
+                '}';
+    }
+
     public int getId() {
         try {
             Statement statement = getDbConnection().createStatement();
@@ -47,6 +57,7 @@ public class Game extends Appointment{
         }catch (SQLException e){
             throw new RuntimeException();
         }
+
     }
 
     public ArrayList<Long> getPlayers() {
