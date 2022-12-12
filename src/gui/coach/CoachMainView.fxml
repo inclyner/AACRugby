@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.calendarfx.view.CalendarView?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -8,9 +9,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="476.0" prefWidth="608.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.coach.CoachMainController">
+<AnchorPane prefHeight="749.0" prefWidth="1036.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.coach.CoachMainController">
    <children>
-      <Button fx:id="btnCallUpPlayers" layoutX="47.0" layoutY="40.0" mnemonicParsing="false" onAction="#onClickCallUpBtn" prefHeight="34.0" prefWidth="178.0" style="-fx-background-color: rgba(193,166,112,255);" text="Call Up Players">
+      <Button fx:id="btnCallUpPlayers" layoutX="33.0" layoutY="113.0" mnemonicParsing="false" onAction="#onClickCallUpBtn" prefHeight="34.0" prefWidth="178.0" style="-fx-background-color: rgba(193,166,112,255);" text="Call Up Players">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -18,7 +19,7 @@
             <Font size="13.0" />
          </font>
       </Button>
-      <Button fx:id="btnInsertNotes" layoutX="47.0" layoutY="82.0" mnemonicParsing="false" onAction="#onClickInsertNotes" prefHeight="34.0" prefWidth="178.0" style="-fx-background-color: rgba(193,166,112,255);" text="Insert player note's">
+      <Button fx:id="btnInsertNotes" layoutX="33.0" layoutY="155.0" mnemonicParsing="false" onAction="#onClickInsertNotes" prefHeight="34.0" prefWidth="178.0" style="-fx-background-color: rgba(193,166,112,255);" text="Insert player note's">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -26,7 +27,7 @@
             <Font size="13.0" />
          </font>
       </Button>
-      <Button fx:id="btnSchedulePractice" layoutX="47.0" layoutY="125.0" mnemonicParsing="false" onAction="#onClickScheduleBtn" prefHeight="34.0" prefWidth="178.0" style="-fx-background-color: rgba(193,166,112,255);" text="Schedule practice">
+      <Button fx:id="btnSchedulePractice" layoutX="33.0" layoutY="198.0" mnemonicParsing="false" onAction="#onClickScheduleBtn" prefHeight="34.0" prefWidth="178.0" style="-fx-background-color: rgba(193,166,112,255);" text="Schedule practice">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -34,7 +35,7 @@
             <Font size="13.0" />
          </font>
       </Button>
-      <Button fx:id="btnPunishment" layoutX="47.0" layoutY="168.0" mnemonicParsing="false" onAction="#onClickPunishmentBtn" prefHeight="34.0" prefWidth="177.0" style="-fx-background-color: rgba(193,166,112,255);" text="Insert external punishment">
+      <Button fx:id="btnPunishment" layoutX="33.0" layoutY="241.0" mnemonicParsing="false" onAction="#onClickPunishmentBtn" prefHeight="34.0" prefWidth="177.0" style="-fx-background-color: rgba(193,166,112,255);" text="Insert external punishment">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -42,7 +43,7 @@
             <Font size="13.0" />
          </font>
       </Button>
-      <Button fx:id="btnReport" layoutX="47.0" layoutY="210.0" mnemonicParsing="false" onAction="#onClickReportBtn" prefHeight="34.0" prefWidth="177.0" style="-fx-background-color: rgba(193,166,112,255);" text="Report non-attendance">
+      <Button fx:id="btnReport" layoutX="33.0" layoutY="283.0" mnemonicParsing="false" onAction="#onClickReportBtn" prefHeight="34.0" prefWidth="177.0" style="-fx-background-color: rgba(193,166,112,255);" text="Report non-attendance">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -50,7 +51,7 @@
             <Font size="13.0" />
          </font>
       </Button>
-      <ImageView fx:id="imageAccount" fitHeight="77.0" fitWidth="81.0" layoutX="495.0" layoutY="36.0" onMouseClicked="#onClickAccountImage" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imageAccount" fitHeight="34.0" fitWidth="38.0" layoutX="161.0" layoutY="39.0" onMouseClicked="#onClickAccountImage" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@img/61205.png" />
          </image>
@@ -58,10 +59,11 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <Label fx:id="lbHello" layoutX="304.0" layoutY="62.0">
+      <Label fx:id="lbHello" layoutX="50.0" layoutY="44.0" text="label">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
+      <CalendarView fx:id="calendarView" layoutX="226.0" prefHeight="751.0" prefWidth="808.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="226.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>

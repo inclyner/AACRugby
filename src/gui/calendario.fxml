@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.calendarfx.view.CalendarView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="718.0" prefWidth="1232.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CalendarController">
+   <children>
+      <CalendarView fx:id="calendarView" layoutX="6.0" prefHeight="753.0" prefWidth="1232.0" />
+   </children>
+</AnchorPane>

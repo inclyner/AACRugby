@@ -15,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import logic.Game;
 
 public class CallUpPlayersController {
@@ -130,7 +131,17 @@ public class CallUpPlayersController {
     @FXML
     void initialize() {
 
-        //ObservableList<Game> games.addAll();
+        Main main = null;
+        try {
+            main = new Main();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        /*Stage stage = main.getStg();
+        stage.setResizable(false);
+        stage.setWidth(620);
+        stage.setHeight(510);*/
+
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         callToGame.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
         email.setCellValueFactory(new PropertyValueFactory<>("email"));

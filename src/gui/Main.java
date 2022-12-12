@@ -44,6 +44,14 @@ public class Main extends Application {
         //stage.setMinWidth(400);
         stage.show();
     }
+    
+    public Stage getStg(){
+        return stg;
+    }
+
+    public void setStg(Stage stage){
+        stg = stage;
+    }
 
     public void changeScene(String fxml){
         try{
