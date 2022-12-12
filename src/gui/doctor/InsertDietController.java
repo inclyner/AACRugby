@@ -16,6 +16,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
 
 public class InsertDietController {
 
@@ -88,6 +89,18 @@ public class InsertDietController {
     @FXML
     void initialize() {
         cmbPlayers.setItems(getPlayers());
+
+        Main main = null;
+        try {
+            main = new Main();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        Stage stage = main.getStg();
+        stage.setResizable(false);
+        stage.setWidth(620);
+        stage.setHeight(510);
+
         assert btnBack != null : "fx:id=\"btnBack\" was not injected: check your FXML file 'InsertDietView.fxml'.";
         assert btnSave != null : "fx:id=\"btnSave\" was not injected: check your FXML file 'InsertDietView.fxml'.";
         assert cmbPlayers != null : "fx:id=\"cmbPlayers\" was not injected: check your FXML file 'InsertDietView.fxml'.";

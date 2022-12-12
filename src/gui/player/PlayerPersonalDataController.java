@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -166,6 +167,7 @@ public class PlayerPersonalDataController {
     void initialize() throws SQLException {
         clicked=false;
         cmbPersonalData.setItems(optionsViewPersonalData);
+
         Main m = new Main();
         LocalDate currentDate;
         String nCC= m.getModelManager().getNcc(m.getModelManager().getEmailLogged());
@@ -184,6 +186,10 @@ public class PlayerPersonalDataController {
         cmbPosition.setValue(m.getModelManager().getpositionnCC(nCC));
         cmbAptitude.setValue(m.getModelManager().getAptitudenCC(nCC));
 
+        Stage stage = m.getStg();
+        stage.setResizable(false);
+        stage.setWidth(620);
+        stage.setHeight(510);
     }
 
 

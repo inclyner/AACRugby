@@ -17,6 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import javafx.util.converter.DateTimeStringConverter;
 
 public class ScheduleAppointmentsController {
@@ -100,6 +101,18 @@ public class ScheduleAppointmentsController {
     @FXML
     void initialize() {
         cmbPlayers.setItems(getPlayers());
+
+        Main main = null;
+        try {
+            main = new Main();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        Stage stage = main.getStg();
+        stage.setResizable(false);
+        stage.setWidth(620);
+        stage.setHeight(510);
+
         assert btnBack != null : "fx:id=\"btnBack\" was not injected: check your FXML file 'ScheduleAppointmentsView.fxml'.";
         assert btnSave != null : "fx:id=\"btnSave\" was not injected: check your FXML file 'ScheduleAppointmentsView.fxml'.";
         assert cmbPlayers != null : "fx:id=\"cmbPlayers\" was not injected: check your FXML file 'ScheduleAppointmentsView.fxml'.";

@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import logic.ChangeRequest;
 
 import java.sql.SQLException;
@@ -100,6 +101,18 @@ public class ApproveRequestsController {
 
     @FXML
     void initialize() throws SQLException {
+
+        Main main = null;
+        try {
+            main = new Main();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        Stage stage = main.getStg();
+        stage.setResizable(false);
+        stage.setWidth(620);
+        stage.setHeight(510);
+
         fromValue.setCellValueFactory(new PropertyValueFactory<>("fromValue"));
         toValue.setCellValueFactory(new PropertyValueFactory<>("toValue"));
         name.setCellValueFactory(new PropertyValueFactory<>("name"));

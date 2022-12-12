@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
 
 import java.sql.SQLException;
 
@@ -55,6 +56,18 @@ public class PlayerDietController {
 
     @FXML
     void initialize() {
+
+        Main main = null;
+        try {
+            main = new Main();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        Stage stage = main.getStg();
+        stage.setResizable(false);
+        stage.setWidth(620);
+        stage.setHeight(510);
+
         cmbPersonalData.setItems(optionsViewPersonalData);
     }
 }
