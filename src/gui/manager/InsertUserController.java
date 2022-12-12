@@ -1,5 +1,5 @@
 package gui.manager;
-// not done not tested
+// done and tested
 import gui.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -145,7 +145,6 @@ public class InsertUserController {
                 }
                 //main.changeScene("manager\\InsertUserView.fxml");
             }
-
 
 
         } catch (SQLException e){
