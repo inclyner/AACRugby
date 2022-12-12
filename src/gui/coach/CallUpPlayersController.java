@@ -77,7 +77,7 @@ public class CallUpPlayersController {
     void onClickBtnSave(ActionEvent event) {
         try {
             Main main = new Main();
-            ArrayList<String> nCC = new ArrayList<>();
+            ArrayList<Long> nCC = new ArrayList<>();
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Call up Players");
             alert.setContentText("Are you sure you want to call up this players?");

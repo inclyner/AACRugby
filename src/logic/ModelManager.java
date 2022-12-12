@@ -63,19 +63,15 @@ public class ModelManager {
 
     public ArrayList<Player> getAllPlayer(){
         Manager manager1 = new Manager();
-        for(Player p: manager1.getPlayers())
-            System.out.println(p);
         return manager1.getPlayers();
     }
 
     public ArrayList<Coach> getAllCoach(){
-        Manager manager1 = new Manager();
-        return  manager1.getCoaches();
+        return  coach.getCoaches();
     }
 
     public ArrayList<Manager> getAllManager(){
-        Manager manager1 = new Manager();
-        return  manager1.getManagers();
+        return  manager.getManagers();
     }
 
     public ArrayList<Doctor> getAllDoctor(){
@@ -96,6 +92,10 @@ public class ModelManager {
     public ArrayList<Game> getAllGames(){
         Manager manager1 = new Manager();
         return  manager1.getGames();
+    }
+
+    public String getNameOfGame(Game game){
+        return coach.getNameGame(game);
     }
 
 
@@ -125,6 +125,10 @@ public class ModelManager {
             throwables.printStackTrace();
         }
         return coach.callUpPlayers(ncc, 1);
+    }
+
+    public void getinsertNotesAboutPlayer(Long cc, int idgame, String notes, boolean fit){
+        coach.insertNotesAboutPlayer(cc, idgame, notes, fit);
     }
 
     public String getNameUser(String email) throws SQLException {

@@ -68,7 +68,7 @@ public class Coach extends CommonFeatures {
         return "Nothing";
     }
 
-    public String callUpPlayers(ArrayList<String> playersCC, int idgame) {
+    public String callUpPlayers(ArrayList<Long> playersCC, int idgame) {
         int i=0;
         if (playersCC.size()-1>18) /*|| String.valueOf(idgame)==null*/
             return "Extra players";
@@ -171,6 +171,7 @@ public class Coach extends CommonFeatures {
                 }
             }
             statement.close();
+            closeDb();
             statement = getDbConnection().createStatement();
             //create data
             sqlQuery = "INSERT INTO game_player (idGame, playerCC, notes) VALUES ('" + idgame + "','" + cc + "','" + notes + "')";
