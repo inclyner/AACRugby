@@ -51,22 +51,9 @@ public class SchedulePracticeController {
     private TextField tfLocal;
 
     @FXML
-    void onClickBtnBack(ActionEvent event) {
-        try {
+    void onClickBtnBack(ActionEvent event) throws SQLException {
             Main main = new Main();
-
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Canceling Operation");
-                alert.setContentText("Are you sure you want do cancel the operation?");
-                Optional<ButtonType> option = alert.showAndWait();
-                if (option.get() == ButtonType.CANCEL)
-                    return;
-                else if (option.get() == ButtonType.OK)
-                    main.changeScene("coach\\CoachMainView.fxml");
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+            main.changeScene("coach\\CoachMainView.fxml");
     }
 
     @FXML
@@ -88,7 +75,7 @@ public class SchedulePracticeController {
                     nCC.add(n);
                 }
             }
-            main.getModelManager().schedulePractices(nCC, tfLocal.getText(), datePicker.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) ,tfBeginTime.getText(), tfEndTime.getText());
+            System.out.println(main.getModelManager().schedulePractices(nCC, tfLocal.getText(), datePicker.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) ,tfBeginTime.getText(), tfEndTime.getText()));
         }
     }
 
@@ -144,6 +131,15 @@ public class SchedulePracticeController {
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
+    }
+
+    private boolean isAnyUserSelected(){
+        for(TableCallUpGame tb : tableCallUp.getItems()){
+            if(tb.getCheckBox().isSelected()){
+                return true;
+            }
+        }
+        return false;
     }
 
 }

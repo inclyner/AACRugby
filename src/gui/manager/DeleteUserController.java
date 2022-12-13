@@ -55,9 +55,9 @@ public class DeleteUserController {
                 if (option.get() == ButtonType.CANCEL)
                     return;
                 else if (option.get() == ButtonType.OK)
-                    main.changeScene("manager\\ManagerMainView.fxml");
+                    main.changeScene("coach\\CoachMainView.fxml");
             } else
-                main.changeScene("manager\\ManagerMainView.fxml");
+                main.changeScene("coach\\CoachMainView.fxml");
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -83,6 +83,7 @@ public class DeleteUserController {
                         emails.add(tb.getEmail());
                     }
                 }
+
                 main.getModelManager().deleteUsers(emails);
                 System.out.println(emails);
                 deleteTableView.setItems(getTable());

@@ -117,6 +117,9 @@ public class Doctor extends CommonFeatures{
         LocalTime initialTime = LocalTime.parse(startTime);
         LocalTime finalTime = initialTime.plusMinutes(30);
 
+        if(finalTime.isAfter(initialTime)) return "Wrong Values";
+
+
         for(MedicalAppointment appointment: getAppointments()){
             if(getAppointments().size()==0) break;
             LocalTime begin = LocalTime.parse(appointment.getInitialTime());

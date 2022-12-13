@@ -223,6 +223,8 @@ public class Coach extends CommonFeatures {
         LocalTime initialTime = LocalTime.parse(startTime);
         LocalTime finalTime = LocalTime.parse(endTime);
 
+        if(finalTime.isBefore(initialTime)) return "Wrong Values";
+
         Statement statement = getDbConnection().createStatement();
         for(MedicalAppointment appointment: getAppointments()){
             if(getAppointments().size()==0) break;
@@ -284,17 +286,18 @@ public class Coach extends CommonFeatures {
                 }
             }
         }
+        System.out.println("Daaa");
         try {
             String sqlQuery= "INSERT INTO practice VALUES(NULL,'"+local+"','"+date+"','"+startTime+"','"+endTime+"','"+getnCC(getEmail())+"')";
             statement.executeUpdate(sqlQuery);
-            System.out.println("idGame");
             statement.close();
 
-            sqlQuery = "SELECT id from game WHERE local='"+"local' " + "AND date='"+"date'";
+            sqlQuery = "SELECT id from practice WHERE local='"+ local +"' AND date='"+ date +"'";
             ResultSet resultSet1 = statement.executeQuery(sqlQuery);
             int idGame = resultSet1.getInt("id");
+            System.out.println(idGame);
             for(Long p: playersCC) {
-                sqlQuery = "INSERT INTO game_player VALUES(" + idGame + "," + p + "," + "NULL" + ")";
+                sqlQuery = "INSERT INTO practice_player (idPractice, playerCC) VALUES(" + idGame + "," + p + ")";
                 statement.executeUpdate(sqlQuery);
                 statement.close();
             }
@@ -303,6 +306,7 @@ public class Coach extends CommonFeatures {
             throw new RuntimeException();
 
         }
+        closeDb();
         return "Operation Successful";
     }
 
