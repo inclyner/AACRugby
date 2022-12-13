@@ -1,15 +1,21 @@
 package gui.coach;
 // not done not tested
-import java.net.URL;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ResourceBundle;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Optional;
 
+import Users.Player;
 import gui.Main;
+import gui.manager.TableDeleteSetter;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.converter.DateTimeStringConverter;
 
@@ -48,15 +54,42 @@ public class SchedulePracticeController {
     void onClickBtnBack(ActionEvent event) {
         try {
             Main main = new Main();
-            main.changeScene("coach\\CoachMainView.fxml");
+
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Canceling Operation");
+                alert.setContentText("Are you sure you want do cancel the operation?");
+                Optional<ButtonType> option = alert.showAndWait();
+                if (option.get() == ButtonType.CANCEL)
+                    return;
+                else if (option.get() == ButtonType.OK)
+                    main.changeScene("coach\\CoachMainView.fxml");
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     @FXML
-    void onClickSaveBtn(ActionEvent event) {
+    void onClickSaveBtn(ActionEvent event) throws SQLException, ParseException {
+        Main main = new Main();
+        ArrayList<Long> nCC = new ArrayList<>();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Schedule Practice?");
+        alert.setContentText("Are you sure you want to schedule this practice?");
+        Optional<ButtonType> option = alert.showAndWait();
 
+        if (option.get() == ButtonType.CANCEL)
+            return;
+        else if (option.get() == ButtonType.OK){
+
+            for(TableCallUpGame tb : tableCallUp.getItems()){
+                if(tb.getCheckBox().isSelected()){
+                    Long n = Long.valueOf(main.getModelManager().getNcc(tb.getEmail()));
+                    nCC.add(n);
+                }
+            }
+            main.getModelManager().schedulePractices(nCC, tfLocal.getText(), datePicker.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) ,tfBeginTime.getText(), tfEndTime.getText());
+        }
     }
 
     @FXML
@@ -89,6 +122,27 @@ public class SchedulePracticeController {
             tfEndTime.setTextFormatter(new TextFormatter<>(new DateTimeStringConverter(format), format.parse("00:00")));
         } catch (ParseException e){
             System.err.println(e);
+        }
+        name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        checkBox.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
+        //email.setCellValueFactory(new PropertyValueFactory<>("email"));
+        tableCallUp.setItems(getPlayers());
+
+    }
+
+    private ObservableList<TableCallUpGame> getPlayers(){
+        try {
+            Main main = new Main();
+            ArrayList<Player> players = main.getModelManager().getAllPlayer();
+            ObservableList<TableCallUpGame> names = FXCollections.observableArrayList();
+            for(Player p: players){
+                String name = main.getModelManager().getNameUser(p.getEmail());
+                TableCallUpGame tab = new TableCallUpGame(name, p.getEmail());
+                names.add(tab);
+            }
+            return names;
+        }catch (SQLException e){
+            throw new RuntimeException(e);
         }
     }
 
