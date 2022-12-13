@@ -52,6 +52,8 @@ public class CallUpPlayersController {
     @FXML
     private ComboBox<String> cmbGame;
 
+    private ArrayList<Game> GAMES = new ArrayList<>();
+
     @FXML
     void onClickBtnBack(ActionEvent event) {
         try {
@@ -90,7 +92,7 @@ public class CallUpPlayersController {
             alert.setTitle("Call up Players");
             alert.setContentText("Are you sure you want to call up this players?");
             Optional<ButtonType> option = alert.showAndWait();
-
+            int id=GAMES.get(cmbGame.getSelectionModel().getSelectedIndex()).getId();
             if (option.get() == ButtonType.CANCEL)
                 return;
             else if (option.get() == ButtonType.OK){
@@ -99,7 +101,7 @@ public class CallUpPlayersController {
                         nCC.add(Long.parseLong(main.getModelManager().getNcc(tb.getEmail())));
                     }
                 }
-                String a = main.getModelManager().callup(nCC, 1);
+                String a = main.getModelManager().callup(nCC, id);
                 Alert alert1 = new Alert(Alert.AlertType.ERROR);
                 if (!a.equals("Insert date about call up in the database")) {
                     alert1.setTitle("Call up");
@@ -146,6 +148,7 @@ public class CallUpPlayersController {
                 if(dataAtual.after(date) && daysbefore.before(date)) {
                     String name = main.getModelManager().getNameOfGame(p);
                     game.add(name);
+                    GAMES.add(p);
                 }
             }
             System.out.println(game);

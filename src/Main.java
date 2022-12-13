@@ -2,6 +2,7 @@ import Users.Coach;
 import Users.CommonFeatures;
 import Users.Player;
 import logic.Game;
+import logic.Practise;
 
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -39,10 +40,12 @@ public class Main {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        ArrayList<Game> g = c.getGames();
+        ArrayList<Practise> g = c.getPractise();
         System.out.println(g);
-        for (Game p: g)
-            System.out.println(c.getNameGame(p));
+        for (Practise p: g) {
+            System.out.println(p.getId());
+            System.out.println(c.getNamePractise(p));
+        }
         System.out.println("w");
         //c.repportNonAttendance(585005353L);
         c.insertNotesAboutPlayer(585005355L, 1, "asdfasfa", true);
