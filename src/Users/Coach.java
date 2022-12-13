@@ -26,46 +26,36 @@ public class Coach extends CommonFeatures {
         super(email);
     }
 
-    public String InsertPlayersPunishement(String name, String notes, int nGames){
-        //Falta obter cc do coach para meter na base de dados a ultima pessoa q alterou tudo
-        if (name == null || notes == null /*|| String.valueOf(nGames) == null*/) {
+    public String InsertPlayersPunishement(Long ncc, String notes, int nGames){
+        if (ncc == null || notes == null /*|| String.valueOf(nGames) == null*/) {
             return "Falta de argumentos";
         }
         try {
             Statement statement = getDbConnection().createStatement();
-            String sqlQuery = "SELECT nCC, name FROM user WHERE typeUserId=2";
-            ResultSet resultSet = statement.executeQuery(sqlQuery);
-            while (resultSet.next()) {
-                long nCC = resultSet.getLong("nCC");
-                String n = resultSet.getString("name");
-                if (Objects.equals(n, name)) {
-                    String sqlQuery1 = "SELECT * FROM externalPunishments";
-                    ResultSet resultSet1 = statement.executeQuery(sqlQuery1);
-                    while (resultSet1.next()) {
-                        if (Objects.equals(resultSet1.getLong("playerCC"), nCC)) {
-                            notes=resultSet1.getString("notes").concat(notes);
-                            nGames+=resultSet1.getInt("numberGames");
-                            sqlQuery1 = "UPDATE externalPunishments SET coachCC ='" + 423455848L + "', notes ='" + notes + "', numberGames ='" + nGames + "'WHERE playerCC=" + nCC;
-                            statement.executeUpdate(sqlQuery1);
-                            resultSet.close();
-                            resultSet1.close();
-                            statement.close();
-                            closeDb();
-                            return "Update the notes";
-                        }
+                String sqlQuery1 = "SELECT * FROM externalPunishments";
+                ResultSet resultSet1 = statement.executeQuery(sqlQuery1);
+                while (resultSet1.next()) {
+                    Long nCC = resultSet1.getLong("playerCC");
+                    if (Objects.equals(resultSet1.getLong("playerCC"), nCC)) {
+                        notes=resultSet1.getString("notes").concat(notes);
+                        nGames+=resultSet1.getInt("numberGames");
+                        sqlQuery1 = "UPDATE externalPunishments SET coachCC ='" + getnCC(getEmail()) + "', notes ='" + notes + "', numberGames ='" + nGames + "'WHERE playerCC=" + nCC;
+                        statement.executeUpdate(sqlQuery1);
+                        resultSet1.close();
+                        statement.close();
+                        closeDb();
+                        return "Update the notes";
                     }
-                    //Alterar a parte de coachCC, esta mal
-                    sqlQuery1 = "INSERT INTO externalPunishments (playerCC, coachCC, notes, numberGames) VALUES ('"+nCC+"','"+nCC+"','"+notes+"','"+nGames+"')";
-                    statement.executeUpdate(sqlQuery1);
-                    statement.close();
-                    closeDb();
-                    return "Insert notes";
                 }
-            }
+                //Alterar a parte de coachCC, esta mal
+                sqlQuery1 = "INSERT INTO externalPunishments (playerCC, coachCC, notes, numberGames) VALUES ('"+ncc+"','"+getnCC(getEmail())+"','"+notes+"','"+nGames+"')";
+                statement.executeUpdate(sqlQuery1);
+                statement.close();
+                closeDb();
+                return "Insert notes";
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return "Nothing";
     }
 
     public String callUpPlayers(ArrayList<Long> playersCC, int idgame) {

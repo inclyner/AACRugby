@@ -74,12 +74,6 @@ public class CallUpPlayersController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        /*try {
-            Main main = new Main();
-            main.changeScene("coach\\CoachMainView.fxml");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }*/
     }
 
     @FXML

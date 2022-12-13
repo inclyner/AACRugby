@@ -248,7 +248,7 @@ public class ReadFilesToDB {
 
                 } while(!Objects.equals(data, "") && myReader.hasNextLine());
                 System.out.println(playerCC+"\t"+notes+"\t"+numberGames+"\t");
-                System.out.println(coach.InsertPlayersPunishement(String.valueOf(playerCC),notes,numberGames));
+                System.out.println(coach.InsertPlayersPunishement(playerCC,notes,numberGames));
             }
             myReader.close();
         } catch (FileNotFoundException e) {
