@@ -36,8 +36,5 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <ComboBox fx:id="cmbAptitude" layoutX="408.0" layoutY="159.0" prefWidth="150.0" onAction="#OnSelectAptitude" />
-
-      <Label layoutX="339.0" layoutY="163.0" text="Aptitude:" />
    </children>
 </AnchorPane>

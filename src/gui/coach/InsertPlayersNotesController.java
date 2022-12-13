@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import logic.Game;
+import logic.ModelManager;
 
 public class InsertPlayersNotesController {
 
@@ -39,20 +40,7 @@ public class InsertPlayersNotesController {
     @FXML
     private TextArea tfGameNotes;
 
-    @FXML
-    private ComboBox<String> cmbAptitude;
 
-
-    @FXML
-    void OnSelectAptitude(ActionEvent event) throws SQLException {
-        String selectedType = cmbPlayers.getSelectionModel().getSelectedItem().toString();
-        //System.out.println(selectedType);
-        Main main= new Main();
-
-        if(selectedType.equals("Player"))
-            cmbAptitude.setDisable(false);
-
-    }
     @FXML
     void onClickBackBtn(ActionEvent event) {
         try {
