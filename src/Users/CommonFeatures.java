@@ -145,7 +145,7 @@ public abstract class CommonFeatures {
                 resultSet1.close();
                 statement1.close();
 
-                games.add(new Game(idGame,nCCCoach, horaInicio, horaFinal, local, equipaAdv, date));
+                games.add(new Game(idGame,nCCCoach, horaInicio, horaFinal, local, equipaAdv, date, players));
                 players = new ArrayList<>();
                 //players.clear();
             }

@@ -160,7 +160,9 @@ public class Coach extends CommonFeatures {
                     ResultSet resultSet1 = statement.executeQuery(sqlQuery1);
                     while (resultSet1.next()) {
                         if (Objects.equals(resultSet1.getLong("nCC"), cc)) {
-                            if (Objects.equals(resultSet1.getBoolean("aptitude"), fit)) {
+                            System.out.println(resultSet1.getString("aptitude"));
+                            System.out.println(fit);
+                            if (resultSet1.getString("aptitude").equals(String.valueOf(fit))) {
                                 resultSet1.close();
                                 statement.close();
                                 closeDb();

@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -45,8 +46,7 @@ public class InsertNotesController {
     @FXML
     private TextArea tfNotes;
 
-    private ObservableList<String> AptitudeList = FXCollections.observableArrayList(
-            "Fit","Not Fit");
+    private ObservableList<String> AptitudeList = FXCollections.observableArrayList("Fit","Not Fit");
 
     @FXML
     void onClickBackBtn(ActionEvent event) {
@@ -70,10 +70,13 @@ public class InsertNotesController {
         Optional<ButtonType> option = alert.showAndWait();
         int indexp=cmbPlayers.getSelectionModel().getSelectedIndex();
         Long ncc=players.get(indexp).getnCC(players.get(indexp).getEmail());
+        boolean fit=true;
+        if (Objects.equals("Not Fit",cmbAptitude.getSelectionModel().getSelectedItem()))
+            fit=false;
         if (option.get() == ButtonType.CANCEL)
             return;
         else if (option.get() == ButtonType.OK) {
-            main.getModelManager().getinsertAppointmentNotes(ncc, tfNotes.getText());
+            main.getModelManager().getinsertAppointmentNotes(ncc, tfNotes.getText(), fit);
             main.changeScene("doctor\\DoctorMainView.fxml");
         }
         }catch(SQLException e){

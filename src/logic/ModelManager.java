@@ -430,8 +430,8 @@ public class ModelManager {
         doctor.InsertDiet(nCC,notes);
     }
 
-    public void getinsertAppointmentNotes(Long ncc, String notes) {
-        doctor.InsertNotes(ncc,notes);
+    public void getinsertAppointmentNotes(Long ncc, String notes, boolean b) {
+        doctor.InsertNotes(ncc,notes, b);
     }
 
     public ArrayList<Entry<String>> getGamesForCalendar() {
