@@ -523,4 +523,8 @@ public class ModelManager {
         return practices;
     }
 
+    public String schedulePractices(ArrayList<Long>playersCC, String local, String date, String startTime, String endTime) throws SQLException, ParseException {
+        return coach.scheduleTrainingSession(playersCC, local, date, startTime, endTime);
+    }
+
 }

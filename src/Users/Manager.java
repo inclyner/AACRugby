@@ -178,6 +178,7 @@ public class Manager extends CommonFeatures {
 
     public String deleteUser(ArrayList<String> listaEmail) throws SQLException {
         String resposta = null;
+        int counter =0;
         ArrayList<Integer> ides = new ArrayList<>();
         Statement statement = getDbConnection().createStatement();
 
@@ -202,8 +203,10 @@ public class Manager extends CommonFeatures {
                             int idPractice = resultSet.getInt("idPractice");
                             sqlQuery = "SELECT * FROM practice_player";
                             ResultSet ids = statement.executeQuery(sqlQuery);
-                            ids.last();
-                            if(ids.getRow()==1){
+                            while(ids.next()){
+                                counter++;
+                            }
+                            if(counter==1){
                                 sqlQuery = "DELETE FROM practice_player WHERE idPractice=" + idPractice+ ";";
                                 statement.executeUpdate(sqlQuery);
                                 sqlQuery = "DELETE FROM practice WHERE id=" + idPractice+ ";";
