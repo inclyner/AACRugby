@@ -272,8 +272,6 @@ public class Manager extends CommonFeatures {
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             String oldInfo = resultSet.getString("oldInfo");
             String newInfo = resultSet.getString("newInfo");
-            Long cc = resultSet.getLong("playerCC");
-            if(cc == null) return "Player not found";
             if (bool) {
                 if (approveCellPhone(newInfo)==null) {
                     sqlQuery="UPDATE user SET phoneNumber = '" + newInfo + "' WHERE nCC=" + id;
