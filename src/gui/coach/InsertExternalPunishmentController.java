@@ -1,14 +1,24 @@
 package gui.coach;
 // not done not tested
+import java.awt.image.AreaAveragingScaleFilter;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import gui.Main;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import logic.Game;
+import logic.Practise;
 
 public class InsertExternalPunishmentController {
 
@@ -67,7 +77,6 @@ public class InsertExternalPunishmentController {
         assert cmbPlayer != null : "fx:id=\"cmbPlayer\" was not injected: check your FXML file 'InsertExternalPunishmentView.fxml'.";
         assert tfNumberGames != null : "fx:id=\"tfNumberGames\" was not injected: check your FXML file 'InsertExternalPunishmentView.fxml'.";
         assert tfPunishmentNote != null : "fx:id=\"tfPunishmentNote\" was not injected: check your FXML file 'InsertExternalPunishmentView.fxml'.";
-
         SpinnerValueFactory<Integer> valueFactory =
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(1,20);
 

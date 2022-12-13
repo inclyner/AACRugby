@@ -417,6 +417,10 @@ public class ModelManager {
         return coach.getNameGame(p);
     }
 
+    public String getNameOfPractise(Practise p) {
+        return coach.getNamePractise(p);
+    }
+
     public ArrayList<Player> getPlayersAvailable(){
         return coach.getPlayersAvailable();
     }
@@ -424,6 +428,10 @@ public class ModelManager {
 
     public void getinsertNotesAboutPlayer(Long ncc, int id, String text, boolean b) {
         coach.insertNotesAboutPlayer(ncc, id, text, b);
+    }
+
+    public void getrepportNonAttendance(Long ncc) {
+        coach.repportNonAttendance(ncc);
     }
 
     public void getinsertDiet(Long nCC, String notes){
@@ -448,7 +456,6 @@ public class ModelManager {
 
             games.add(entry);
         }
-
         return games;
     }
 
