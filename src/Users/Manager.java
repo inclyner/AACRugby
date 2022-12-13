@@ -274,13 +274,13 @@ public class Manager extends CommonFeatures {
             String newInfo = resultSet.getString("newInfo");
             if (bool) {
                 if (approveCellPhone(newInfo)==null) {
-                    sqlQuery="UPDATE user SET phoneNumber = '" + newInfo + "' WHERE nCC=" + id;
+                    sqlQuery="UPDATE user SET phoneNumber = '" + newInfo + "' WHERE nCC=" + id ;
                 } else if (Objects.equals(checkEmail(newInfo), "")) {
-                    sqlQuery = "UPDATE user SET email = '" + newInfo + "' WHERE nCC=" + id;
+                    sqlQuery = "UPDATE user SET email = '" + newInfo + "' WHERE nCC=" + id ;
                 }else return "Invalid Values";
                 statement.executeUpdate(sqlQuery);
             }
-            sqlQuery = "DELETE FROM changeRequest WHERE playerCC=" + id;
+            sqlQuery = "DELETE FROM changeRequest WHERE playerCC=" + id + " AND newInfo='" + newInfo + "'";
             statement.executeUpdate(sqlQuery);
             closeDb();
             return "Option Validated";
