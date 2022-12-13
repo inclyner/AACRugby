@@ -430,6 +430,10 @@ public class ModelManager {
         coach.insertNotesAboutPlayer(ncc, id, text, b);
     }
 
+    public void getInsertPlayersPunishement(Long ncc, String notes, int nGames) {
+        coach.InsertPlayersPunishement(ncc, notes, nGames);
+    }
+
     public void getrepportNonAttendance(Long ncc) {
         coach.repportNonAttendance(ncc);
     }
