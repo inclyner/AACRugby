@@ -40,6 +40,20 @@ public class InsertPlayersNotesController {
     private TextArea tfGameNotes;
 
     @FXML
+    private ComboBox<String> cmbAptitude;
+
+
+    @FXML
+    void OnSelectAptitude(ActionEvent event) throws SQLException {
+        String selectedType = cmbPlayers.getSelectionModel().getSelectedItem().toString();
+        //System.out.println(selectedType);
+        Main main= new Main();
+
+        if(selectedType.equals("Player"))
+            cmbAptitude.setDisable(false);
+
+    }
+    @FXML
     void onClickBackBtn(ActionEvent event) {
         try {
             Main main = new Main();
@@ -98,26 +112,24 @@ public class InsertPlayersNotesController {
             ObservableList<String> game = FXCollections.observableArrayList();
             for(Game p: g){
                 Date date = new SimpleDateFormat("dd-MM-yyyy").parse(p.getDate());
-                if(dataAtual.after(date)) {
+                if(dataAtual.before(date)) {
                     String name = main.getModelManager().getNameOfGame(p);
                     game.add(name);
                 }
             }
+            System.out.println(game);
             return game;
         }catch (SQLException | ParseException e){
+            System.out.println(e);
             throw new RuntimeException();
         }
     }
 
     @FXML
-    void initialize() {
+    void initialize() throws SQLException {
 
-        Main main = null;
-        try {
-            main = new Main();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        Main main = new Main();
+
         Stage stage = main.getStg();
         stage.setResizable(false);
         stage.setWidth(620);
