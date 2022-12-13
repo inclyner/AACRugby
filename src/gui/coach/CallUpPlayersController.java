@@ -2,6 +2,8 @@ package gui.coach;
 //not done not Tested
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import Users.Player;
@@ -128,6 +130,32 @@ public class CallUpPlayersController {
         }
     }
 
+    private ObservableList<String> getGames(){
+        try {
+            Calendar cal = Calendar.getInstance();
+            Date dataAtual = cal.getTime();
+            cal.add(Calendar.DATE, -3);
+            Date daysbefore = cal.getTime();
+            Main main = new Main();
+            ArrayList<Game> g = main.getModelManager().getAllGames();
+            ObservableList<String> game = FXCollections.observableArrayList();
+            for(Game p: g){
+                System.out.println(dataAtual);
+                System.out.println(daysbefore);
+                Date date = new SimpleDateFormat("dd-MM-yyyy").parse(p.getDate());
+                if(dataAtual.after(date) && daysbefore.before(date)) {
+                    String name = main.getModelManager().getNameOfGame(p);
+                    game.add(name);
+                }
+            }
+            System.out.println(game);
+            return game;
+        }catch (SQLException | ParseException e){
+            System.out.println(e);
+            throw new RuntimeException();
+        }
+    }
+
     @FXML
     void initialize() {
 
@@ -137,15 +165,11 @@ public class CallUpPlayersController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        /*Stage stage = main.getStg();
-        stage.setResizable(false);
-        stage.setWidth(620);
-        stage.setHeight(510);*/
 
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         callToGame.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
         email.setCellValueFactory(new PropertyValueFactory<>("email"));
-
+        cmbGame.setItems(getGames());
         tableViewCallUpPlayers.setItems(getTable());
     }
 
@@ -155,7 +179,6 @@ public class CallUpPlayersController {
             Main main = new Main();
             ArrayList<Player> players = main.getModelManager().getAllPlayer();
             ObservableList<TableCallUpGame> tabela = FXCollections.observableArrayList();
-            //System.out.println(players);
             for(Player p: main.getModelManager().getPlayersAvailable()){
                 TableCallUpGame tab = new TableCallUpGame(p.getNameUser(p.getEmail()), p.getEmail());
                 tabela.add(tab);
@@ -164,28 +187,6 @@ public class CallUpPlayersController {
         }catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        /*try {
-            Main main = new Main();
-            //ArrayList<Player> players = main.getModelManager().getAllPlayer();
-            ObservableList<TableCallUpGame> tabela = FXCollections.observableArrayList();
-            //System.out.println(players);
-            /*
-            for(Player player : players){
-                TableCallUpGame tab = new TableCallUpGame(player.getEmail());
-                tabela.add(tab);
-            }
-
-
-            for (int i = 0; i < 20; i++) {
-
-                TableCallUpGame data = new TableCallUpGame("Rodrigo");
-                tabela.add(data);
-            }
-
-            return tabela;
-        }catch (SQLException e) {
-            throw new RuntimeException(e);
-        }*/
     }
 
     private boolean isAnyUserSelected(){

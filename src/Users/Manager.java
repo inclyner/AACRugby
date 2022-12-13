@@ -220,8 +220,6 @@ public class Manager extends CommonFeatures {
 
                             }
                         }
-
-
                     }
                     else if(type==3){
                         String query = "SELECT coachCC FROM game WHERE coachCC=" + getnCC(email);
