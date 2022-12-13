@@ -63,7 +63,6 @@ public class Game extends Appointment{
         }catch (SQLException e){
             throw new RuntimeException();
         }
-
     }
 
     public ArrayList<Long> getPlayers() {
