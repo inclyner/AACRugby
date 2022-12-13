@@ -430,6 +430,10 @@ public class ModelManager {
         coach.insertNotesAboutPlayer(ncc, id, text, b);
     }
 
+    public void getInsertPlayersPunishement(Long ncc, String notes, int nGames) {
+        coach.InsertPlayersPunishement(ncc, notes, nGames);
+    }
+
     public void getrepportNonAttendance(Long ncc) {
         coach.repportNonAttendance(ncc);
     }
@@ -528,6 +532,10 @@ public class ModelManager {
         }
 
         return practices;
+    }
+
+    public String schedulePractices(ArrayList<Long>playersCC, String local, String date, String startTime, String endTime) throws SQLException, ParseException {
+        return coach.scheduleTrainingSession(playersCC, local, date, startTime, endTime);
     }
 
 }

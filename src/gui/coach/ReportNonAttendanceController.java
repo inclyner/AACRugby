@@ -41,7 +41,14 @@ public class ReportNonAttendanceController {
     void onClickBtnBack(ActionEvent event) {
         try {
             Main main = new Main();
-            main.changeScene("coach\\CoachMainView.fxml");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Canceling Operation");
+            alert.setContentText("Are you sure you want do cancel the operation?");
+            Optional<ButtonType> option = alert.showAndWait();
+            if (option.get() == ButtonType.CANCEL)
+                return;
+            else if (option.get() == ButtonType.OK)
+                main.changeScene("coach\\CoachMainView.fxml");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -51,12 +58,9 @@ public class ReportNonAttendanceController {
     void onClickBtnSave(ActionEvent event) {
         try {
             Main main = new Main();
-            ArrayList<Long> nCC = new ArrayList<>();
-            ArrayList<Player> players = main.getModelManager().getAllPlayer();
-            ArrayList<Game> games = main.getModelManager().getAllGames();
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Insert notes about player");
-            alert.setContentText("Are you sure you want to insert this notes?");
+            alert.setTitle("Insert not attendance about player");
+            alert.setContentText("Are you sure you want to insert this?");
             Optional<ButtonType> option = alert.showAndWait();
             String mail = PLAYERS.get(cmbPlayer.getSelectionModel().getSelectedIndex()).getEmail();
             int id= PRACTISES.get(cmbPractice.getSelectionModel().getSelectedIndex()).getId();
@@ -65,6 +69,7 @@ public class ReportNonAttendanceController {
                 return;
             else if (option.get() == ButtonType.OK){
                 main.getModelManager().getrepportNonAttendance(Long.parseLong(ncc));
+                main.changeScene("coach\\CoachMainView.fxml");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

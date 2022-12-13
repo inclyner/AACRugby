@@ -48,20 +48,17 @@ public class InsertPlayersNotesController {
     private ArrayList<Game> GAMES = new ArrayList<>();
 
     @FXML
-    void OnSelectAptitude(ActionEvent event) throws SQLException {
-        /*String selectedType = cmbPlayers.getSelectionModel().getSelectedItem().toString();
-        //System.out.println(selectedType);
-        Main main= new Main();
-
-        if(selectedType.equals("Player"))
-            cmbAptitude.setDisable(false);
-*/
-    }
-    @FXML
     void onClickBackBtn(ActionEvent event) {
         try {
             Main main = new Main();
-            main.changeScene("coach\\CoachMainView.fxml");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Canceling Operation");
+            alert.setContentText("Are you sure you want do cancel the operation?");
+            Optional<ButtonType> option = alert.showAndWait();
+            if (option.get() == ButtonType.CANCEL)
+                return;
+            else if (option.get() == ButtonType.OK)
+                main.changeScene("coach\\CoachMainView.fxml");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -88,6 +85,7 @@ public class InsertPlayersNotesController {
                 return;
             else if (option.get() == ButtonType.OK){
                 main.getModelManager().getinsertNotesAboutPlayer(Long.parseLong(ncc), id, tfGameNotes.getText(), fit);
+                main.changeScene("coach\\CoachMainView.fxml");
                 }
         } catch (SQLException e) {
             throw new RuntimeException(e);

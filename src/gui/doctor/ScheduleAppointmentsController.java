@@ -73,6 +73,7 @@ public class ScheduleAppointmentsController {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle(r);
                 alert.showAndWait();
+                main.changeScene("doctor\\DoctorMainView.fxml");
             }else{
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle(r);
