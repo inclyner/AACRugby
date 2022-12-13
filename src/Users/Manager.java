@@ -211,14 +211,15 @@ public class Manager extends CommonFeatures {
                             }
                         }
                         for(Game games: getGames()){
-                            if(games.getPlayers().contains(getnCC(email))){
-                                if(games.getPlayers().size()<=15){
-                                    sqlQuery = "DELETE from game_player WHERE idGame = " + games.getId();
-                                    statement.executeUpdate(sqlQuery);
+                            if(games.getPlayers() != null){
+                                if(games.getPlayers().contains(getnCC(email)) ){
+                                    if(games.getPlayers().size()<=15){
+                                        sqlQuery = "DELETE from game_player WHERE idGame = " + games.getId();
+                                        statement.executeUpdate(sqlQuery);
+                                    }
                                 }
-
-
                             }
+
                         }
                     }
                     else if(type==3){

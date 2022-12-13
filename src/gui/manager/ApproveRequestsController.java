@@ -61,7 +61,7 @@ public class ApproveRequestsController {
                 Long ncc =  main.getModelManager().getnCCChange(value.getToValue(),value.getFromValue());
                 String r = main.getModelManager().approveReq(ncc, true);
 
-                Alert alert = new Alert(Alert.AlertType.ERROR);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle(r);
                 alert.showAndWait();
 
