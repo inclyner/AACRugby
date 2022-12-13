@@ -56,7 +56,7 @@ public class Doctor extends CommonFeatures{
            throw new RuntimeException();
        }
    }
-    public String InsertNotes(Long cc, String notes){
+    public String InsertNotes(Long cc, String notes, boolean fit){
         int i=1;
         String sqlQuery2="";
         try{
@@ -68,7 +68,6 @@ public class Doctor extends CommonFeatures{
                 Long doctorcc = resultSet.getLong("doctorCC");
                 if (playercc.equals(cc) && doctorcc.equals(getnCC(getEmail()))){
                     i=0;
-
                 }
             }
             if(i==0){
@@ -78,6 +77,27 @@ public class Doctor extends CommonFeatures{
             }
             statement.executeUpdate(sqlQuery2);
             resultSet.close();
+            String sqlQuery1 = "SELECT nCC, aptitude FROM user WHERE typeUserId=2";
+            ResultSet resultSet1 = statement.executeQuery(sqlQuery1);
+            while (resultSet1.next()) {
+                if (Objects.equals(resultSet1.getLong("nCC"), cc)) {
+                    System.out.println(resultSet1.getString("aptitude"));
+                    System.out.println(fit);
+                    if (resultSet1.getString("aptitude").equals(String.valueOf(fit))) {
+                        resultSet1.close();
+                        statement.close();
+                        closeDb();
+                        return "Aptitude already correct";
+                    } else {
+                        sqlQuery1 = "UPDATE user SET aptitude='" + fit + "'WHERE nCC ='" + cc + "';";
+                        statement.executeUpdate(sqlQuery1);
+                        resultSet1.close();
+                        statement.close();
+                        closeDb();
+                        return "Change aptitude";
+                    }
+                }
+            }
             statement.close();
             closeDb();
             return "Create medical notes";

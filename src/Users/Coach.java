@@ -163,13 +163,11 @@ public class Coach extends CommonFeatures {
                             System.out.println(resultSet1.getString("aptitude"));
                             System.out.println(fit);
                             if (resultSet1.getString("aptitude").equals(String.valueOf(fit))) {
-                                System.out.println("1");
                                 resultSet1.close();
                                 statement.close();
                                 closeDb();
                                 return;
                             } else {
-                                System.out.println("2");
                                 sqlQuery1 = "UPDATE user SET aptitude='" + fit + "'WHERE nCC ='" + cc + "';";
                                 statement.executeUpdate(sqlQuery1);
                                 resultSet1.close();

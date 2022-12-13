@@ -417,6 +417,10 @@ public class ModelManager {
         return coach.getNameGame(p);
     }
 
+    public String getNameOfPractise(Practise p) {
+        return coach.getNamePractise(p);
+    }
+
     public ArrayList<Player> getPlayersAvailable(){
         return coach.getPlayersAvailable();
     }
@@ -426,12 +430,16 @@ public class ModelManager {
         coach.insertNotesAboutPlayer(ncc, id, text, b);
     }
 
+    public void getrepportNonAttendance(Long ncc) {
+        coach.repportNonAttendance(ncc);
+    }
+
     public void getinsertDiet(Long nCC, String notes){
         doctor.InsertDiet(nCC,notes);
     }
 
-    public void getinsertAppointmentNotes(Long ncc, String notes) {
-        doctor.InsertNotes(ncc,notes);
+    public void getinsertAppointmentNotes(Long ncc, String notes, boolean b) {
+        doctor.InsertNotes(ncc,notes, b);
     }
 
     public ArrayList<Entry<String>> getGamesForCalendar() {
@@ -448,7 +456,6 @@ public class ModelManager {
 
             games.add(entry);
         }
-
         return games;
     }
 

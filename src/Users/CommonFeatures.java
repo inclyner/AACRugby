@@ -145,7 +145,7 @@ public abstract class CommonFeatures {
                 resultSet1.close();
                 statement1.close();
 
-                games.add(new Game(idGame,nCCCoach, horaInicio, horaFinal, local, equipaAdv, date));
+                games.add(new Game(idGame,nCCCoach, horaInicio, horaFinal, local, equipaAdv, date, players));
                 players = new ArrayList<>();
                 players.clear();
             }
@@ -174,6 +174,34 @@ public abstract class CommonFeatures {
                     String horaFinal = resultSet.getString("horaFinal");
                     String local = resultSet.getString("local");
                     result = equipaAdv + ", " + date + ", (" + horaInicio + "/" + horaFinal + "), " + local;
+                    resultSet.close();
+                    statement.close();
+                    closeDb();
+                    return result;
+                }
+            }
+            resultSet.close();
+            statement.close();
+            closeDb();
+            return "Error";
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String getNamePractise(Practise practise){
+        try {
+            Statement statement = getDbConnection().createStatement();
+            String query = "SELECT * from practice";
+            String result;
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()){
+                if(Objects.equals(practise.getId(), resultSet.getInt("id"))) {
+                    String date = resultSet.getString("date");
+                    String horaInicio = resultSet.getString("startTime");
+                    String horaFinal = resultSet.getString("endTime");
+                    String local = resultSet.getString("local");
+                    result = date + ", (" + horaInicio + "/" + horaFinal + "), " + local;
                     resultSet.close();
                     statement.close();
                     closeDb();
