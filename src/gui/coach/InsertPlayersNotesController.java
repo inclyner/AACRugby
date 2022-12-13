@@ -15,7 +15,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import logic.Game;
-import logic.ModelManager;
 
 public class InsertPlayersNotesController {
 
@@ -40,7 +39,24 @@ public class InsertPlayersNotesController {
     @FXML
     private TextArea tfGameNotes;
 
+    @FXML
+    private ComboBox<String> cmbAptitude;
 
+    private ObservableList<String> AptitudeList = FXCollections.observableArrayList("Fit","Not Fit");
+
+    private ArrayList<Player> PLAYERS = new ArrayList<>();
+    private ArrayList<Game> GAMES = new ArrayList<>();
+
+    @FXML
+    void OnSelectAptitude(ActionEvent event) throws SQLException {
+        /*String selectedType = cmbPlayers.getSelectionModel().getSelectedItem().toString();
+        //System.out.println(selectedType);
+        Main main= new Main();
+
+        if(selectedType.equals("Player"))
+            cmbAptitude.setDisable(false);
+*/
+    }
     @FXML
     void onClickBackBtn(ActionEvent event) {
         try {
@@ -62,14 +78,16 @@ public class InsertPlayersNotesController {
             alert.setTitle("Insert notes about player");
             alert.setContentText("Are you sure you want to insert this notes?");
             Optional<ButtonType> option = alert.showAndWait();
-            int indexp=cmbPlayers.getSelectionModel().getSelectedIndex();
-            int indexg=cmbGames.getSelectionModel().getSelectedIndex();
-            Long ncc=players.get(indexp).getnCC(players.get(indexp).getEmail());
-            int id=games.get(indexg).getId();
+            String mail = PLAYERS.get(cmbPlayers.getSelectionModel().getSelectedIndex()).getEmail();
+            int id= GAMES.get(cmbGames.getSelectionModel().getSelectedIndex()).getId();
+            String ncc= main.getModelManager().getNcc(mail);
+            boolean fit=true;
+            if (Objects.equals("Not Fit",cmbAptitude.getSelectionModel().getSelectedItem()))
+                fit=false;
             if (option.get() == ButtonType.CANCEL)
                 return;
             else if (option.get() == ButtonType.OK){
-                main.getModelManager().getinsertNotesAboutPlayer(ncc, id, tfGameNotes.getText(), true);
+                main.getModelManager().getinsertNotesAboutPlayer(Long.parseLong(ncc), id, tfGameNotes.getText(), fit);
                 }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -84,6 +102,7 @@ public class InsertPlayersNotesController {
             for(Player p: players){
                 String name = main.getModelManager().getNameUser(p.getEmail());
                 names.add(name);
+                PLAYERS.add(p);
             }
             return names;
         }catch (SQLException e){
@@ -100,9 +119,10 @@ public class InsertPlayersNotesController {
             ObservableList<String> game = FXCollections.observableArrayList();
             for(Game p: g){
                 Date date = new SimpleDateFormat("dd-MM-yyyy").parse(p.getDate());
-                if(dataAtual.before(date)) {
+                if(dataAtual.after(date)) {
                     String name = main.getModelManager().getNameOfGame(p);
                     game.add(name);
+                    GAMES.add(p);
                 }
             }
             System.out.println(game);
@@ -128,6 +148,7 @@ public class InsertPlayersNotesController {
         //assert cmbGames != null : "fx:id=\"btnSave\" was not injected: check your FXML file 'InsertPlayersNotesView.fxml'.";
         cmbGames.setItems(getGames());
         cmbPlayers.setItems(getPlayers());
+        cmbAptitude.setItems(AptitudeList);
         assert tfGameNotes != null : "fx:id=\"tfGameNotes\" was not injected: check your FXML file 'InsertPlayersNotesView.fxml'.";
 
     }

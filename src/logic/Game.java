@@ -14,7 +14,7 @@ public class Game extends Appointment{
     private ArrayList<Long> players;
     private String oponentTeam;
 
-    public Game(int id,Long nCCAuthor, String initialTime, String finalTime,String local, String oponentTeam, String date) {
+    public Game(int id,Long nCCAuthor, String initialTime, String finalTime,String local, String oponentTeam, String date, ArrayList<Long> players) {
         super(nCCAuthor, initialTime, finalTime, date);
         this.id = id;
         this.local = local;

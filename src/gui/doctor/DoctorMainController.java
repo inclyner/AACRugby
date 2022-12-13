@@ -3,6 +3,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.calendarfx.model.Calendar;
@@ -17,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import logic.Game;
 
 public class DoctorMainController {
 
@@ -24,13 +26,10 @@ public class DoctorMainController {
     private Label lbHello;
     @FXML
     private ImageView accountImage;
-
     @FXML
     private Button btnAppointments;
-
     @FXML
     private Button btnInnsertNotes;
-
     @FXML
     private Button btnInsertDiet;
 
@@ -67,6 +66,8 @@ public class DoctorMainController {
 
     }
 
+
+
     @FXML
     void initialize() throws SQLException {
         assert btnAppointments != null : "fx:id=\"btnAppointments\" was not injected: check your FXML file 'DoctorMainView.fxml'.";
@@ -81,17 +82,24 @@ public class DoctorMainController {
         stage.setWidth(1100);
         stage.setHeight(800);
 
-        Calendar holidays = new Calendar("AAC Rugby Team Calendar");
-        holidays.setStyle(Calendar.Style.STYLE3);
+        Calendar calendar = new Calendar("AAC Season Calendar");
+        calendar.setStyle(Calendar.Style.STYLE3);
+        for(Entry<String> entry : main.getModelManager().getGamesForCalendar()){
+            calendar.addEntry(entry);
+        }
 
-        Entry<String> entry = new Entry<>("Appointment");
-        entry.setInterval(ZonedDateTime.of(2022,12,12,15,0,0,0, ZoneId.systemDefault()),ZonedDateTime.of(2022,12,12,17,0,0,0, ZoneId.systemDefault()));
+        Calendar calendarMedic = new Calendar("Medical Appointments");
+        calendarMedic.setStyle(Calendar.Style.STYLE1);
+        for(Entry<String> entry : main.getModelManager().getMedicalAppointmentsForCalendar(main.getModelManager().getEmailLogged(),false)){
+            calendarMedic.addEntry(entry);
+        }
 
-        holidays.addEntry(entry);
-
+        calendarMedic.readOnlyProperty().setValue(true);
+        calendar.readOnlyProperty().setValue(true);
 
         CalendarSource myCalendarSource = new CalendarSource("My Calendars");
-        myCalendarSource.getCalendars().addAll(holidays);
+        myCalendarSource.getCalendars().addAll(calendar);
+        myCalendarSource.getCalendars().addAll(calendarMedic);
 
         calendarView.getCalendarSources().addAll(myCalendarSource);
 

@@ -125,16 +125,26 @@ public class CoachMainController {
             stage.setWidth(1100);
             stage.setHeight(800);
 
-            Calendar holidays = new Calendar("AAC Rugby Team Calendar");
-            holidays.setStyle(Calendar.Style.STYLE3);
+            Calendar calendar = new Calendar("AAC Season Calendar");
+            calendar.setStyle(Calendar.Style.STYLE3);
+            for(Entry<String> entry : main.getModelManager().getGamesForCalendar()){
+                calendar.addEntry(entry);
+            }
 
-            Entry<String> entry = new Entry<>("Appointment");
-            entry.setInterval(ZonedDateTime.of(2022,12,12,15,0,0,0, ZoneId.systemDefault()),ZonedDateTime.of(2022,12,12,17,0,0,0, ZoneId.systemDefault()));
 
-            holidays.addEntry(entry);
+            Calendar calendarPractices = new Calendar("Team Practices");
+            calendarPractices.setStyle(Calendar.Style.STYLE5);
+            for(Entry<String> entry : main.getModelManager().getPracticesForCalendar(false)){
+                calendarPractices.addEntry(entry);
+            }
+
+
+            calendar.readOnlyProperty().setValue(true);
+            calendarPractices.readOnlyProperty().setValue(true);
 
             CalendarSource myCalendarSource = new CalendarSource("My Calendars");
-            myCalendarSource.getCalendars().addAll(holidays);
+            myCalendarSource.getCalendars().addAll(calendar);
+            myCalendarSource.getCalendars().addAll(calendarPractices);
 
             calendarView.getCalendarSources().addAll(myCalendarSource);
 
@@ -144,8 +154,6 @@ public class CoachMainController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
 
     }
 

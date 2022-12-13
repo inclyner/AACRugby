@@ -6,11 +6,13 @@ import Users.Coach;
 import Users.Doctor;
 import Users.Manager;
 import Users.Player;
+import com.calendarfx.model.Entry;
 
 import javax.mail.MessagingException;
 import java.io.File;
 import java.sql.*;
 import java.text.ParseException;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
 public class ModelManager {
@@ -182,6 +184,28 @@ public class ModelManager {
             String n = resultSet.getString("nCC");
             if(n.equals(nCC)) {
                 String name = resultSet.getString("name");
+                resultSet.close();
+                statement.close();
+                return name;
+            }
+        }
+        resultSet.close();
+        statement.close();
+        dbConn.close();
+        return null;
+    }
+
+    private String getNCCEmail(String email) throws SQLException {
+        File f = new File("bd\\AACRugby.db");
+        String DATABASE_URL = "jdbc:sqlite:" + f.getAbsolutePath();
+        Connection dbConn = DriverManager.getConnection(DATABASE_URL);
+        Statement statement = dbConn.createStatement();
+        String sqlQuery = "SELECT email, nCC from user";
+        ResultSet resultSet = statement.executeQuery(sqlQuery);
+        while (resultSet.next()) {
+            String n = resultSet.getString("email");
+            if (n.equals(email)) {
+                String name = resultSet.getString("nCC");
                 resultSet.close();
                 statement.close();
                 return name;
@@ -406,8 +430,97 @@ public class ModelManager {
         doctor.InsertDiet(nCC,notes);
     }
 
-    public void getinsertAppointmentNotes(Long ncc, String notes) {
-        doctor.InsertNotes(ncc,notes);
+    public void getinsertAppointmentNotes(Long ncc, String notes, boolean b) {
+        doctor.InsertNotes(ncc,notes, b);
+    }
+
+    public ArrayList<Entry<String>> getGamesForCalendar() {
+
+        ArrayList<Entry<String>> games = new ArrayList<>();
+
+        for (Game game : getAllGames()) {
+            Entry<String> entry = new Entry<>("Game: AAC - " + game.getOponentTeam());
+
+            ZonedDateTime begin = Utils.Utils.convertDateTimeToEntryCalendar(game.getDate(), game.getInitialTime());
+            ZonedDateTime end = Utils.Utils.convertDateTimeToEntryCalendar(game.getDate(), game.getFinalTime());
+
+            entry.setInterval(begin, end);
+
+            games.add(entry);
+        }
+
+        return games;
+    }
+
+    public ArrayList<Entry<String>> getMedicalAppointmentsForCalendar(String loggedEmail, boolean player) throws SQLException {
+
+        ArrayList<Entry<String>> medicalAppointments = new ArrayList<>();
+
+        for (MedicalAppointment appointment : getAllAppointments()) {
+
+            Entry<String> entry = null;
+
+            long playerCC = appointment.getPlayerCC();
+            String playerNameCC = playerCC + "";
+            String playerEmail = getEmailUserNcc(playerNameCC);
+
+            long doctorCC = appointment.getnCCAuthor();
+            String doctorEmailCC = doctorCC + "";
+            String doctorEmail = getEmailUserNcc(doctorEmailCC);
+
+            // Se o email do appointment for igual ao doctor loggado...
+            if (doctorEmail.equals(loggedEmail) && !player) {
+                String playerName = getNameUserNcc(playerNameCC);
+                entry = new Entry<>("Medical Appointment with player - " + playerName);
+            } else if (playerEmail.equals(loggedEmail) && player) {
+                String doctorName = getNameUserNcc(doctorEmailCC);
+                entry = new Entry<>("Medical Appointment with doctor - " + doctorName);
+            }
+
+            if (entry != null) {
+                ZonedDateTime begin = Utils.Utils.convertDateTimeToEntryCalendar(appointment.getDate(), appointment.getInitialTime());
+                ZonedDateTime end = Utils.Utils.convertDateTimeToEntryCalendar(appointment.getDate(), appointment.getFinalTime());
+
+                entry.setInterval(begin, end);
+
+                medicalAppointments.add(entry);
+            }
+        }
+
+
+        return medicalAppointments;
+    }
+
+    public ArrayList<Entry<String>> getPracticesForCalendar(boolean player) throws SQLException {
+
+        ArrayList<Entry<String>> practices = new ArrayList<>();
+
+        for (Practise practise : getAllPractise()) {
+            Entry<String> entry = null;
+            if(player){
+                String playerEmail = getEmailLogged();
+                String playerCCString = getNCCEmail(playerEmail);
+
+                assert playerCCString != null;
+                Long playerCC = Long.parseLong(playerCCString);
+
+                if(practise.getPlayers().contains(playerCC)){
+                    entry = new Entry<>("Team Practice");
+                }
+            } else {
+                entry = new Entry<>("Team Practice");
+            }
+
+            if(entry != null) {
+                ZonedDateTime begin = Utils.Utils.convertDateTimeToEntryCalendar(practise.getDate(), practise.getInitialTime());
+                ZonedDateTime end = Utils.Utils.convertDateTimeToEntryCalendar(practise.getDate(), practise.getFinalTime());
+
+                entry.setInterval(begin, end);
+                practices.add(entry);
+            }
+        }
+
+        return practices;
     }
 
 }
