@@ -7,7 +7,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="AACRUGBY" level="project" />
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
@@ -20,17 +19,6 @@
         <JAVADOC>
           <root url="jar://$MODULE_DIR$/aspose-email-22.11-javadoc.jar!/" />
         </JAVADOC>
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="library" exported="" name="bin" level="project" />
-    <orderEntry type="library" exported="" name="jre1.8" level="project" />
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="file://C:/Program Files/Java/javafx-17.0.2-javadoc" />
-        </CLASSES>
-        <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
@@ -48,17 +36,6 @@
         </CLASSES>
         <JAVADOC />
         <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="library" name="JavaFxLib" level="application" />
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="file://C:/Program Files/Java/javafx-sdk-19/lib" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-        <jarDirectory url="file://C:/Program Files/Java/javafx-sdk-19/lib" recursive="false" />
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
@@ -89,7 +66,18 @@
           <root url="file://$MODULE_DIR$/src" />
         </SOURCES>
         <jarDirectory url="file://$MODULE_DIR$" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$" recursive="false" />
         <jarDirectory url="file://$MODULE_DIR$" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$PATH_TO_FX$" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$PATH_TO_FX$" recursive="false" />
       </library>
     </orderEntry>
   </component>

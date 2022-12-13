@@ -82,7 +82,6 @@ public class InsertPlayersNotesController {
             int id= GAMES.get(cmbGames.getSelectionModel().getSelectedIndex()).getId();
             String ncc= main.getModelManager().getNcc(mail);
             boolean fit=true;
-            System.out.println();
             if (Objects.equals("Not Fit",cmbAptitude.getSelectionModel().getSelectedItem()))
                 fit=false;
             if (option.get() == ButtonType.CANCEL)
