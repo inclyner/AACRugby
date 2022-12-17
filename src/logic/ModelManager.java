@@ -408,9 +408,9 @@ public class ModelManager {
 
     }
 
-    public void requestChange(String oldInfo, String newInfo, long l){
+    public String requestChange(String oldInfo, String newInfo, long l){
         Player p = new Player();
-        p.requestChangePersonalData(oldInfo, newInfo, l);
+        return p.requestChangePersonalData(oldInfo, newInfo, l);
     }
 
     public String getNameOfGame(Game p) {
