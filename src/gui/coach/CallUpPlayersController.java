@@ -138,7 +138,7 @@ public class CallUpPlayersController {
         try {
             Calendar cal = Calendar.getInstance();
             Date dataAtual = cal.getTime();
-            cal.add(Calendar.DATE, +3);
+            cal.add(Calendar.DATE, -3);
             Date daysbefore = cal.getTime();
             Main main = new Main();
             ArrayList<Game> g = main.getModelManager().getAllGames();
