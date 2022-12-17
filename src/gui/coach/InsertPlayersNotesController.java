@@ -71,6 +71,13 @@ public class InsertPlayersNotesController {
             ArrayList<Long> nCC = new ArrayList<>();
             ArrayList<Player> players = main.getModelManager().getAllPlayer();
             ArrayList<Game> games = main.getModelManager().getAllGames();
+            if (CheckFields()){
+                Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                alert1.setTitle("Fields Empty");
+                alert1.setContentText("Fill all the fields");
+                alert1.showAndWait();
+                return;
+            }
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Insert notes about player");
             alert.setContentText("Are you sure you want to insert this notes?");
@@ -131,6 +138,13 @@ public class InsertPlayersNotesController {
         }
     }
 
+    private boolean CheckFields(){
+        if (cmbGames.getSelectionModel().getSelectedIndex()==-1 || cmbAptitude.getSelectionModel().getSelectedIndex()==-1 ||
+        cmbPlayers.getSelectionModel().getSelectedIndex() ==-1 || tfGameNotes.getText().isEmpty())
+            return true;
+        return false;
+    }
+
     @FXML
     void initialize() throws SQLException {
 
@@ -140,15 +154,9 @@ public class InsertPlayersNotesController {
         stage.setResizable(false);
         stage.setWidth(620);
         stage.setHeight(510);
-
-        assert btnBack != null : "fx:id=\"btnBack\" was not injected: check your FXML file 'InsertPlayersNotesView.fxml'.";
-        assert btnSave != null : "fx:id=\"btnSave\" was not injected: check your FXML file 'InsertPlayersNotesView.fxml'.";
-        //assert cmbGames != null : "fx:id=\"btnSave\" was not injected: check your FXML file 'InsertPlayersNotesView.fxml'.";
         cmbGames.setItems(getGames());
         cmbPlayers.setItems(getPlayers());
         cmbAptitude.setItems(AptitudeList);
-        assert tfGameNotes != null : "fx:id=\"tfGameNotes\" was not injected: check your FXML file 'InsertPlayersNotesView.fxml'.";
-
     }
 
 }

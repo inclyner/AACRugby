@@ -55,13 +55,9 @@ public class CoachMainController {
     private CalendarView calendarView;
 
     @FXML
-    void onClickAccountImage(MouseEvent event) {
-        try {
-            Main main = new Main();
-            main.changeScene("UserPersonalDataView.fxml");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    void onClickAccountImage(MouseEvent event) throws SQLException {
+        Main main = new Main();
+        main.changeScene("UserPersonalDataView.fxml");
     }
 
     @FXML

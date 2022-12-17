@@ -82,6 +82,13 @@ public class CallUpPlayersController {
             Main main = new Main();
             ArrayList<Long> nCC = new ArrayList<>();
             ArrayList<Game> games = main.getModelManager().getAllGames();
+            Alert alert2 = new Alert(Alert.AlertType.ERROR);
+            if (cmbGame.getSelectionModel().getSelectedIndex()==-1){
+                alert2.setTitle("Missing a field");
+                alert2.setContentText("You must select a game");
+                alert2.showAndWait();
+                return;
+            }
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Call up Players");
             alert.setContentText("Are you sure you want to call up this players?");
@@ -130,7 +137,7 @@ public class CallUpPlayersController {
         try {
             Calendar cal = Calendar.getInstance();
             Date dataAtual = cal.getTime();
-            cal.add(Calendar.DATE, -3);
+            cal.add(Calendar.DATE, +3);
             Date daysbefore = cal.getTime();
             Main main = new Main();
             ArrayList<Game> g = main.getModelManager().getAllGames();
@@ -139,7 +146,7 @@ public class CallUpPlayersController {
                 System.out.println(dataAtual);
                 System.out.println(daysbefore);
                 Date date = new SimpleDateFormat("dd-MM-yyyy").parse(p.getDate());
-                if(dataAtual.after(date) && daysbefore.before(date)) {
+                if(dataAtual.before(date) && daysbefore.after(date)) {
                     String name = main.getModelManager().getNameOfGame(p);
                     game.add(name);
                     GAMES.add(p);

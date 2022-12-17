@@ -67,7 +67,6 @@ public class PlayerDietController {
         stage.setResizable(false);
         stage.setWidth(620);
         stage.setHeight(510);
-
         cmbPersonalData.setItems(optionsViewPersonalData);
     }
 }

@@ -49,7 +49,5 @@ public class Player extends CommonFeatures{
             System.out.println(e.getMessage());
             throw new RuntimeException();
         }
-
     }
-
 }
