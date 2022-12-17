@@ -78,6 +78,7 @@ public class CallUpPlayersController {
 
     @FXML
     void onClickBtnSave(ActionEvent event) {
+
         try {
             Main main = new Main();
             ArrayList<Long> nCC = new ArrayList<>();
