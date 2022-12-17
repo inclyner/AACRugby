@@ -201,7 +201,7 @@ public class Manager extends CommonFeatures {
                         ResultSet resultSetTemp = statement.executeQuery(sqlQuery);
                         while (resultSetTemp.next()) {
                             int idPractice = resultSet.getInt("idPractice");
-                            sqlQuery = "SELECT * FROM practice_player";
+                            sqlQuery = "SELECT * FROM practice_player WHERE idPractice =" + idPractice+ ";";
                             ResultSet ids = statement.executeQuery(sqlQuery);
                             while(ids.next()){
                                 counter++;
