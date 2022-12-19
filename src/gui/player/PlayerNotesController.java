@@ -7,6 +7,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
@@ -17,6 +19,12 @@ public class PlayerNotesController {
     private ComboBox<String> cmbPersonalData;
     @FXML
     private Button btnBack;
+
+    @FXML
+    private TextArea tfCoachNotes;
+
+    @FXML
+    private TextArea tfDoctorNotes;
 
 
     private ObservableList<String> optionsViewPersonalData = FXCollections.observableArrayList(
@@ -67,6 +75,14 @@ public class PlayerNotesController {
         stage.setResizable(false);
         stage.setWidth(620);
         stage.setHeight(510);
+        String ncc=null;
+        try {
+            ncc = main.getModelManager().getNcc(main.getModelManager().getEmailLogged());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        tfCoachNotes.setText("Game notes:\n" + main.getModelManager().getGameNotes(Long.parseLong(ncc)) + "\n\nExternal notes: \n" + main.getModelManager().getExternalNotes(Long.parseLong(ncc)));
+        tfDoctorNotes.setText(main.getModelManager().getMedicalNotes(Long.parseLong(ncc)));
 
         cmbPersonalData.setItems(optionsViewPersonalData);
     }

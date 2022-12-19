@@ -539,4 +539,16 @@ public class ModelManager {
         return coach.scheduleTrainingSession(playersCC, local, date, startTime, endTime);
     }
 
+    public String getDietNotes(Long cc){
+        return player.getDietNotes(cc);
+    }
+    public String getMedicalNotes(Long cc){
+        return player.getMedicalNotes(cc);
+    }
+    public String getGameNotes(Long cc){
+        return player.getGameNotes(cc);
+    }
+    public String getExternalNotes(Long cc){
+        return player.getExternalNotes(cc);
+    }
 }

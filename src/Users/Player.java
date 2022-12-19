@@ -62,9 +62,10 @@ public class Player extends CommonFeatures{
             Statement statement = getDbConnection().createStatement();
             String query = "SELECT email from user";
             ResultSet resultSet = statement.executeQuery(query);
-            while (resultSet.next() && terminate.equals("")) {
+            while (resultSet.next()) {
                 String e = resultSet.getString("email");
-                if (email.equals(e)) terminate="Email Already Exists";
+                if (email.equals(e))
+                    return "Email Already Exists";
             }
             statement.close();
             resultSet.close();
@@ -74,7 +75,7 @@ public class Player extends CommonFeatures{
         }
     }
     public String requestChangePersonalData(String oldInfo, String newInfo, Long nCC) {
-        if(checkEmail(newInfo).equals("") || approveCellPhone(newInfo) != null)
+        if(!checkEmail(newInfo).equals("") && approveCellPhone(newInfo) != null)
             return "Wrong type";
         try {
             Statement statement = getDbConnection().createStatement();

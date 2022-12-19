@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="476.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.player.PlayerNotesController">
+<AnchorPane prefHeight="476.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.player.PlayerNotesController">
    <children>
       <ComboBox fx:id="cmbPersonalData" layoutX="34.0" layoutY="34.0" onAction="#onSelectTypeOfData" prefWidth="150.0" promptText="Notes" />
-      <TextArea editable="false" layoutX="36.0" layoutY="138.0" prefHeight="200.0" prefWidth="255.0" />
+      <TextArea fx:id="tfCoachNotes" editable="false" layoutX="36.0" layoutY="138.0" prefHeight="200.0" prefWidth="255.0" />
       <Button fx:id="btnBack" layoutX="57.0" layoutY="413.0" mnemonicParsing="false" onAction="#onClickBackBtn" style="-fx-background-color: rgba(193,166,112,255);" text="Back">
          <font>
             <Font size="13.0" />
@@ -21,7 +18,7 @@
          </cursor>
       </Button>
       <Label layoutX="45.0" layoutY="108.0" text="Coach notes:" />
-      <TextArea editable="false" layoutX="334.0" layoutY="138.0" prefHeight="200.0" prefWidth="242.0" />
+      <TextArea fx:id="tfDoctorNotes" editable="false" layoutX="334.0" layoutY="138.0" prefHeight="200.0" prefWidth="242.0" />
       <Label layoutX="334.0" layoutY="108.0" text="Doctor notes:" />
    </children>
 </AnchorPane>

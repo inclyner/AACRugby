@@ -73,7 +73,6 @@ public class DeleteUserController {
             alert.setTitle("Delete Users");
             alert.setContentText("Are you sure you want to delete the selected users?");
             Optional<ButtonType> option = alert.showAndWait();
-
             if (option.get() == ButtonType.CANCEL)
                 return;
             else if (option.get() == ButtonType.OK){
@@ -83,10 +82,12 @@ public class DeleteUserController {
                         emails.add(tb.getEmail());
                     }
                 }
-
                 main.getModelManager().deleteUsers(emails);
-                System.out.println(emails);
                 deleteTableView.setItems(getTable());
+                Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                alert1.setContentText("User deleted");
+                alert1.showAndWait();
+                main.changeScene("manager\\ManagerMainView.fxml");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

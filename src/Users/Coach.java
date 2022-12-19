@@ -35,11 +35,10 @@ public class Coach extends CommonFeatures {
                 String sqlQuery1 = "SELECT * FROM externalPunishments";
                 ResultSet resultSet1 = statement.executeQuery(sqlQuery1);
                 while (resultSet1.next()) {
-                    Long nCC = resultSet1.getLong("playerCC");
-                    if (Objects.equals(resultSet1.getLong("playerCC"), nCC)) {
+                    if (Objects.equals(resultSet1.getLong("playerCC"), ncc)) {
                         notes=resultSet1.getString("notes").concat(notes);
                         nGames+=resultSet1.getInt("numberGames");
-                        sqlQuery1 = "UPDATE externalPunishments SET coachCC ='" + getnCC(getEmail()) + "', notes ='" + notes + "', numberGames ='" + nGames + "'WHERE playerCC=" + nCC;
+                        sqlQuery1 = "UPDATE externalPunishments SET coachCC ='" + getnCC(getEmail()) + "', notes ='" + notes + "', numberGames ='" + nGames + "'WHERE playerCC=" + ncc;
                         statement.executeUpdate(sqlQuery1);
                         resultSet1.close();
                         statement.close();
@@ -203,7 +202,6 @@ public class Coach extends CommonFeatures {
     }
 
     public String scheduleTrainingSession(ArrayList<Long>playersCC, String local, String date, String startTime, String endTime) throws SQLException, ParseException {
-        int i=0;
         Calendar cal = Calendar.getInstance();
         cal.getTime();
         Date dataAtual = cal.getTime();

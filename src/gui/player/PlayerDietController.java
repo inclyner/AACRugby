@@ -68,5 +68,13 @@ public class PlayerDietController {
         stage.setWidth(620);
         stage.setHeight(510);
         cmbPersonalData.setItems(optionsViewPersonalData);
+        String ncc=null;
+        try {
+            ncc = main.getModelManager().getNcc(main.getModelManager().getEmailLogged());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        tfdietInformation.setText(main.getModelManager().getDietNotes(Long.parseLong(ncc)));
+
     }
 }

@@ -142,13 +142,13 @@ public class InsertUserController {
                     alert.setTitle("Great");
                     alert.setContentText(r);
                     alert.showAndWait();
+                    main.changeScene("manager\\ManagerMainView.fxml");
                 }else{
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Invalid Info");
                     alert.setContentText(r);
                     alert.showAndWait();
                 }
-                main.changeScene("manager\\InsertUserView.fxml");
             }
         } catch (SQLException e){
             System.out.println("Aqui" + e);

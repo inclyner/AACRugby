@@ -16,6 +16,7 @@ import java.sql.Statement;
 
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class ApproveRequestsController {
 
@@ -76,7 +77,14 @@ public class ApproveRequestsController {
     void onClickBackBtn(ActionEvent event) {
         try {
             Main main = new Main();
-            main.changeScene("manager\\ManagerMainView.fxml");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Canceling Operation");
+            alert.setContentText("Are you sure you want do cancel the operation?");
+            Optional<ButtonType> option = alert.showAndWait();
+            if (option.get() == ButtonType.CANCEL)
+                return;
+            else if (option.get() == ButtonType.OK)
+                main.changeScene("manager\\ManagerMainView.fxml");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -126,10 +134,9 @@ public class ApproveRequestsController {
         ArrayList<ChangeRequest> requests = main.getModelManager().getAllRequests();
 
         for (ChangeRequest changeRequest: requests){
-            TableRequests tab = new TableRequests(main.getModelManager().getNameUserNcc(String.valueOf(changeRequest.getPlayerCC())), "Email", changeRequest.getOldInfo(), changeRequest.getNewInfo());
+            TableRequests tab = new TableRequests(main.getModelManager().getNameUserNcc(String.valueOf(changeRequest.getPlayerCC())), changeRequest.getOldInfo(), changeRequest.getNewInfo());
             tabela.add(tab);
         }
-
         return tabela;
     }
 }
