@@ -69,7 +69,7 @@ public class UserPersonalDataController {
     }
 
     @FXML
-    void onClivkBtnSave(ActionEvent event) {
+    void onClickBtnSave(ActionEvent event) {
 
     }
 
