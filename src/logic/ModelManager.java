@@ -62,7 +62,7 @@ public class ModelManager {
         return false;
     }
 
-    public String insertUser(int type, String nCC, String name, String email, String pass, String sex, String birthDate, String phoneNumber, String aptitude, String height, String weight, String position) throws SQLException, MessagingException {
+    public String insertUser(int type, String nCC, String name, String email, String pass, String sex, String birthDate, String phoneNumber, Boolean aptitude, String height, String weight, String position) throws SQLException, MessagingException {
         return manager.insertUser(type, nCC, name, email, pass, sex,birthDate, phoneNumber,  aptitude, height, weight,position);
     }
 

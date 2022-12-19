@@ -5,6 +5,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Optional;
 
 import Users.Player;
@@ -52,7 +54,14 @@ public class SchedulePracticeController {
 
     @FXML
     void onClickBtnBack(ActionEvent event) throws SQLException {
-            Main main = new Main();
+        Main main = new Main();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Canceling Operation");
+        alert.setContentText("Are you sure you want do cancel the operation?");
+        Optional<ButtonType> option = alert.showAndWait();
+        if (option.get() == ButtonType.CANCEL)
+            return;
+        else if (option.get() == ButtonType.OK)
             main.changeScene("coach\\CoachMainView.fxml");
     }
 
@@ -60,11 +69,17 @@ public class SchedulePracticeController {
     void onClickSaveBtn(ActionEvent event) throws SQLException, ParseException {
         Main main = new Main();
         ArrayList<Long> nCC = new ArrayList<>();
+        if (CheckFields() && !isAnyUserSelected()){
+            Alert alert1 = new Alert(Alert.AlertType.ERROR);
+            alert1.setTitle("Fields Empty");
+            alert1.setContentText("Fill all the fields");
+            alert1.showAndWait();
+            return;
+        }
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Schedule Practice?");
         alert.setContentText("Are you sure you want to schedule this practice?");
         Optional<ButtonType> option = alert.showAndWait();
-
         if (option.get() == ButtonType.CANCEL)
             return;
         else if (option.get() == ButtonType.OK){
@@ -75,10 +90,40 @@ public class SchedulePracticeController {
                     nCC.add(n);
                 }
             }
-            System.out.println(main.getModelManager().schedulePractices(nCC, tfLocal.getText(), datePicker.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) ,tfBeginTime.getText(), tfEndTime.getText()));
+            String r = main.getModelManager().schedulePractices(nCC, tfLocal.getText(), datePicker.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) ,tfBeginTime.getText(), tfEndTime.getText());
+            if(r.equals("Operation Successfull")){
+                Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);
+                alert2.setContentText(r);
+                alert2.showAndWait();
+                main.changeScene("coach\\CoachMainView.fxml");
+            }else{
+                Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                alert2.setTitle(r);
+                alert2.showAndWait();
+            }
         }
     }
 
+    //Nota select all nao funciona
+    @FXML
+    void onSelectchbAllPlayers(ActionEvent event) {
+        if(chbSelectAll.isSelected()){
+            for(TableCallUpGame table : tableCallUp.getItems()){
+                table.getCheckBox().setSelected(true);
+            }
+        } else {
+            for(TableCallUpGame table : tableCallUp.getItems()){
+                table.getCheckBox().setSelected(false);
+            }
+        }
+    }
+
+    private boolean CheckFields(){
+        if (tfBeginTime.getText().isEmpty() || tfEndTime.getText().isEmpty() || tfLocal.getText().isEmpty()
+                || datePicker.getValue()==null)
+            return true;
+        return false;
+    }
     @FXML
     void initialize()  {
 

@@ -55,9 +55,9 @@ public class DeleteUserController {
                 if (option.get() == ButtonType.CANCEL)
                     return;
                 else if (option.get() == ButtonType.OK)
-                    main.changeScene("coach\\CoachMainView.fxml");
+                    main.changeScene("manager\\ManagerMainView.fxml");
             } else
-                main.changeScene("coach\\CoachMainView.fxml");
+                main.changeScene("manager\\ManagerMainView.fxml");
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

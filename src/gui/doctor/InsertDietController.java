@@ -41,7 +41,14 @@ public class InsertDietController {
     void onClickBackBtn(ActionEvent event) {
         try {
             Main main = new Main();
-            main.changeScene("doctor\\DoctorMainView.fxml");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Canceling Operation");
+            alert.setContentText("Are you sure you want do cancel the operation?");
+            Optional<ButtonType> option = alert.showAndWait();
+            if (option.get() == ButtonType.CANCEL)
+                return;
+            else if (option.get() == ButtonType.OK)
+                main.changeScene("doctor\\DoctorMainView.fxml");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -53,6 +60,13 @@ public class InsertDietController {
             Main main = new Main();
             ArrayList<Long> nCC = new ArrayList<>();
             ArrayList<Player> players = main.getModelManager().getAllPlayer();
+            if (CheckFields()){
+                Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                alert1.setTitle("Fields Empty");
+                alert1.setContentText("Fill all the fields");
+                alert1.showAndWait();
+                return;
+            }
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Insert diet for player");
             alert.setContentText("Are you sure you want to insert this diet?");
@@ -82,6 +96,12 @@ public class InsertDietController {
         }catch (SQLException e){
             throw new RuntimeException();
         }
+    }
+
+    private boolean CheckFields(){
+        if (cmbPlayers.getSelectionModel().getSelectedIndex() ==-1 || tfDiet.getText().isEmpty())
+            return true;
+        return false;
     }
 
     @FXML

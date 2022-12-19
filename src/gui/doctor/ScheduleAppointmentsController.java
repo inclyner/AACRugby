@@ -5,10 +5,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import Users.Player;
 import gui.Main;
@@ -41,7 +38,14 @@ public class ScheduleAppointmentsController {
     void onClickBackBtn(ActionEvent event) {
         try {
             Main main = new Main();
-            main.changeScene("doctor\\DoctorMainView.fxml");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Canceling Operation");
+            alert.setContentText("Are you sure you want do cancel the operation?");
+            Optional<ButtonType> option = alert.showAndWait();
+            if (option.get() == ButtonType.CANCEL)
+                return;
+            else if (option.get() == ButtonType.OK)
+                main.changeScene("coach\\DoctorMainView.fxml");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -71,7 +75,7 @@ public class ScheduleAppointmentsController {
             String r =main.getModelManager().insertMedicalAppointment(nCC, datePicker.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), tfTime.getText());
             if(r.equals("Medical Appointment inserted in database")){
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle(r);
+                alert.setContentText(r);
                 alert.showAndWait();
                 main.changeScene("doctor\\DoctorMainView.fxml");
             }else{
@@ -99,6 +103,7 @@ public class ScheduleAppointmentsController {
             throw new RuntimeException(e);
         }
     }
+
     @FXML
     void initialize() {
         cmbPlayers.setItems(getPlayers());

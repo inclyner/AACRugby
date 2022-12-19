@@ -276,7 +276,6 @@ public class Coach extends CommonFeatures {
                 }
             }
         }
-        System.out.println("Daaa");
         try {
             String sqlQuery= "INSERT INTO practice VALUES(NULL,'"+local+"','"+date+"','"+startTime+"','"+endTime+"','"+getnCC(getEmail())+"')";
             statement.executeUpdate(sqlQuery);

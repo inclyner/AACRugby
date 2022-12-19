@@ -58,6 +58,13 @@ public class ReportNonAttendanceController {
     void onClickBtnSave(ActionEvent event) {
         try {
             Main main = new Main();
+            if (CheckFields()){
+                Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                alert1.setTitle("Fields Empty");
+                alert1.setContentText("Fill all the fields");
+                alert1.showAndWait();
+                return;
+            }
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Insert not attendance about player");
             alert.setContentText("Are you sure you want to insert this?");
@@ -115,6 +122,11 @@ public class ReportNonAttendanceController {
         }
     }
 
+    private boolean CheckFields(){
+        if (cmbPlayer.getSelectionModel().getSelectedIndex() ==-1 || cmbPractice.getSelectionModel().getSelectedIndex()==-1)
+            return true;
+        return false;
+    }
     @FXML
     void initialize() {
 

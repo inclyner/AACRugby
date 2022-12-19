@@ -16,6 +16,7 @@ import javax.swing.text.html.Option;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import java.util.Optional;
 import Utils.Utils;
 import javafx.stage.Stage;
@@ -81,6 +82,7 @@ public class InsertUserController {
         String tittle = null;
         String message = null;
         boolean error = false;
+        boolean fit=true;
         int age = 0;
         if(!tfAge.getText().isEmpty())
             age = Integer.parseInt(tfAge.getText());
@@ -132,7 +134,9 @@ public class InsertUserController {
                     sexSelected= "Female";
                 else
                     sexSelected="Male";
-                String r = main.getModelManager().insertUser(cmbTypeUser.getSelectionModel().getSelectedIndex()+1, tfCitizenCardNumber.getText(), tfName.getText(), tfEmail.getText() ,tfPassword.getText(), sexSelected, tfBirthDate.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), tfPhoneNumber.getText(), cmbAptitude.getSelectionModel().getSelectedItem(), tfHeight.getText(), tfWeight.getText(), cmbPosition.getSelectionModel().getSelectedItem());
+                if(Objects.equals(cmbAptitude.getSelectionModel().getSelectedItem(), "Not Fit"))
+                    fit=false;
+                String r = main.getModelManager().insertUser(cmbTypeUser.getSelectionModel().getSelectedIndex()+1, tfCitizenCardNumber.getText(), tfName.getText(), tfEmail.getText() ,tfPassword.getText(), sexSelected, tfBirthDate.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), tfPhoneNumber.getText(), fit, tfHeight.getText(), tfWeight.getText(), cmbPosition.getSelectionModel().getSelectedItem());
                 if(r.equals("User is now in the System")) {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Great");
@@ -144,10 +148,8 @@ public class InsertUserController {
                     alert.setContentText(r);
                     alert.showAndWait();
                 }
-                //main.changeScene("manager\\InsertUserView.fxml");
+                main.changeScene("manager\\InsertUserView.fxml");
             }
-
-
         } catch (SQLException e){
             System.out.println("Aqui" + e);
         } catch (MessagingException e) {

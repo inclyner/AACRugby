@@ -76,7 +76,7 @@ public class Manager extends CommonFeatures {
         }
     }
 
-    public String insertUser(int type, String nCC, String name, String email, String pass, String sex, String birthDate, String phoneNumber, String aptitude, String height, String weight, String position) throws SQLException, MessagingException {
+    public String insertUser(int type, String nCC, String name, String email, String pass, String sex, String birthDate, String phoneNumber, Boolean aptitude, String height, String weight, String position) throws SQLException, MessagingException {
         Long cartao=null, phone=null;
         Float peso =null, altura =null;
 
