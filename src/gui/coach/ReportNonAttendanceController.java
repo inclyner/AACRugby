@@ -122,6 +122,11 @@ public class ReportNonAttendanceController {
         }
     }
 
+    private boolean CheckFields(){
+        if (cmbPlayer.getSelectionModel().getSelectedIndex() ==-1 || cmbPractice.getSelectionModel().getSelectedIndex()==-1)
+            return true;
+        return false;
+    }
     @FXML
     void initialize() {
 

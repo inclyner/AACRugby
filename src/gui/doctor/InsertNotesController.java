@@ -111,7 +111,11 @@ public class InsertNotesController {
             throw new RuntimeException(e);
         }
     }
-
+    private boolean CheckFields(){
+        if (cmbPlayers.getSelectionModel().getSelectedIndex() ==-1 || tfNotes.getText().isEmpty())
+            return true;
+        return false;
+    }
 
     @FXML
     void initialize() {

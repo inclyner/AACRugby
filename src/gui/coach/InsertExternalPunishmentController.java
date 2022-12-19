@@ -105,6 +105,12 @@ public class InsertExternalPunishmentController {
         }
     }
 
+    private boolean CheckFields(){
+        if (cmbPlayer.getSelectionModel().getSelectedIndex() ==-1 || tfPunishmentNote.getText().isEmpty())
+            return true;
+        return false;
+    }
+
     @FXML
     void initialize() {
 

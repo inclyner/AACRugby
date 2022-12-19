@@ -103,6 +103,7 @@ public class ScheduleAppointmentsController {
             throw new RuntimeException(e);
         }
     }
+
     @FXML
     void initialize() {
         cmbPlayers.setItems(getPlayers());

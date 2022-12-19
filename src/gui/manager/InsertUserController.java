@@ -148,10 +148,8 @@ public class InsertUserController {
                     alert.setContentText(r);
                     alert.showAndWait();
                 }
-                //main.changeScene("manager\\InsertUserView.fxml");
+                main.changeScene("manager\\InsertUserView.fxml");
             }
-
-
         } catch (SQLException e){
             System.out.println("Aqui" + e);
         } catch (MessagingException e) {

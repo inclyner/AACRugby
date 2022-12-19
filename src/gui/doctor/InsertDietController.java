@@ -98,6 +98,12 @@ public class InsertDietController {
         }
     }
 
+    private boolean CheckFields(){
+        if (cmbPlayers.getSelectionModel().getSelectedIndex() ==-1 || tfDiet.getText().isEmpty())
+            return true;
+        return false;
+    }
+
     @FXML
     void initialize() {
         cmbPlayers.setItems(getPlayers());
