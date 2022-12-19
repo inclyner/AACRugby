@@ -111,6 +111,7 @@ public class PlayerPersonalDataController {
     @FXML
     void onClickBtnSave(ActionEvent event) throws SQLException{
         Main main = new Main();
+        String r=null;
         if(clicked){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Send request to change data");
@@ -121,11 +122,15 @@ public class PlayerPersonalDataController {
                 return;
             else if (option.get() == ButtonType.OK){
                 if (!Objects.equals(tfEmail.getText(), main.getModelManager().getEmailUserNcc(userCC))) {
-                    main.getModelManager().requestChange(main.getModelManager().getEmailUserNcc(userCC),tfEmail.getText(), Long.parseLong(userCC));
+                    r = main.getModelManager().requestChange(main.getModelManager().getEmailUserNcc(userCC),tfEmail.getText(), Long.parseLong(userCC));
                 }
                 if(!Objects.equals(tfPhoneNumber.getText(), main.getModelManager().getPhoneNumberUserNcc(userCC))) {
-                    main.getModelManager().requestChange(main.getModelManager().getPhoneNumberUserNcc(userCC), tfPhoneNumber.getText(),Long.parseLong(userCC));
+                    r =main.getModelManager().requestChange(main.getModelManager().getPhoneNumberUserNcc(userCC), tfPhoneNumber.getText(),Long.parseLong(userCC));
                 }
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Send request to change data");
+                alert.setContentText(r);
+                option = alert.showAndWait();
             }
         }
     }

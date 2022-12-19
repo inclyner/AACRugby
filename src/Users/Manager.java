@@ -39,7 +39,6 @@ public class Manager extends CommonFeatures {
         Matcher hasSpecial = special.matcher(height);
         Matcher hasLetters = letter.matcher(height);
         if (hasLetters.find() || hasSpecial.find()) return "Invalid Height";
-
         else return null;
     }
     private String approveCellPhone(String phoneNumber){
