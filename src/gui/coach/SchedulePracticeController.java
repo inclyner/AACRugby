@@ -69,7 +69,7 @@ public class SchedulePracticeController {
     void onClickSaveBtn(ActionEvent event) throws SQLException, ParseException {
         Main main = new Main();
         ArrayList<Long> nCC = new ArrayList<>();
-        if (CheckFields() && !isAnyUserSelected()){
+        if (CheckFields() || !isAnyUserSelected()){
             Alert alert1 = new Alert(Alert.AlertType.ERROR);
             alert1.setTitle("Fields Empty");
             alert1.setContentText("Fill all the fields");
@@ -91,7 +91,7 @@ public class SchedulePracticeController {
                 }
             }
             String r = main.getModelManager().schedulePractices(nCC, tfLocal.getText(), datePicker.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) ,tfBeginTime.getText(), tfEndTime.getText());
-            if(r.equals("Operation Successfull")){
+            if(r.equals("Operation Successful")){
                 Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);
                 alert2.setContentText(r);
                 alert2.showAndWait();
@@ -99,6 +99,7 @@ public class SchedulePracticeController {
             }else{
                 Alert alert2 = new Alert(Alert.AlertType.ERROR);
                 alert2.setTitle(r);
+                alert2.setContentText(r);
                 alert2.showAndWait();
             }
         }
