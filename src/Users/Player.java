@@ -89,4 +89,106 @@ public class Player extends CommonFeatures{
         }
         return "Request Sended";
     }
+
+
+    public String getDietNotes(Long cc){
+        try {
+            Statement statement = getDbConnection().createStatement();
+            String query = "SELECT * from dietNotes";
+            ResultSet resultSet = statement.executeQuery(query);
+            String diet=null, aux;
+            while (resultSet.next()){
+                long ncc = resultSet.getLong("playerCC");
+                if(Objects.equals(ncc, cc)){
+                    aux = resultSet.getString("diet");
+                    if(diet==null)
+                        diet=aux;
+                    else {
+                        diet=String.join("\n", aux, diet);
+                    }
+                }
+            }
+            resultSet.close();
+            statement.close();
+            closeDb();
+            return diet;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public String getMedicalNotes(Long cc){
+        try {
+            Statement statement = getDbConnection().createStatement();
+            String query = "SELECT * from medicalNotes";
+            ResultSet resultSet = statement.executeQuery(query);
+            String notes=null, aux=null;
+            while (resultSet.next()) {
+                long ncc = resultSet.getLong("playerCC");
+                if (Objects.equals(ncc, cc)) {
+                    aux = resultSet.getString("notes");
+                    if (notes == null)
+                        notes = aux;
+                    else {
+                        notes = String.join("\n", aux, notes);
+                    }
+                }
+            }
+            resultSet.close();
+            statement.close();
+            closeDb();
+            return notes;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public String getGameNotes(Long cc){
+        try {
+            Statement statement = getDbConnection().createStatement();
+            String query = "SELECT * from game_player";
+            ResultSet resultSet = statement.executeQuery(query);
+            String gameNotes=null, aux=null;
+            while (resultSet.next()) {
+                long ncc = resultSet.getLong("playerCC");
+                if (Objects.equals(ncc, cc)) {
+                    aux = resultSet.getString("notes");
+                    if (gameNotes == null)
+                        gameNotes = aux;
+                    else {
+                        gameNotes = String.join("\n", aux, gameNotes);
+                    }
+                }
+            }
+            resultSet.close();
+            statement.close();
+            closeDb();
+            return gameNotes;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public String getExternalNotes(Long cc){
+        try {
+            Statement statement = getDbConnection().createStatement();
+            String query = "SELECT * from externalPunishments";
+            ResultSet resultSet = statement.executeQuery(query);
+            String notes=null, aux=null;
+            while (resultSet.next()) {
+                long ncc = resultSet.getLong("playerCC");
+                if (Objects.equals(ncc, cc)) {
+                    aux = resultSet.getString("notes");
+                    if (notes == null)
+                        notes = aux;
+                    else {
+                        notes = String.join("\n", aux, notes);
+                    }
+                }
+            }
+            resultSet.close();
+            statement.close();
+            closeDb();
+            return notes;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
