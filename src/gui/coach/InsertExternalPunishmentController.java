@@ -64,6 +64,13 @@ public class InsertExternalPunishmentController {
     void onClickBtnSave(ActionEvent event) {
         try{
             Main main = new Main();
+            if (CheckFields()){
+                Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                alert1.setTitle("Fields Empty");
+                alert1.setContentText("Fill all the fields");
+                alert1.showAndWait();
+                return;
+            }
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Insert external punishment about player");
             alert.setContentText("Are you sure you want to insert this?");

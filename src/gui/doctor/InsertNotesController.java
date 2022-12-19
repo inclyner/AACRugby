@@ -52,7 +52,14 @@ public class InsertNotesController {
     void onClickBackBtn(ActionEvent event) {
         try {
             Main main = new Main();
-            main.changeScene("doctor\\DoctorMainView.fxml");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Canceling Operation");
+            alert.setContentText("Are you sure you want do cancel the operation?");
+            Optional<ButtonType> option = alert.showAndWait();
+            if (option.get() == ButtonType.CANCEL)
+                return;
+            else if (option.get() == ButtonType.OK)
+                main.changeScene("doctor\\DoctorMainView.fxml");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -61,24 +68,31 @@ public class InsertNotesController {
     @FXML
     void onClickSaveBtn(ActionEvent event){
         try{
-        Main main = new Main();
-        ArrayList<Long> nCC = new ArrayList<>();
-        ArrayList<Player> players = main.getModelManager().getAllPlayer();
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Insert notes about player");
-        alert.setContentText("Are you sure you want to insert this notes?");
-        Optional<ButtonType> option = alert.showAndWait();
-        int indexp=cmbPlayers.getSelectionModel().getSelectedIndex();
-        Long ncc=players.get(indexp).getnCC(players.get(indexp).getEmail());
-        boolean fit=true;
-        if (Objects.equals("Not Fit",cmbAptitude.getSelectionModel().getSelectedItem()))
-            fit=false;
-        if (option.get() == ButtonType.CANCEL)
-            return;
-        else if (option.get() == ButtonType.OK) {
-            main.getModelManager().getinsertAppointmentNotes(ncc, tfNotes.getText(), fit);
-            main.changeScene("doctor\\DoctorMainView.fxml");
-        }
+            Main main = new Main();
+            ArrayList<Long> nCC = new ArrayList<>();
+            ArrayList<Player> players = main.getModelManager().getAllPlayer();
+            if (CheckFields()){
+                Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                alert1.setTitle("Fields Empty");
+                alert1.setContentText("Fill all the fields");
+                alert1.showAndWait();
+                return;
+            }
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Insert notes about player");
+            alert.setContentText("Are you sure you want to insert this notes?");
+            Optional<ButtonType> option = alert.showAndWait();
+            int indexp=cmbPlayers.getSelectionModel().getSelectedIndex();
+            Long ncc=players.get(indexp).getnCC(players.get(indexp).getEmail());
+            boolean fit=true;
+            if (Objects.equals("Not Fit",cmbAptitude.getSelectionModel().getSelectedItem()))
+                fit=false;
+            if (option.get() == ButtonType.CANCEL)
+                return;
+            else if (option.get() == ButtonType.OK) {
+                main.getModelManager().getinsertAppointmentNotes(ncc, tfNotes.getText(), fit);
+                main.changeScene("doctor\\DoctorMainView.fxml");
+            }
         }catch(SQLException e){
             throw new RuntimeException(e);
         }
