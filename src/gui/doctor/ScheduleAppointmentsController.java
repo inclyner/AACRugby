@@ -59,30 +59,35 @@ public class ScheduleAppointmentsController {
         try{
             Main main = new Main();
             if(cmbPlayers.getSelectionModel().getSelectedItem()==null ||
-                    tfTime.getText().isEmpty()){
+                    tfTime.getText().isEmpty() ||
+                    datePicker.getValue() == null){
                 error=true;
                 title = "Missing data!";
                 message = "You must fill all the required fields";
             }
+
             if(error){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle(title);
                 alert.setContentText(message);
                 alert.showAndWait();
+
+            } else {
+                Long nCC = main.getModelManager().getNCccName(cmbPlayers.getValue());
+                String r =main.getModelManager().insertMedicalAppointment(nCC, datePicker.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), tfTime.getText());
+                if(r.equals("Medical Appointment inserted in database")){
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setContentText(r);
+                    alert.showAndWait();
+                    main.changeScene("doctor\\DoctorMainView.fxml");
+                }else{
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle(r);
+                    alert.showAndWait();
+                }
             }
 
-            Long nCC = main.getModelManager().getNCccName(cmbPlayers.getValue());
-            String r =main.getModelManager().insertMedicalAppointment(nCC, datePicker.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), tfTime.getText());
-            if(r.equals("Medical Appointment inserted in database")){
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setContentText(r);
-                alert.showAndWait();
-                main.changeScene("doctor\\DoctorMainView.fxml");
-            }else{
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle(r);
-                alert.showAndWait();
-            }
+
 
         }catch(SQLException | ParseException e){
             throw new RuntimeException(e);
