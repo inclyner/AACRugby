@@ -45,7 +45,7 @@ public class ScheduleAppointmentsController {
             if (option.get() == ButtonType.CANCEL)
                 return;
             else if (option.get() == ButtonType.OK)
-                main.changeScene("coach\\DoctorMainView.fxml");
+                main.changeScene("doctor\\DoctorMainView.fxml");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

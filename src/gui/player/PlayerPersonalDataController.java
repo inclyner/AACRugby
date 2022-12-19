@@ -127,7 +127,11 @@ public class PlayerPersonalDataController {
                 if(!Objects.equals(tfPhoneNumber.getText(), main.getModelManager().getPhoneNumberUserNcc(userCC))) {
                     r =main.getModelManager().requestChange(main.getModelManager().getPhoneNumberUserNcc(userCC), tfPhoneNumber.getText(),Long.parseLong(userCC));
                 }
-                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                if(r.equals("Wrong type")) {
+                    alert = new Alert(Alert.AlertType.ERROR);
+                }else {
+                    alert = new Alert(Alert.AlertType.CONFIRMATION);
+                }
                 alert.setTitle("Send request to change data");
                 alert.setContentText(r);
                 option = alert.showAndWait();
