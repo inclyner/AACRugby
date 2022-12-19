@@ -4,6 +4,7 @@ import Users.Manager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import javax.mail.MessagingException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,9 +15,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ManagerTest {
 
-/*
+
     // delete users tests
-    @Test
+   /* @Test
     void testDeleteUser_userExists() throws Exception {
         // Arrange
         ArrayList<Long> listaCc = new ArrayList<Long>();
@@ -55,40 +56,40 @@ class ManagerTest {
 
     //insert user tests
     @Test
-    public void insertCorrectUserPlayerAllFields() {
+    public void insertCorrectUserPlayerAllFields() throws SQLException, MessagingException {
 
         Manager manager = new Manager();
         ArrayList<Long> lista= new ArrayList<Long>();
         lista.add(423455849L);
         remove_user423455849();
-        assertEquals( "User is now in the System",manager.insertUser(2, 423455849L, "Joao Silva", "rhoikj467@tmail3.com", "pswor123!", "male", "12-10-99", 123456789L, true, 180F, 190F, "Wing"));
+        assertEquals( "User is now in the System",manager.insertUser(2, "423455890", "Joao Silva", "rhomaha467@tmail3.com", "pswor123!", "male", "12-10-99", "123456789", "true", "180", "190", "Wing"));
         remove_user423455849();
+    }*/
+    @Test
+    public void insertRepeatEmailUser() throws SQLException, MessagingException {
+        Manager manager = new Manager();
+        assertEquals("Email Already Exists",manager.insertUser(2, "423455891", "Joao Silva", "rrtr467@tmail3.com", "pswor123!", "male", "12-10-99", "123456789", true, "180", "190", "Wing"));
     }
     @Test
-    public void insertRepeatEmailUser() {
+    public void insertRepeatCCUser() throws SQLException, MessagingException {
         Manager manager = new Manager();
-        assertEquals("Email Already Exists",manager.insertUser(2, 423455849L, "Joao Silva", "camiloTavares@aac.pt", "psword123!", "male", "12-10-99", 123456789L, true, 180F, 190F, "Wing"));
+        assertEquals("Citizen Card Number Already Exists",manager.insertUser(2, "423455890", "Joao Silva", "rrtr467@tmail3.com", "pswor123!", "male", "12-10-99", "123456789", true, "180", "190", "Wing"));
     }
     @Test
-    public void insertRepeatCCUser() {
+    public void insertCorrectUserDoctorAllFields() throws SQLException, MessagingException {
         Manager manager = new Manager();
-        assertEquals("Citizen Card Number Already Exists",manager.insertUser(2, 423455849L, "Joao Silva", "rhoyikj467@tmail3.com", "psword123!", "male", "12-10-99", 123456789L, true, 180F, 190F, "Wing"));
+        //remove_user423455849();
+        assertEquals("User is now in the System",manager.insertUser(1, "423412849", "Joao Baiao", "rhoyikj467@tmail3.com", "psword123!", "male", "12-10-99", "123456789",null,null,null,""));
+        //remove_user423455849();
     }
     @Test
-    public void insertCorrectUserDoctorAllFields() {
+    public void insertCorrectUserCoachAllFields() throws SQLException, MessagingException {
         Manager manager = new Manager();
-        remove_user423455849();
-        assertEquals("User is now in the System",manager.insertUser(1, 423412849L, "Joao Baiao", "rhoyikj467@tmail3.com", "psword123!", "male", "12-10-99", 123456789L,null,Float.NaN,Float.NaN,""));
-        remove_user423455849();
-    }
-    @Test
-    public void insertCorrectUserCoachAllFields() {
-        Manager manager = new Manager();
-        remove_user423455849();
-        assertEquals("User is now in the System",manager.insertUser(3, 423643849L, "Joao Costa", "rhoyikj467@tmail3.com", "psword123!", "male", "12-10-99", 123456789L, null,Float.NaN,Float.NaN,""));
+        //remove_user423455849();
+        assertEquals("User is now in the System",manager.insertUser(3, "423412349", "Joao Baiao", "rh24ttj467@tmail3.com", "psword123!", "male", "12-10-99", "123456789",null,null,null,""));
 
     }
-    @Test
+    /*@Test
     public void insertCorrectUserOnlyRequired() {
         Manager manager = new Manager();
         remove_user423455849();
@@ -108,104 +109,104 @@ class ManagerTest {
     @Test
     public void noUserName() {
         Manager manager = new Manager();
-        assertEquals("please Insert a name!",manager.insertUser(2, 423455849L, "", "rhoyikj467@tmail3.com", "psword123!", "male", "12-10-99", 123456789L, true, 180F, 190F, "Wing"));
+        assertEquals("please Insert a name!",manager.insertUser(2, 423455849L, "", "rhoyikj467@tmail3.com", "psword123!", "male", "12-10-99", "123456789", true, 180F, 190F, "Wing"));
     }
     @Test
     public void smallUserName() {
         Manager manager = new Manager();
-        assertEquals("Name is too small!",manager.insertUser(2, 423455849L, "joao", "rhoyikj467@tmail3.com", "psword123!", "male", "12-10-99", 123456789L, true, 180F, 190F, "Wing"));
+        assertEquals("Name is too small!",manager.insertUser(2, 423455849L, "joao", "rhoyikj467@tmail3.com", "psword123!", "male", "12-10-99", "123456789", true, 180F, 190F, "Wing"));
     }
     @Test
     public void bigUserName() {
         Manager manager = new Manager();
-        assertEquals("Please Insert a Smaller name!",manager.insertUser(2, 423455849L, "alexandrino carlos monteiro ", "rhoyikj467@tmail3.com", "psword123!", "male", "12-10-99", 123456789L, true, 180F, 190F, "Wing"));
+        assertEquals("Please Insert a Smaller name!",manager.insertUser(2, 423455849L, "alexandrino carlos monteiro ", "rhoyikj467@tmail3.com", "psword123!", "male", "12-10-99", "123456789", true, 180F, 190F, "Wing"));
     }
     @Test
     public void invalidUserName() {
         Manager manager = new Manager();
-        assertEquals("Please insert a name with just letters",manager.insertUser(2, 423455849L, "alex4ndr3", "rhoyikj467@tmail3.com", "psword123!", "male", "12-10-99", 123456789L, true, 180F, 190F, "Wing"));
+        assertEquals("Please insert a name with just letters",manager.insertUser(2, 423455849L, "alex4ndr3", "rhoyikj467@tmail3.com", "psword123!", "male", "12-10-99", "123456789", true, 180F, 190F, "Wing"));
     }
     @Test
     public void insertWrongEmailFormat() {
         Manager manager = new Manager();
-        assertEquals("Please insert a valid email",manager.insertUser(2, 423455849L, "Joao Silva", "rhoyik@j467@tmail3.com", "psword123!", "male", "12-10-99", 123456789L, true, 180F, 190F, "Wing"));
+        assertEquals("Please insert a valid email",manager.insertUser(2, 423455849L, "Joao Silva", "rhoyik@j467@tmail3.com", "psword123!", "male", "12-10-99", "123456789", true, 180F, 190F, "Wing"));
     }
     @Test
     public void insertNoEmailFormat() {
         Manager manager = new Manager();
-        assertEquals("Please insert a valid email",manager.insertUser(2, 423455849L, "Joao Silva", "", "psword123!", "male", "12-10-99", 123456789L, true, 180F, 190F, "Wing"));
+        assertEquals("Please insert a valid email",manager.insertUser(2, 423455849L, "Joao Silva", "", "psword123!", "male", "12-10-99", "123456789", true, 180F, 190F, "Wing"));
     }
     @Test
     public void insertNoPassword() {
         Manager manager = new Manager();
-        assertEquals("Please Insert a Password",manager.insertUser(2, 423455849L, "Joao Silva", "rhoyikj467@tmail3.com", "", "male", "12-10-99", 123456789L, true, 180F, 190F, "Wing"));
-    }
+        assertEquals("Please Insert a Password",manager.insertUser(2, 423455849L, "Joao Silva", "rhoyikj467@tmail3.com", "", "male", "12-10-99", "123456789", true, 180F, 190F, "Wing"));
+    }*/
     @Test
-    public void insertSmallPassword() {
+    public void insertSmallPassword() throws SQLException, MessagingException {
         Manager manager = new Manager();
-        assertEquals("Password is too small!",manager.insertUser(2, 423455849L, "Joao Silva", "rhoyikj467@tmail3.com", "12345", "male", "12-10-99", 123456789L, true, 180F, 190F, "Wing"));
+        assertEquals("Password is too small!",manager.insertUser(2, "423446849", "Joao Silva", "rhoyj467@tmail3.com", "w", "male", "12-10-99", "123456789", Boolean.valueOf("true"), "180", "190", "Wing"));
     }
     @Test
-    public void insertBigPassword() {
+    public void insertBigPassword() throws SQLException, MessagingException {
         Manager manager = new Manager();
-        assertEquals("Please Insert a Smaller Password",manager.insertUser(2, 423455849L, "Joao Silva", "rhoyikj467@tmail3.com", "12345678910", "male", "12-10-99", 123456789L, true, 180F, 190F, "Wing"));
+        assertEquals("Please Insert a Smaller Password",manager.insertUser(2, String.valueOf(1114558411L), "Joao Silva", "rhoyikj@hotmail3.com", "psword123!!!", "male", "12-10-99", String.valueOf(123456789L), true, String.valueOf(380F), String.valueOf(190F), "Wing"));
     }
     @Test
-    public void insertNoSpecialPassword() {
+    public void insertNoSpecialPassword() throws SQLException, MessagingException {
         Manager manager = new Manager();
-        assertEquals("Please insert a password with digits and special character",manager.insertUser(2, 423455849L, "Joao Silva", "rhoyikj467@tmail3.com", "145678910", "male", "12-10-99", 123456789L, true, 180F, 190F, "Wing"));
+        assertEquals("Please insert a password with digits and special characters",manager.insertUser(2, String.valueOf(4214558411L), "Joao Silva", "rhoyikj@hotmail3.com", "err123", "male", "12-10-99", String.valueOf(123456789L), true, String.valueOf(380F), String.valueOf(190F), "Wing"));
     }
     @Test
-    public void insertSmallPhoneNumber() {
+    public void insertSmallPhoneNumber() throws SQLException, MessagingException {
         Manager manager = new Manager();
-        assertEquals("Incomplete Phone Number",manager.insertUser(2, 423455849L, "Joao Silva", "rhoyikj467@tmail3.com", "psword123!", "male", "12-10-99", 156789L, true, 180F, 190F, "Wing"));
+        assertEquals("Incomplete Phone Number",manager.insertUser(2, String.valueOf(421422841L), "Joao Silva", "ryikj46@tmail3.com", "psword123!", "male", "12-10-99", String.valueOf(123489L),true, String.valueOf(380F), String.valueOf(190F), "Wing"));
     }
     @Test
-    public void insertBigPhoneNumber() {
+    public void insertBigPhoneNumber() throws SQLException, MessagingException {
         Manager manager = new Manager();
-        assertEquals("Incomplete Phone Number",manager.insertUser(2, 423455849L, "Joao Silva", "rhoyikj467@tmail3.com", "psword123!", "male", "12-10-99", 12345678910L, true, 180F, 190F, "Wing"));
+        assertEquals("Incomplete Phone Number",manager.insertUser(2, String.valueOf(421455841L), "Joao Silva", "rhoyikj46@tmail3.com", "psword123!", "male", "12-10-99", String.valueOf(123456784664569L), true, String.valueOf(160), String.valueOf(190), "Wing"));
     }
     @Test
-    public void insertShortHeight() {
+    public void insertShortHeight() throws SQLException, MessagingException {
         Manager manager = new Manager();
-        assertEquals("We don't want anyone that small",manager.insertUser(2, 423455849L, "Joao Silva", "rhoyikj467@tmail3.com", "psword123!", "male", "12-10-99", 123456789L, true, 90F, 190F, "Wing"));
+        assertEquals("We don't want anyone that small",manager.insertUser(2, String.valueOf(121455840), "Joao Silva", "rhoaj46@tmail3.com", "psword123!", "male", "12-10-99", String.valueOf(123456789), true, String.valueOf(50), String.valueOf(100), "Wing"));
     }
     @Test
-    public void insertBigHeight() {
+    public void insertBigHeight() throws SQLException, MessagingException {
         Manager manager = new Manager();
-        assertEquals("There's no one that high",manager.insertUser(2, 423455849L, "Joao Silva", "rhoyikj467@tmail3.com", "psword123!", "male", "12-10-99", 123456789L, true, 380F, 190F, "Wing"));
+        assertEquals("There's no one that high",manager.insertUser(2, String.valueOf(421455841L), "Joao Silva", "rhoyikj46@tmail3.com", "psword123!", "male", "12-10-99", String.valueOf(123456789L), true, String.valueOf(350), String.valueOf(40), "Wing"));
     }
     @Test
-    public void insertUnderWeight() {
+    public void insertUnderWeight() throws SQLException, MessagingException {
         Manager manager = new Manager();
-        assertEquals("Weight's too high",manager.insertUser(2, 423455849L, "Joao Silva", "rhoyikj467@tmail3.com", "psword123!", "male", "12-10-99", 123456789L, true, 180F, 340F, "Wing"));
+        assertEquals("Invalid Weight",manager.insertUser(2, String.valueOf(423455249L), "Joao Silva", "rhoyikj67@tmail3.com", "psword123!", "male", "12-10-99", String.valueOf(123456789L), true, String.valueOf(180F), String.valueOf(340F), "Wing"));
     }
     @Test
-    public void insertOverWeight() {
+    public void insertOverWeight() throws SQLException, MessagingException {
             Manager manager = new Manager();
-            assertEquals("Weight's too low",manager.insertUser(2, 423455849L, "Joao Silva", "rhoyikj467@tmail3.com", "psword123!", "male", "12-10-99", 123456789L, true, 180F, 25F, "Wing"));
+            assertEquals("Invalid Weight",manager.insertUser(2, String.valueOf(423455049L), "Joao Silva", "rhyikj467@tmail3.com", "psword123!", "male", "12-10-99", String.valueOf(123456789L),true, String.valueOf(180F), String.valueOf(25F), "Wing"));
         }
     @Test
-    public void OverWeight() {
+    public void OverWeight() throws SQLException, MessagingException {
         Manager manager = new Manager();
-        assertEquals("Weight's too low",manager.insertUser(2, 423455849L, "Joao Silva", "rhoyikj467@tmail3.com", "psword123!", "male", "12-10-99", 123456789L, true, 180F, 25F, "Wing"));
+        assertEquals("Invalid Weight",manager.insertUser(2, String.valueOf(423454849L), "Joao Silva", "rhoyik467@tmail3.com", "psword123!", "male", "12-10-99", String.valueOf(123456789L), true, String.valueOf(180F), String.valueOf(25F), "Wing"));
     }
 
     @Test
     public void approveChangeRequestRight() {
         Manager manager = new Manager();
-        assertEquals("Option Validated",manager.approveChangeRequest(2, true));
+        assertEquals("Option Validated",manager.approveChangeRequest(837587143L, true));
     }
 
     @Test
     public void approveChangeRequestWrongEmail() {
         Manager manager = new Manager();
-        assertEquals("Invalid Values",manager.approveChangeRequest(2, true));
+        assertEquals("Invalid Values",manager.approveChangeRequest(585005353L, true));
     }
     @Test
     public void approveChangeRequestWrongCellPhone() {
         Manager manager = new Manager();
-        assertEquals("Invalid Values",manager.approveChangeRequest(2, true));
+        assertEquals("Invalid Values",manager.approveChangeRequest(451707431L, true));
     }
 
 
@@ -214,7 +215,7 @@ class ManagerTest {
 
 
 // change request tests
-    @Test
+   /* @Test
     void testApproveChangeRequest_playerNotFound() {
         // Arrange
         int id = 1;
@@ -272,8 +273,8 @@ class ManagerTest {
 
     void remove_user423455849() {
         Manager manager = new Manager();
-        ArrayList<Long> lista= new ArrayList<Long>();
-        lista.add(423643849L);
+        ArrayList<String> lista= new ArrayList<>();
+        lista.add(String.valueOf(423643849L));
         try {
             manager.deleteUser(lista);
         } catch (SQLException e) {

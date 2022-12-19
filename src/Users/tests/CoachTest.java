@@ -12,33 +12,33 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CoachTest {
 
-    /*@Test
+    @Test
     public void InsertPunishment(){
         Coach coach = null;
         try {
-            coach = new Coach("fvgrgfg");
+            coach = new Coach("camilasantos@acc.com");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        assertEquals("Insert notes",coach.InsertPlayersPunishement(585005353L, "ola as d", 2));
+        assertEquals("Insert notes",coach.InsertPlayersPunishement(868119635L, "ola as d", 2));
     }
 
     @Test
     public void UpdatePunishment(){
         Coach coach = null;
         try {
-            coach = new Coach("fvgrgfg");
+            coach = new Coach("camilasantos@acc.com");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        assertEquals("Update notes",coach.InsertPlayersPunishement(585005353L, "ola as d", 2));
+        assertEquals("Update the notes",coach.InsertPlayersPunishement(451707431L, "ola as d", 2));
     }
 
     @Test
     public void DoCallUpInsertExtraPlayer(){
         Coach coach = null;
         try {
-            coach = new Coach("fvgrgfg");
+            coach = new Coach("camilasantos@acc.com");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -47,7 +47,27 @@ class CoachTest {
         } catch (SQLException e){
             throw new RuntimeException();
         }*/
-       /* ArrayList<Long> cc = coach.getCc();
+        ArrayList<Long> cc = coach.getCc();
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
         assertEquals("Extra players",coach.callUpPlayers(cc, 12));
     }
 
@@ -64,12 +84,7 @@ class CoachTest {
         } catch (SQLException e){
             throw new RuntimeException();
         }*/
-        /*ArrayList<Long> cc = coach.getCc();
-        int i=0;
-        while(i<10) {
-            cc.remove(i);
-            i++;
-        }
+        ArrayList<Long> cc = coach.getCc();
         assertEquals("Not enough players",coach.callUpPlayers(cc, 12));
     }
 
@@ -86,13 +101,24 @@ class CoachTest {
         } catch (SQLException e){
             throw new RuntimeException();
         }*/
-        /*ArrayList<Long> cc = coach.getCc();
-        int i=0;
-        while(i<3) {
-            cc.remove(i);
-            i++;
-        }
-        assertEquals("Insert date about call up in the database",coach.callUpPlayers(cc, 12));
+        ArrayList<Long> cc = new ArrayList<>();
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        assertEquals("Insert date about call up in the database",coach.callUpPlayers(cc, 1));
     }
 
     @Test
@@ -103,17 +129,28 @@ class CoachTest {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        /*try {
+              /*try {
             coach.InsertUsersFromTxt();
         } catch (SQLException e){
             throw new RuntimeException();
         }*/
-       /* ArrayList<Long> cc = coach.getCc();
-        int i=0;
-        while(i<3) {
-            cc.remove(i);
-            i++;
-        }
+        ArrayList<Long> cc = new ArrayList<>();
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
+        cc.add(100253335L);
         assertEquals("Already have call up of this game",coach.callUpPlayers(cc, 12));
     }
 
@@ -132,5 +169,5 @@ class CoachTest {
         }catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }*/
+    }
 }
