@@ -12,6 +12,9 @@ import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
 import com.calendarfx.view.CalendarView;
 import gui.Main;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -21,6 +24,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class CoachMainController {
 
@@ -110,6 +114,49 @@ public class CoachMainController {
         }
     }
 
+    private void initializeCoachCalendarView() {
+        try {
+            Main main = new Main();
+
+            // Calendario atualiza 5 em 5 segundos
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), ev -> {
+                try {
+                    calendarView.getCalendarSources().removeAll(calendarView.getCalendarSources());
+
+                    Calendar calendar = new Calendar("AAC Season Calendar");
+                    calendar.setStyle(Calendar.Style.STYLE3);
+                    for(Entry<String> entry : main.getModelManager().getGamesForCalendar()){
+                        calendar.addEntry(entry);
+                    }
+
+                    Calendar calendarPractices = new Calendar("Team Practices");
+                    calendarPractices.setStyle(Calendar.Style.STYLE5);
+                    for(Entry<String> entry : main.getModelManager().getPracticesForCalendar(false)){
+                        calendarPractices.addEntry(entry);
+                    }
+
+                    calendar.readOnlyProperty().setValue(true);
+                    calendarPractices.readOnlyProperty().setValue(true);
+
+                    CalendarSource myCalendarSource = new CalendarSource("My Calendars");
+                    myCalendarSource.getCalendars().addAll(calendar);
+                    myCalendarSource.getCalendars().addAll(calendarPractices);
+
+                    calendarView.getCalendarSources().addAll(myCalendarSource);
+
+                    calendarView.setShowSearchField(false);
+                    calendarView.setShowAddCalendarButton(false);
+                } catch (SQLException e){
+                    throw new RuntimeException(e);
+                }
+            }));
+            timeline.setCycleCount(Animation.INDEFINITE);
+            timeline.play();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @FXML
     void initialize() {
         try {
@@ -121,19 +168,20 @@ public class CoachMainController {
             stage.setWidth(1100);
             stage.setHeight(800);
 
+            initializeCoachCalendarView();
+
+            /*
             Calendar calendar = new Calendar("AAC Season Calendar");
             calendar.setStyle(Calendar.Style.STYLE3);
             for(Entry<String> entry : main.getModelManager().getGamesForCalendar()){
                 calendar.addEntry(entry);
             }
 
-
             Calendar calendarPractices = new Calendar("Team Practices");
             calendarPractices.setStyle(Calendar.Style.STYLE5);
             for(Entry<String> entry : main.getModelManager().getPracticesForCalendar(false)){
                 calendarPractices.addEntry(entry);
             }
-
 
             calendar.readOnlyProperty().setValue(true);
             calendarPractices.readOnlyProperty().setValue(true);
@@ -145,7 +193,7 @@ public class CoachMainController {
             calendarView.getCalendarSources().addAll(myCalendarSource);
 
             calendarView.setShowSearchField(false);
-            calendarView.setShowAddCalendarButton(false);
+            calendarView.setShowAddCalendarButton(false);*/
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

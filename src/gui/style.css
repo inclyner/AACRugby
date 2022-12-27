@@ -1,0 +1,5 @@
+.root {
+    -fx-highlight-fill: rgba(193,166,112,255);
+    -fx-accent: rgba(193,166,112,112);
+    -fx-focus-color: rgba(243,166,12,255);
+}

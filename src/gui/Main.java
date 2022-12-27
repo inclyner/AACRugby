@@ -5,10 +5,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import logic.ModelManager;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -32,11 +34,20 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         //RootPane rootPane = new RootPane(modelManager);
+
+        File f = new File("src/gui/style.css");
+
         stg = stage;
+
         stage.setResizable(false);
+
+        //stage.getScene().getStylesheets().clear();
+        //stage.getScene().getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\","/"));
+
         Parent root = FXMLLoader.load(getClass().getResource("loginView.fxml"));
         Scene scene = new Scene(root, 600, 480, Color.WHITE);
-
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\","/"));
         stage.setScene(scene);
 
         stage.setTitle("Rugby Team Management");
