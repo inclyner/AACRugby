@@ -1,0 +1,5 @@
+id	date		equipaAdversaria	horaInicial	horaFinal	local	coachCC
+1	07-01-2023	Bulldogs	9:30		11:00		Coimbra	209377465
+2	13-01-2023	Belas		17:30		19:00		Coimbra	209377465
+3	17-01-2023	AEISA		9:30		11:00		Lisboa	209377465
+4	20-01-2023	RCE		9:30		11:00		Loulé	209377465
